@@ -2,6 +2,7 @@
 
 import { serverClient } from '@/utils/supabase/server';
 import { getErrorMessage } from '@/utils/errorMsg';
+import { getAdmins } from './apiCalls';
 
 export async function loginAction(formData: FormData) {
   try {
@@ -11,7 +12,7 @@ export async function loginAction(formData: FormData) {
       email: formData.get('email') as string,
       password: formData.get('password') as string
     };
-    
+
     const { error } = await auth.signInWithPassword(data);
 
     if (error) throw error;
@@ -37,10 +38,10 @@ export async function otpLoginAction(formData: FormData) {
 
     if (error) throw error;
 
-    return session
+    return session;
   } catch (error) {
-    console.log(error)
-    return null
+    console.log(error);
+    return null;
   }
 }
 
@@ -97,5 +98,25 @@ export const signOutAction = async () => {
     return { errorMessage: null };
   } catch (error) {
     return { errorMessage: getErrorMessage(error) };
+  }
+};
+
+export const defineAdmin = async (): Promise<string | null> => {
+  try {
+    const { auth } = await serverClient();
+    const admins = await getAdmins();
+    const {
+      data: { user }
+    } = await auth.getUser();
+    const currentAdmin = user?.email ?? null;
+
+    if (!admins?.includes(currentAdmin)) {
+      throw new Error('Unable to define admin.');
+    } else {
+      return currentAdmin;
+    }
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 };

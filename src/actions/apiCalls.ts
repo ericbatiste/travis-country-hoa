@@ -1,8 +1,7 @@
-
-
 import { browserClient } from "@/utils/supabase/client"
+import { serverClient } from "@/utils/supabase/server"
 
-export async function postUserRegistration(formData: FormData) {
+export const postUserRegistration = async (formData: FormData) => {
   const supabase = browserClient()
   
   const firstName = formData.get('firstName') as string
@@ -28,22 +27,39 @@ export async function postUserRegistration(formData: FormData) {
     }
 }
 
-export async function getUserRegistrations() {
+export const getUserRegistrations = async () => {
   try {
     const supabase = browserClient();
     
     const { data: users, error } = await supabase
-      .from('users')
-      .select('id, first_name, last_name, email, address, status')
-      .eq('status', 'pending');
-
+    .from('users')
+    .select('id, first_name, last_name, email, address, status')
+    .eq('status', 'pending');
+    
     if (error) throw new Error();
-
-    console.log(users)
-
+    
     return users || [];
   } catch (error) {
     console.error('Error retrieving data:', error);
     return [];
+  }
+}
+
+export const getAdmins = async () => {
+  try {
+    const supabase = browserClient();
+
+    const { data: users, error } = await supabase
+    .from('users')
+    .select('email')
+    .eq('admin', true);
+
+    const admins = users?.map(user => user.email)
+
+    if (error) throw error
+
+    return admins
+  } catch (error) {
+    console.log(error);
   }
 }
