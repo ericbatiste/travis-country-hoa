@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { otpLoginAction } from "@/actions/users";
 import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
+import { updateUserStatus } from "@/actions/apiCalls";
 
 export default function OTPLogin() {
   const [isPending, startTransition] = useTransition();
@@ -14,8 +15,10 @@ export default function OTPLogin() {
     startTransition(async () => {
       const session = await otpLoginAction(formData);
       if (session) {
+        const email = session.user.email
+        updateUserStatus(email as string, 'verified')
         toast.success("One time login code successfull!");
-        router.push("/update-password");
+        router.push("/auth/update-password");
       } else {
         toast.error('One time login code failed, please try again.');
       }

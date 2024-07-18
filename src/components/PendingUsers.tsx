@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { approveUserAction } from '@/actions/users';
-import { getUserRegistrations } from '@/actions/apiCalls';
+import { getPendingUsers, updateUserStatus } from '@/actions/apiCalls';
 
 type User = {
   id: string;
@@ -14,11 +14,11 @@ type User = {
 };
 
 export default function PendingUsers() {
-  const [PendingUsers, setPendingUsers] = useState<User[]>([]);
+  const [pendingUsers, setPendingUsers] = useState<User[]>([]);
 
   useEffect(() => {
     const getUsers = async () => {
-      const data = await getUserRegistrations();
+      const data = await getPendingUsers();
       if (data) {
         setPendingUsers(data);
       }
@@ -27,15 +27,18 @@ export default function PendingUsers() {
     getUsers();
   }, []);
 
-  const handleUserApproval = (email: string) => {
-    approveUserAction(email);
+  const handleUserApproval = async (email: string) => {
+    const { errorMessage } = await approveUserAction(email);
+    if (!errorMessage) { 
+        updateUserStatus(email, 'approved');
+    }
   };
 
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-6">User Registrations</h1>
       <ul className="divide-y divide-gray-200">
-        {PendingUsers.map(user => (
+        {pendingUsers.map(user => (
           <li key={user.id} className="py-4">
             <p className="text-lg font-semibold">
               {user.first_name} {user.last_name}

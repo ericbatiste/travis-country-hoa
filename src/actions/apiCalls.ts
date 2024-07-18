@@ -27,7 +27,7 @@ export const postUserRegistration = async (formData: FormData) => {
     }
 }
 
-export const getUserRegistrations = async () => {
+export const getPendingUsers = async () => {
   try {
     const supabase = browserClient();
     
@@ -61,5 +61,22 @@ export const getAdmins = async () => {
     return admins
   } catch (error) {
     console.log(error);
+  }
+}
+
+export const updateUserStatus = async (email: string, updatedStatus: string) => {
+  try {
+    const supabase = browserClient()
+
+    const { data, error } = await supabase
+      .from('users')
+      .update({ status: updatedStatus })
+      .eq('email', email)
+
+    if (error) throw error
+
+    console.log(data)
+  } catch (error) {
+    console.log(error)
   }
 }

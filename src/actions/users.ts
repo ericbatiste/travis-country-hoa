@@ -111,7 +111,8 @@ export const defineAdmin = async (): Promise<string | null> => {
     const currentAdmin = user?.email ?? null;
 
     if (!admins?.includes(currentAdmin)) {
-      throw new Error('Unable to define admin.');
+      // throw new Error('Unable to define admin.');
+      return null
     } else {
       return currentAdmin;
     }
