@@ -43,8 +43,9 @@ export default function Editor({ onChange }: EditorProps) {
     'background'
     // 'clean',
   ];
+  const placeholder = 'Enter content as you would like to see it displayed on screen...';
 
-  const { quill, quillRef } = useQuill({ theme, modules, formats });
+  const { quill, quillRef } = useQuill({ theme, modules, formats, placeholder });
 
   useEffect(() => {
     if (quill && onChange) {
@@ -56,8 +57,8 @@ export default function Editor({ onChange }: EditorProps) {
   }, [quill, onChange]);
 
   return (
-    <div className="w-full min-w-[400px] h-[300px] ">
-      <div ref={quillRef} className="h-full" />
+    <div style={{ width: '100%', minWidth: '700px', height: '300px' }}>
+      <div ref={quillRef} />
     </div>
   );
 }
