@@ -8,7 +8,7 @@ interface EditorProps {
   onChange: (content: string) => void;
 }
 
-export default function Editor({ onChange }: EditorProps) {
+export default function Quill({ onChange }: EditorProps) {
   const theme = 'snow';
   const modules = {
     toolbar: [

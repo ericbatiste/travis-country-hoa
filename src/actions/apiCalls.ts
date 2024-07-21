@@ -67,14 +67,13 @@ export const updateUserStatus = async (email: string, updatedStatus: string) => 
   try {
     const supabase = browserClient();
 
-    const { data, error } = await supabase
+    const { error } = await supabase
       .from('users')
       .update({ status: updatedStatus })
       .eq('email', email);
 
     if (error) throw error;
 
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -105,3 +104,43 @@ export const postNewFeaturedBylaw = async (
     return { errorMessage: getErrorMessage(error) }
   }
 };
+
+export const getBoardObservations = async () => {
+  try {
+    const supabase = browserClient()
+
+    const { data, error } =  await supabase
+    .from('board_observations')
+    .select('id, last_updated, content')
+
+    if (error) throw error
+
+    return data[0] || []
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const updateBoardObservations = async (content: string) => {
+  try {
+    const supabase = browserClient();
+
+    const data = await getBoardObservations()
+
+    const { error } = await supabase
+      .from('board_observations')
+      .update({
+        last_updated: new Date(),
+        content: content,
+      })
+      .eq('id', data?.id);
+
+    if (error) throw error;
+
+    return { errorMessage: null }
+  } catch(error) {
+    return { errorMessage: getErrorMessage(error) }
+  }
+};
+
+
