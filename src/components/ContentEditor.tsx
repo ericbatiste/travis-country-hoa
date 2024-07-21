@@ -1,7 +1,7 @@
 import Quill from '@/components/Quill';
+import SubmitContentBtn from './SubmitContentBtn';
 import { useState, useTransition, ChangeEvent } from 'react';
 import toast from 'react-hot-toast';
-import { Loader2 } from 'lucide-react';
 import { getErrorMessage } from '@/utils/errorMsg';
 import { postNewFeaturedBylaw, updateBoardObservations } from '@/actions/apiCalls';
 
@@ -18,15 +18,14 @@ type ContentEditorProps = {
 
 export default function ContentEditor({ editingSection }: ContentEditorProps) {
   const [isPending, startTransition] = useTransition();
-
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+  const [boardContent, setBoardContent] = useState('');
   const [featuredContent, setFeaturedContent] = useState<FeaturedContent>({
     sectionNumber: '',
     sectionTitle: '',
     bylawText: '',
     inANutshell: ''
   });
-
-  const [boardContent, setBoardContent] = useState('');
 
   const handleEditorChange = (content: string, section: string) => {
     switch (section) {
@@ -50,15 +49,26 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
   const validateContent = (content: FeaturedContent | string) => {
     if (typeof content === 'string') {
       if (!content.trim()) {
-        throw new Error('Please fill in the Board Observations content.');
+        throw new Error('Add content to the board observations editor.');
       }
     } else {
       for (const key in content) {
         if (!content[key as keyof FeaturedContent].trim()) {
-          throw new Error(`Please fill in all fields for Featured Bylaw & In a Nutshell.`);
+          throw new Error(`Complete all fields to post new featured bylaw`);
         }
       }
     }
+  };
+
+  const resetFields = () => {
+    setFeaturedContent({
+      sectionNumber: '',
+      sectionTitle: '',
+      bylawText: '',
+      inANutshell: ''
+    });
+    setBoardContent('');
+    setIsCheckboxChecked(false);
   };
 
   const postFeaturedContent = async () => {
@@ -76,6 +86,7 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
           toast.error(errorMessage);
         } else {
           toast.success('New featured content successfully added!');
+          resetFields();
         }
       });
     } catch (error) {
@@ -92,6 +103,7 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
           toast.error(errorMessage);
         } else {
           toast.success('Board Observations updated successfully!');
+          resetFields();
         }
       });
     } catch (error) {
@@ -133,33 +145,45 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
 
           <div className="w-full flex-grow mt-4 mb-4">
             <h2 className="text-lg font-bold mt-2 mb-2">Bylaw Text:</h2>
-            <Quill onChange={content => handleEditorChange(content, 'featuredBylaw')} />
+            <Quill
+              value={featuredContent.bylawText}
+              onChange={content => handleEditorChange(content, 'featuredBylaw')}
+            />
           </div>
 
-          <div className="w-full flex-grow mt-10 mb-4">
+          <div className="w-full flex-grow mt-10 mb-6">
             <h2 className="text-lg font-bold mt-2 mb-2">In a Nutshell:</h2>
-            <Quill onChange={content => handleEditorChange(content, 'inANutshell')} />
+            <Quill
+              value={featuredContent.inANutshell}
+              onChange={content => handleEditorChange(content, 'inANutshell')}
+            />
           </div>
 
-          <button
+          <SubmitContentBtn
             onClick={postFeaturedContent}
-            className="mt-14 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center justify-center"
-          >
-            {isPending ? <Loader2 /> : 'Post Featured & Nutshell Content'}
-          </button>
+            isPending={isPending}
+            isChecked={isCheckboxChecked}
+            setIsChecked={setIsCheckboxChecked}
+            text="Submit"
+          />
         </>
       ) : (
         <>
-          <div className="w-full flex-grow mb-10">
+          <div className="w-full flex-grow mb-6">
             <h2 className="text-lg font-bold mb-2">Board Observations:</h2>
-            <Quill onChange={content => handleEditorChange(content, 'boardObservations')} />
+            <Quill
+              value={boardContent}
+              onChange={content => handleEditorChange(content, 'boardObservations')}
+            />
           </div>
-          <button
+
+          <SubmitContentBtn
             onClick={updateBoardContent}
-            className="mt-8 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 flex items-center justify-center"
-          >
-            {isPending ? <Loader2 /> : 'Post Board Observations'}
-          </button>
+            isPending={isPending}
+            isChecked={isCheckboxChecked}
+            setIsChecked={setIsCheckboxChecked}
+            text="Submit"
+          />
         </>
       )}
     </div>

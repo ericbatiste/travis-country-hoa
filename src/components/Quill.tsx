@@ -4,11 +4,12 @@ import 'quill/dist/quill.snow.css';
 import { useQuill } from 'react-quilljs';
 import { useEffect } from 'react';
 
-interface EditorProps {
+type EditorProps = {
+  value: string;
   onChange: (content: string) => void;
 }
 
-export default function Quill({ onChange }: EditorProps) {
+export default function Quill({ value, onChange }: EditorProps) {
   const theme = 'snow';
   const modules = {
     toolbar: [
@@ -48,13 +49,25 @@ export default function Quill({ onChange }: EditorProps) {
   const { quill, quillRef } = useQuill({ theme, modules, formats, placeholder });
 
   useEffect(() => {
-    if (quill && onChange) {
-      quill.on('text-change', () => {
+    if (quill) {
+      const handleTextChange = () => {
         const content = quill.root.innerHTML;
         onChange(content);
-      });
+      };
+
+      quill.on('text-change', handleTextChange);
+
+      return () => {
+        quill.off('text-change', handleTextChange);
+      };
     }
   }, [quill, onChange]);
+
+  useEffect(() => {
+    if (quill && value !== quill.root.innerHTML) {
+      quill.root.innerHTML = value;
+    }
+  }, [value, quill]);
 
   return (
     <div style={{ width: '100%', minWidth: '700px', height: '300px' }}>

@@ -34,8 +34,8 @@ export default function AdminDashboard() {
               value={editingSection}
               className="mb-2 px-4 py-2 border rounded"
             >
-              <option value="bylaw">Featured Bylaw & In a Nutshell</option>
-              <option value="board">Board Observations</option>
+              <option value="bylaw">Post new featured bylaw</option>
+              <option value="board">Update Board Observations</option>
             </select>
             <ContentEditor editingSection={editingSection} />
           </div>
