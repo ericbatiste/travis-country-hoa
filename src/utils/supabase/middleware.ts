@@ -49,7 +49,7 @@ export async function updateSession(request: NextRequest) {
 
   const admin = await defineAdmin();
 
-  if (!admin && request.nextUrl.pathname.startsWith('/dashboard')) {
+  if (!admin && request.nextUrl.pathname.startsWith('/admin-dashboard')) {
     const url = request.nextUrl.clone();
     url.pathname = '/error';
     return NextResponse.redirect(url);

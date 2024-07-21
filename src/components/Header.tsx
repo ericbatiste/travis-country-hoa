@@ -26,9 +26,12 @@ export default function Header() {
           <li>
             <Link href="/">Home</Link>
           </li>
+          <li>
+            <Link href="/board-observations">Current Board Observations</Link>
+          </li>
           {admin && (
             <li>
-              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/admin-dashboard">Admin</Link>
             </li>
           )}
           <li>

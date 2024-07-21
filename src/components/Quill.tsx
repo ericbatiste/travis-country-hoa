@@ -5,7 +5,7 @@ import { useQuill } from 'react-quilljs';
 import { useEffect } from 'react';
 
 type EditorProps = {
-  value: string;
+  value: string
   onChange: (content: string) => void;
 }
 
@@ -24,7 +24,7 @@ export default function Quill({ value, onChange }: EditorProps) {
       // ['clean'],
     ],
     clipboard: {
-      matchVisual: false
+      matchVisual: true
     }
   };
   const formats = [
@@ -64,8 +64,12 @@ export default function Quill({ value, onChange }: EditorProps) {
   }, [quill, onChange]);
 
   useEffect(() => {
-    if (quill && value !== quill.root.innerHTML) {
-      quill.root.innerHTML = value;
+    if (quill) {
+      const currentHtml = quill.root.innerHTML;
+      if (value !== currentHtml) {
+        const delta = quill.clipboard.convert({ html: value});
+        quill.setContents(delta, 'silent');
+      }
     }
   }, [value, quill]);
 

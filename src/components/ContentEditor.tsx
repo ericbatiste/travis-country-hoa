@@ -76,12 +76,12 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
       validateContent(featuredContent);
       startTransition(async () => {
         const { sectionNumber, sectionTitle, bylawText, inANutshell } = featuredContent;
-        const { errorMessage } = await postNewFeaturedBylaw(
+        const { errorMessage } = await postNewFeaturedBylaw({
           sectionNumber,
           sectionTitle,
           bylawText,
           inANutshell
-        );
+        });
         if (errorMessage) {
           toast.error(errorMessage);
         } else {
@@ -122,6 +122,7 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
                 type="text"
                 name="sectionNumber"
                 placeholder="Bylaw section number (not displayed)."
+                autoComplete='false'
                 value={featuredContent.sectionNumber}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded"
@@ -135,6 +136,7 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
                 type="text"
                 name="sectionTitle"
                 placeholder="Bylaw section title (not displayed)."
+                autoComplete='false'
                 value={featuredContent.sectionTitle}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded"
