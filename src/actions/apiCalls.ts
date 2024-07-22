@@ -6,7 +6,8 @@ import {
   PostNewFeaturedBylawParams,
   FeaturedBylawContentType,
   BoardObservationsContentType,
-  ReturnsErrorMsg
+  ReturnsErrorMsg,
+  AllBylawsType
 } from './types';
 
 export const postUserRegistration = async (formData: FormData) => {
@@ -99,6 +100,24 @@ export const getFeaturedBylawContent = async (): Promise<FeaturedBylawContentTyp
     if (error) throw error;
 
     return data && data.length > 0 ? data[0] : null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getAllBylaws = async (): Promise<AllBylawsType[] | null> => {
+  try {
+    const supabase = browserClient();
+
+    const { data, error } = await supabase
+      .from('bylaws')
+      .select('created_at, section_number, section_title, bylaw_text, in_a_nutshell')
+      .order('created_at', { ascending: true })
+
+    if (error) throw error;
+
+    return data && data.length > 0 ? data : null;
   } catch (error) {
     console.error(error);
     return null;

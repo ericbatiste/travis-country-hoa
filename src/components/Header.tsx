@@ -30,6 +30,9 @@ export default function Header() {
             <Link href="/board-observations">Current Board Observations</Link>
           </li>
           <li>
+            <Link href="/archive">Archive</Link>
+          </li>
+          <li>
             <Link href="/contact-us">Contact Us</Link>
           </li>
           {admin && (
