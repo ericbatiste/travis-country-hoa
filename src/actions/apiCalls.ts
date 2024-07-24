@@ -95,11 +95,12 @@ export const getFeaturedBylawContent = async (): Promise<FeaturedBylawContentTyp
       .from('bylaws')
       .select('bylaw_text, in_a_nutshell')
       .order('created_at', { ascending: false })
-      .limit(1);
+      .limit(1)
+      .single();
 
     if (error) throw error;
 
-    return data && data.length > 0 ? data[0] : null;
+    return data ?? null;
   } catch (error) {
     console.error(error);
     return null;
@@ -108,16 +109,52 @@ export const getFeaturedBylawContent = async (): Promise<FeaturedBylawContentTyp
 
 export const getAllBylaws = async (): Promise<AllBylawsType[] | null> => {
   try {
-    const supabase = browserClient();
+    const supabase = await serverClient();
 
     const { data, error } = await supabase
       .from('bylaws')
-      .select('created_at, section_number, section_title, bylaw_text, in_a_nutshell')
+      .select('id, created_at, section_number, section_title, bylaw_text, in_a_nutshell')
       .order('created_at', { ascending: true })
 
     if (error) throw error;
 
     return data && data.length > 0 ? data : null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getAllBylawIds = async (): Promise<AllBylawsType[] | null> => {
+  try {
+    const supabase = browserClient();
+
+    const { data, error } = await supabase
+      .from('bylaws')
+      .select('id')
+
+    if (error) throw error;
+
+    return data && data.length > 0 ? data : null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getBylawById = async (id: string): Promise<AllBylawsType | null> => {
+  try {
+    const supabase = await serverClient();
+
+    const { data, error } = await supabase
+      .from('bylaws')
+      .select('id, created_at, section_number, section_title, bylaw_text, in_a_nutshell')
+      .match({ id })
+      .single()
+
+    if (error) throw error;
+
+    return data ?? null;
   } catch (error) {
     console.error(error);
     return null;

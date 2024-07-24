@@ -6,6 +6,7 @@ export type PostNewFeaturedBylawParams = {
 };
 
 export type AllBylawsType = {
+  id?: string;
   created_at?: string;
   section_number?: string;
   section_title?: string;
