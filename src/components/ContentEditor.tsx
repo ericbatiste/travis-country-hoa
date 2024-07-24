@@ -4,25 +4,16 @@ import { useState, useTransition, ChangeEvent } from 'react';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '@/utils/errorMsg';
 import { postNewFeaturedBylaw, updateBoardObservations } from '@/actions/apiCalls';
+import { EditFeaturedContentType } from '@/actions/types';
 
-type FeaturedContent = {
-  sectionNumber: string;
-  sectionTitle: string;
-  bylawText: string;
-  inANutshell: string;
-};
-
-type ContentEditorProps = {
-  editingSection: string;
-};
-
-export default function ContentEditor({ editingSection }: ContentEditorProps) {
+export default function ContentEditor({ editingSection }: { editingSection: string }) {
   const [isPending, startTransition] = useTransition();
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const [boardContent, setBoardContent] = useState('');
-  const [featuredContent, setFeaturedContent] = useState<FeaturedContent>({
+  const [featuredContent, setFeaturedContent] = useState<EditFeaturedContentType>({
     sectionNumber: '',
     sectionTitle: '',
+    description: '',
     bylawText: '',
     inANutshell: ''
   });
@@ -46,14 +37,19 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
     setFeaturedContent(prev => ({ ...prev, [name]: value }));
   };
 
-  const validateContent = (content: FeaturedContent | string) => {
+  const handleTextElementChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFeaturedContent(prev => ({ ...prev, [name]: value }));
+  };
+
+  const validateContent = (content: EditFeaturedContentType | string) => {
     if (typeof content === 'string') {
       if (!content.trim()) {
         throw new Error('Add content to the board observations editor.');
       }
     } else {
       for (const key in content) {
-        if (!content[key as keyof FeaturedContent].trim()) {
+        if (!content[key as keyof EditFeaturedContentType].trim()) {
           throw new Error(`Complete all fields to post new featured bylaw`);
         }
       }
@@ -64,6 +60,7 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
     setFeaturedContent({
       sectionNumber: '',
       sectionTitle: '',
+      description: '',
       bylawText: '',
       inANutshell: ''
     });
@@ -75,13 +72,15 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
     try {
       validateContent(featuredContent);
       startTransition(async () => {
-        const { sectionNumber, sectionTitle, bylawText, inANutshell } = featuredContent;
+        const { sectionNumber, sectionTitle, description, bylawText, inANutshell } = featuredContent;
         const { errorMessage } = await postNewFeaturedBylaw({
           sectionNumber,
           sectionTitle,
+          description,
           bylawText,
           inANutshell
         });
+
         if (errorMessage) {
           toast.error(errorMessage);
         } else {
@@ -122,7 +121,7 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
                 type="text"
                 name="sectionNumber"
                 placeholder="Bylaw section number (not displayed)."
-                autoComplete='false'
+                autoComplete="false"
                 value={featuredContent.sectionNumber}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded"
@@ -136,13 +135,25 @@ export default function ContentEditor({ editingSection }: ContentEditorProps) {
                 type="text"
                 name="sectionTitle"
                 placeholder="Bylaw section title (not displayed)."
-                autoComplete='false'
+                autoComplete="false"
                 value={featuredContent.sectionTitle}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded"
                 required
               />
             </div>
+          </div>
+
+          <div className="mt-6">
+            <label className="block text-lg font-bold mb-2">Add brief description:</label>
+            <textarea
+              name="description"
+              placeholder="Text for the archive description."
+              value={featuredContent.description}
+              onChange={handleTextElementChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              required
+            />
           </div>
 
           <div className="w-full flex-grow mt-4 mb-4">

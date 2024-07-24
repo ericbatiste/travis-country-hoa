@@ -12,8 +12,10 @@ export default async function Archive() {
           <BylawCard 
             key={bylaw.id}
             id={bylaw.id}
+            createdAt={bylaw.created_at}
             sectionNumber={bylaw.section_number}
             sectionTitle={bylaw.section_title}
+            description={bylaw.description}
           />
         ))}
       </div>

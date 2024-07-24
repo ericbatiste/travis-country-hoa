@@ -113,7 +113,7 @@ export const getAllBylaws = async (): Promise<AllBylawsType[] | null> => {
 
     const { data, error } = await supabase
       .from('bylaws')
-      .select('id, created_at, section_number, section_title, bylaw_text, in_a_nutshell')
+      .select('id, created_at, section_number, section_title, description, bylaw_text, in_a_nutshell')
       .order('created_at', { ascending: true })
 
     if (error) throw error;
@@ -164,6 +164,7 @@ export const getBylawById = async (id: string): Promise<AllBylawsType | null> =>
 export const postNewFeaturedBylaw = async ({
   sectionNumber,
   sectionTitle,
+  description,
   bylawText,
   inANutshell
 }: PostNewFeaturedBylawParams): Promise<ReturnsErrorMsg> => {
@@ -175,6 +176,7 @@ export const postNewFeaturedBylaw = async ({
       .insert({
         section_number: sectionNumber,
         section_title: sectionTitle,
+        description: description,
         bylaw_text: DOMPurify.sanitize(bylawText),
         in_a_nutshell: DOMPurify.sanitize(inANutshell)
       });

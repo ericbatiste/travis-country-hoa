@@ -1,15 +1,20 @@
 'use client';
 
+import { formatDate } from '@/utils/formatDate';
 import { useRouter } from 'next/navigation';
 
 export default function BylawCard({
   id,
+  createdAt,
   sectionNumber,
-  sectionTitle
-} : {
+  sectionTitle,
+  description
+}: {
   id?: string;
+  createdAt?: string;
   sectionNumber?: string;
   sectionTitle?: string;
+  description?: string;
 }) {
   const router = useRouter();
 
@@ -18,15 +23,19 @@ export default function BylawCard({
   };
 
   return (
-    <>
-      <div
-        key={sectionNumber}
-        className="border p-4 rounded cursor-pointer hover:shadow-lg"
-        onClick={handleCardClick}
-      >
-        <h2 className="text-xl font-semibold">Section: {sectionNumber}</h2>
-        <p className="text-lg text-gray-600 font-semibold">{sectionTitle}</p>
+    <div
+      key={sectionNumber}
+      className="border p-4 rounded cursor-pointer hover:shadow-lg flex"
+      onClick={handleCardClick}
+    >
+      <div className="flex-shrink-0 w-2/5 space-x-10 flex">
+        <p className="whitespace-nowrap">{formatDate(createdAt as string)}</p>
+        <p className="whitespace-nowrap">Section: {sectionNumber}</p>
+        <p>{sectionTitle}</p>
       </div>
-    </>
+      <div className="w-3/5">
+        <p>{description}</p>
+      </div>
+    </div>
   );
 }
