@@ -89,7 +89,7 @@ export const updateUserStatus = async (email: string, updatedStatus: string) => 
 
 export const getFeaturedBylawContent = async (): Promise<FeaturedBylawContentType | null> => {
   try {
-    const supabase = browserClient();
+    const supabase = await serverClient();
 
     const { data, error } = await supabase
       .from('bylaws')
@@ -152,7 +152,7 @@ export const postNewFeaturedBylaw = async ({
 
 export const getBoardObservations = async (): Promise<BoardObservationsContentType | null> => {
   try {
-    const supabase = browserClient()
+    const supabase = await serverClient()
 
     const { data, error } = await supabase
       .from('board_observations')
