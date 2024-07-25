@@ -2,6 +2,7 @@ import DOMPurify from 'dompurify';
 import { getErrorMessage } from '@/utils/errorMsg';
 import { browserClient } from '@/utils/supabase/client';
 import { serverClient } from '@/utils/supabase/server';
+import { getAuthUser } from './users';
 import {
   PostNewFeaturedBylawParams,
   FeaturedBylawContentType,
@@ -9,6 +10,27 @@ import {
   ReturnsErrorMsg,
   AllBylawsType
 } from './types';
+
+export const getUserName = async (): Promise<string | null> => {
+  try {
+    const supabase = browserClient();
+    const authUser = await getAuthUser();
+    const email = authUser?.email ?? null;
+
+    const { data: user, error} = await supabase
+      .from('users')
+      .select('first_name, email')
+      .eq('email', email )
+      .single()
+
+    if (error) throw error;
+
+    return user?.first_name ?? null
+  } catch (error) {
+    console.error(error)
+    return null
+  }
+}
 
 export const postUserRegistration = async (formData: FormData) => {
   const supabase = browserClient();
