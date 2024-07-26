@@ -21,29 +21,29 @@ export default function Header() {
     <header className="bg-gray-800 text-white shadow-md p-4">
       <nav className="container mx-auto flex justify-between items-center">
         <ul className="flex space-x-8">
-          <li>
-            <Link href="/" className="hover:font-bold">
+          <li className="transition-transform hover:scale-110">
+            <Link href="/">
               Home
             </Link>
           </li>
-          <li>
-            <Link href="/board-observations" className="hover:font-bold">
+          <li className="transition-transform hover:scale-110">
+            <Link href="/board-observations">
               Current Board Observations
             </Link>
           </li>
-          <li>
-            <Link href="/archive" className="hover:font-bold">
+          <li className="transition-transform hover:scale-110">
+            <Link href="/archive">
               Archive
             </Link>
           </li>
-          <li>
-            <Link href="/contact-us" className="hover:font-bold">
+          <li className="transition-transform hover:scale-110">
+            <Link href="/contact-us">
               Contact Us
             </Link>
           </li>
           {admin && (
-            <li>
-              <Link href="/admin-dashboard" className="hover:font-bold">
+            <li className="transition-transform hover:scale-110">
+              <Link href="/admin-dashboard">
                 Admin
               </Link>
             </li>
