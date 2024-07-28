@@ -2,7 +2,6 @@
 
 import { serverClient } from '@/utils/supabase/server';
 import { getErrorMessage } from '@/utils/errorMsg';
-import { User } from '@supabase/supabase-js';
 
 export const getAuthUser = async () => {
   try {
@@ -112,25 +111,5 @@ export const signOutAction = async () => {
     return { errorMessage: null };
   } catch (error) {
     return { errorMessage: getErrorMessage(error) };
-  }
-};
-
-export const defineAdmin = async (
-  email: string | undefined
-): Promise<{ admin: boolean }> => {
-  try {
-    const supabase = await serverClient();
-
-    const { data: publicUser, error } = await supabase
-      .from('users')
-      .select('admin')
-      .eq('email', email)
-      .single();
-
-    if (error) throw error;
-
-    return publicUser;
-  } catch (error) {
-    return { admin: false};
   }
 };

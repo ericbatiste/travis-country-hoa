@@ -227,3 +227,23 @@ export const updateBoardObservations = async (content: string) => {
     return { errorMessage: getErrorMessage(error) }
   }
 };
+
+export const defineAdmin = async (
+  email: string | undefined
+): Promise<{ admin: boolean }> => {
+  try {
+    const supabase = await serverClient();
+
+    const { data: publicUser, error } = await supabase
+      .from('users')
+      .select('admin')
+      .eq('email', email)
+      .single();
+
+    if (error) throw error;
+
+    return publicUser;
+  } catch (error) {
+    return { admin: false};
+  }
+};

@@ -28,7 +28,7 @@ export default function SignOutBtn({ userName }: { userName: string | null}) {
     <div className="relative">
       {userName && (
         <div
-          className="flex items-center space-x-2 cursor-pointer"
+          className="flex items-center space-x-4 mr-6 cursor-pointer"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
           <p>Howdy {userName}!</p>

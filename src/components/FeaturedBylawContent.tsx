@@ -1,15 +1,15 @@
-import { sanitizeHTML } from "@/utils/sanitizeHtml";
-import { getFeaturedBylawContent } from "@/actions/apiCalls";
+import { sanitizeHTML } from '@/utils/sanitizeHtml';
+import { getFeaturedBylawContent } from '@/actions/apiCalls';
 
 export default async function FeaturedBylawContent() {
   const featuredBylawContent = await getFeaturedBylawContent();
 
   return (
-    <section className="p-6 bg-gray-100 rounded-lg shadow-md">
-      <div>
+    <section>
+      <article className="p-10 mt-20 bg-gray-100 rounded-lg shadow-md">
         {featuredBylawContent?.bylaw_text && (
           <div className="mb-4">
-            <h2 className="mb-4 text-xl font-semibold text-gray-800">
+            <h2 className="mb-6 text-xl font-semibold text-gray-800 text-center">
               This Month's Featured Bylaw
             </h2>
             <article
@@ -18,9 +18,11 @@ export default async function FeaturedBylawContent() {
             />
           </div>
         )}
+      </article>
+      <article className="p-10 mt-20 mb-10 bg-gray-100 rounded-lg shadow-md">
         {featuredBylawContent?.in_a_nutshell && (
           <div>
-            <h2 className="mb-4 text-xl font-semibold text-gray-800">
+            <h2 className="mb-6 text-xl font-semibold text-gray-800 text-center">
               In a Nutshell...
             </h2>
             <article
@@ -29,7 +31,7 @@ export default async function FeaturedBylawContent() {
             />
           </div>
         )}
-      </div>
+      </article>
     </section>
   );
 }

@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
-import { defineAdmin } from '@/actions/users';
+import { defineAdmin } from '@/actions/apiCalls';
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({

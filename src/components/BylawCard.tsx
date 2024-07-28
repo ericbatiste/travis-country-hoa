@@ -24,11 +24,11 @@ export default function BylawCard({
 
   return (
     <div
-      key={sectionNumber}
-      className="border p-4 rounded cursor-pointer hover:shadow-lg flex"
+      key={id}
+      className="border p-4 rounded-lg cursor-pointer hover:shadow-lg flex"
       onClick={handleCardClick}
     >
-      <div className="flex-shrink-0 w-2/5 space-x-10 flex">
+      <div className="flex-shrink-0 w-2/5 space-x-8 flex">
         <p className="whitespace-nowrap">{formatDate(createdAt as string)}</p>
         <p className="whitespace-nowrap">Section: {sectionNumber}</p>
         <p>{sectionTitle}</p>

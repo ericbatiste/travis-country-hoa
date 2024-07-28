@@ -19,7 +19,7 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-4 text-center">We are TSSCA members too…</h1>
         <h2 className="text-xl mb-6 text-center">
