@@ -47,7 +47,7 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  const admin = await defineAdmin();
+  const { admin } = await defineAdmin(user?.email);
 
   if (!admin && request.nextUrl.pathname.startsWith('/admin-dashboard')) {
     const url = request.nextUrl.clone();

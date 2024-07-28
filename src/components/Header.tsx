@@ -1,21 +1,14 @@
-'use client';
-
 import Link from 'next/link';
 import SignOutBtn from './SignOutBtn';
-import { useEffect, useState } from 'react';
-import { defineAdmin } from '@/actions/users';
+import { defineAdmin, getAuthUser } from '@/actions/users';
+import { getUserName } from '@/actions/apiCalls';
 
-export default function Header() {
-  const [admin, setAdmin] = useState<string | null>(null);
+export const revalidate = 0
 
-  useEffect(() => {
-    const fetchAdmin = async () => {
-      const currentAdmin = await defineAdmin();
-      setAdmin(currentAdmin);
-    };
-
-    fetchAdmin();
-  }, []);
+export default async function Header() {
+  const user = await getAuthUser();
+  const { admin } = await defineAdmin(user?.email);
+  const userName = await getUserName(user?.email);
 
   return (
     <header className="bg-gray-800 text-white shadow-md p-4">
@@ -49,7 +42,7 @@ export default function Header() {
             </li>
           )}
         </ul>
-        <SignOutBtn />
+        <SignOutBtn userName={userName}/>
       </nav>
     </header>
   );

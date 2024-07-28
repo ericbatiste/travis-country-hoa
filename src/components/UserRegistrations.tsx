@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import UserRegistrationCard from './UserRegistrationCard';
 import { approveUserAction } from '@/actions/users';
-import { getPendingUsers, updateUserStatus } from '@/actions/apiCalls';
+import { getPublicUsers, updateUserStatus } from '@/actions/apiCalls';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '@/utils/errorMsg';
 import { UserType } from '@/actions/types';
@@ -15,7 +15,7 @@ export default function UserRegistrations() {
 
   useEffect(() => {
     const getUsers = async () => {
-      const data = await getPendingUsers();
+      const data = await getPublicUsers();
       if (data) {
         setUsers(data);
       }
@@ -62,6 +62,7 @@ export default function UserRegistrations() {
   const handleUserRejection = async (email: string) => {
     const { errorMessage } = await updateUserStatus(email, 'rejected');
     if (!errorMessage) {
+      // send notification email here.
       toast.success('User status updated to rejected.');
     } else {
       toast.error(errorMessage);

@@ -2,7 +2,6 @@ import DOMPurify from 'dompurify';
 import { getErrorMessage } from '@/utils/errorMsg';
 import { browserClient } from '@/utils/supabase/client';
 import { serverClient } from '@/utils/supabase/server';
-import { getAuthUser } from './users';
 import {
   PostNewFeaturedBylawParams,
   FeaturedBylawContentType,
@@ -11,26 +10,23 @@ import {
   AllBylawsType
 } from './types';
 
-export const getUserName = async (): Promise<string | null> => {
+export const getUserName = async (email: string | undefined): Promise<string | null> => {
   try {
-    const supabase = browserClient();
-    const authUser = await getAuthUser();
-    const email = authUser?.email ?? null;
+    const supabase = await serverClient();
 
-    const { data: user, error} = await supabase
+    const { data: user, error } = await supabase
       .from('users')
       .select('first_name, email')
-      .eq('email', email )
-      .single()
+      .eq('email', email)
+      .single();
 
     if (error) throw error;
 
-    return user?.first_name ?? null
+    return user?.first_name ?? null;
   } catch (error) {
-    console.error(error)
-    return null
+    return null;
   }
-}
+};
 
 export const postUserRegistration = async (formData: FormData) => {
   const supabase = browserClient();
@@ -56,14 +52,13 @@ export const postUserRegistration = async (formData: FormData) => {
   }
 };
 
-export const getPendingUsers = async () => {
+export const getPublicUsers = async () => {
   try {
     const supabase = browserClient();
 
     const { data: users, error } = await supabase
       .from('users')
-      .select('id, first_name, last_name, email, address, status')
-      .eq('status', 'pending');
+      .select('id, first_name, last_name, email, address, status');
 
     if (error) throw new Error();
 
@@ -71,25 +66,6 @@ export const getPendingUsers = async () => {
   } catch (error) {
     console.error('Error retrieving data:', error);
     return [];
-  }
-};
-
-export const getAdmins = async () => {
-  try {
-    const supabase = browserClient();
-
-    const { data: users, error } = await supabase
-      .from('users')
-      .select('email')
-      .eq('admin', true);
-
-    const admins = users?.map(user => user.email);
-
-    if (error) throw error;
-
-    return admins;
-  } catch (error) {
-    console.log(error);
   }
 };
 

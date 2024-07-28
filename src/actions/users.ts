@@ -2,7 +2,7 @@
 
 import { serverClient } from '@/utils/supabase/server';
 import { getErrorMessage } from '@/utils/errorMsg';
-import { getAdmins } from './apiCalls';
+import { User } from '@supabase/supabase-js';
 
 export const getAuthUser = async () => {
   try {
@@ -115,19 +115,22 @@ export const signOutAction = async () => {
   }
 };
 
-export const defineAdmin = async (): Promise<string | null> => {
+export const defineAdmin = async (
+  email: string | undefined
+): Promise<{ admin: boolean }> => {
   try {
-    const user = await getAuthUser();
-    const admins = await getAdmins();
-    const currentAdmin = user?.email ?? null;
+    const supabase = await serverClient();
 
-    if (!admins?.includes(currentAdmin)) {
-      return null
-    } else {
-      return currentAdmin;
-    }
+    const { data: publicUser, error } = await supabase
+      .from('users')
+      .select('admin')
+      .eq('email', email)
+      .single();
+
+    if (error) throw error;
+
+    return publicUser;
   } catch (error) {
-    console.log(error);
-    return null;
+    return { admin: false};
   }
 };

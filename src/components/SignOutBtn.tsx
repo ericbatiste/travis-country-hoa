@@ -1,26 +1,15 @@
 'use client';
 
 import { signOutAction } from '@/actions/users';
-import { useEffect, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Loader2, CircleUserRound, ChevronDown, ChevronUp } from 'lucide-react';
-import { getUserName } from '@/actions/apiCalls';
 
-export default function SignOutBtn() {
+export default function SignOutBtn({ userName }: { userName: string | null}) {
   const [isPending, startTransition] = useTransition();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [userName, setUserName] = useState('');
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchName = async () => {
-      const name = await getUserName();
-      if (name) setUserName(name);
-    };
-
-    fetchName();
-  }, []);
 
   const handleLogout = async () => {
     startTransition(async () => {
@@ -28,6 +17,7 @@ export default function SignOutBtn() {
       if (errorMessage) {
         toast.error(errorMessage);
       } else {
+        setIsDropdownOpen(false)
         toast.success('Log out success, Goodbye!');
         router.push('/login');
       }
