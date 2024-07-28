@@ -38,3 +38,19 @@ export type BoardObservationsContentType = {
 export type ReturnsErrorMsg = {
   errorMessage: string | null;
 }
+
+export type UserType = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  address: string;
+  status: string;
+};
+
+export type UserRegistrationCardProps = {
+  user: UserType;
+  onApprove: (id: string) => void;
+  onReject: (id: string) => void;
+  onResendCode: (id: string) => void;
+};

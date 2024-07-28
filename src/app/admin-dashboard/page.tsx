@@ -1,6 +1,6 @@
 'use client';
 
-import PendingUsers from '@/components/PendingUsers';
+import UserRegistrations from '@/components/UserRegistrations';
 import ContentEditor from '@/components/ContentEditor';
 import { useState, ChangeEvent } from 'react';
 
@@ -22,11 +22,11 @@ export default function AdminDashboard() {
         onClick={toggleView}
         className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
-        {showPendingUsers ? 'Show Editor' : 'Show Pending Users'}
+        {showPendingUsers ? 'Show Editor' : 'Show Users'}
       </button>
       <div className="mt-4">
         {showPendingUsers ? (
-          <PendingUsers />
+          <UserRegistrations />
         ) : (
           <div className="flex flex-col items-center">
             <select

@@ -104,8 +104,9 @@ export const updateUserStatus = async (email: string, updatedStatus: string) => 
 
     if (error) throw error;
 
+    return { errorMessage: null };
   } catch (error) {
-    console.log(error);
+    return { errorMessage: getErrorMessage(error) };
   }
 };
 
