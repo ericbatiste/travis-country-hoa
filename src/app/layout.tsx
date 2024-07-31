@@ -11,8 +11,8 @@ import Navigation from '@/components/Navigation';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Travis Country News',
-  description: 'Exclusive news blog for residents of Travis Country'
+  title: 'Our Travis Country',
+  description: 'Informative blog and bylaw archive exclusively for members of the TCCSA.'
 };
 
 export const revalidate = 0;

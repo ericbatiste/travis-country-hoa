@@ -3,13 +3,9 @@
 import 'quill/dist/quill.snow.css';
 import { useQuill } from 'react-quilljs';
 import { useEffect } from 'react';
+import { QuillProps } from '@/actions/types';
 
-type EditorProps = {
-  value: string
-  onChange: (content: string) => void;
-}
-
-export default function Quill({ value, onChange }: EditorProps) {
+export default function Quill({ value, onChange }: QuillProps) {
   const theme = 'snow';
   const modules = {
     toolbar: [

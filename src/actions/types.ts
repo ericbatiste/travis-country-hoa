@@ -1,3 +1,5 @@
+import { ChangeEvent } from 'react';
+
 export type EditFeaturedContentType = {
   sectionNumber: string;
   sectionTitle: string;
@@ -54,3 +56,20 @@ export type UserRegistrationCardProps = {
   onReject: (id: string) => void;
   onResendCode: (id: string) => void;
 };
+
+export type AdminEditorProps = {
+  featuredContent?: EditFeaturedContentType;
+  boardContent?: string;
+  handleEditorChange: (content: string, section: string) => void;
+  handleInputChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  isPending: boolean;
+  isCheckboxChecked: boolean;
+  setIsCheckboxChecked: (checked: boolean) => void;
+  postFeaturedContent?: () => void;
+  updateBoardContent?: () => void;
+};
+
+export type QuillProps = {
+  value?: string
+  onChange: (content: string) => void;
+}
