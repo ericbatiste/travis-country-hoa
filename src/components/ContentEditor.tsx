@@ -1,22 +1,40 @@
-import { useState, useTransition, ChangeEvent } from 'react';
+import { useState, useTransition, ChangeEvent, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '@/utils/errorMsg';
-import { postNewFeaturedBylaw, updateBoardObservations } from '@/actions/apiCalls';
-import { EditFeaturedContentType } from '@/actions/types';
+import { postNewFeaturedBylaw, updateBoardObservations, updateBylaw } from '@/actions/apiCalls';
+import { GetBylawsType, PostNewFeaturedBylawType } from '@/actions/types';
 import FeaturedBylawEditor from './FeaturedBylawEditor';
 import BoardObservationsEditor from './BoardObservationsEditor';
+import UpdateBylawEditor from './UpdateBylawEditor';
 
 export default function ContentEditor({ editingSection }: { editingSection: string }) {
   const [isPending, startTransition] = useTransition();
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+  const [selectedBylaw, setSelectedBylaw] = useState<GetBylawsType | null>(null);
   const [boardContent, setBoardContent] = useState('');
-  const [featuredContent, setFeaturedContent] = useState<EditFeaturedContentType>({
+  const [featuredContent, setFeaturedContent] = useState<PostNewFeaturedBylawType>({
     sectionNumber: '',
     sectionTitle: '',
     description: '',
     bylawText: '',
     inANutshell: ''
   });
+
+  useEffect(() => {
+    resetFields();
+  }, [editingSection]);
+
+  useEffect(() => {
+    if (selectedBylaw && setFeaturedContent) {
+      setFeaturedContent({
+        sectionNumber: selectedBylaw.section_number,
+        sectionTitle: selectedBylaw.section_title,
+        description: selectedBylaw.description,
+        bylawText: selectedBylaw.bylaw_text,
+        inANutshell: selectedBylaw.in_a_nutshell,
+      });
+    }
+  }, [selectedBylaw, setFeaturedContent]);
 
   const handleEditorChange = (content: string, section: string) => {
     switch (section) {
@@ -37,17 +55,31 @@ export default function ContentEditor({ editingSection }: { editingSection: stri
     setFeaturedContent(prev => ({ ...prev, [name]: value }));
   };
 
-  const validateContent = (content: EditFeaturedContentType | string) => {
+  const validateContent = (content: PostNewFeaturedBylawType | string) => {
     if (typeof content === 'string') {
       if (!content.trim()) {
-        throw new Error('Add content to the board observations editor.');
+        throw new Error('Complete all fields to submit content.');
       }
     } else {
       for (const key in content) {
-        if (!content[key as keyof EditFeaturedContentType].trim()) {
-          throw new Error(`Complete all fields to post new featured bylaw`);
+        if (!content[key as keyof PostNewFeaturedBylawType].trim()) {
+          throw new Error(`Complete all fields to submit content.`);
         }
       }
+    }
+  };
+
+  const handleSubmit = () => {
+    switch (editingSection) {
+      case 'new bylaw':
+        postFeaturedContent();
+        break;
+      case 'update bylaw':
+        updateBylawContent();
+        break;
+      case 'board':
+        updateBoardContent();
+        break;
     }
   };
 
@@ -61,13 +93,15 @@ export default function ContentEditor({ editingSection }: { editingSection: stri
     });
     setBoardContent('');
     setIsCheckboxChecked(false);
+    setSelectedBylaw(null);
   };
 
   const postFeaturedContent = async () => {
     try {
       validateContent(featuredContent);
       startTransition(async () => {
-        const { sectionNumber, sectionTitle, description, bylawText, inANutshell } = featuredContent;
+        const { sectionNumber, sectionTitle, description, bylawText, inANutshell } =
+          featuredContent;
         const { errorMessage } = await postNewFeaturedBylaw({
           sectionNumber,
           sectionTitle,
@@ -80,6 +114,35 @@ export default function ContentEditor({ editingSection }: { editingSection: stri
           toast.error(errorMessage);
         } else {
           toast.success('New featured content successfully added!');
+          resetFields();
+        }
+      });
+    } catch (error) {
+      toast.error(getErrorMessage(error));
+    }
+  };
+
+  const updateBylawContent = async () => {
+    if (!selectedBylaw) return;
+    try {
+      validateContent(featuredContent);
+      startTransition(async () => {
+        const { sectionNumber, sectionTitle, description, bylawText, inANutshell } =
+          featuredContent;
+        const id = selectedBylaw.id
+        const { errorMessage } = await updateBylaw({
+          id,
+          sectionNumber,
+          sectionTitle,
+          description,
+          bylawText,
+          inANutshell
+        });
+
+        if (errorMessage) {
+          toast.error(errorMessage);
+        } else {
+          toast.success('Bylaw successfully updated!');
           resetFields();
         }
       });
@@ -107,27 +170,43 @@ export default function ContentEditor({ editingSection }: { editingSection: stri
 
   return (
     <div className="flex flex-col w-4/5 max-w-screen-lg mt-8">
-      {editingSection === 'bylaw' ? (
+      {editingSection === 'new bylaw' && (
         <FeaturedBylawEditor
+          selectedBylaw={selectedBylaw}
           featuredContent={featuredContent}
+          setFeaturedContent={setFeaturedContent}
           handleEditorChange={handleEditorChange}
           handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
           isPending={isPending}
           isCheckboxChecked={isCheckboxChecked}
           setIsCheckboxChecked={setIsCheckboxChecked}
-          postFeaturedContent={postFeaturedContent}
         />
-      ) : (
+      )}
+      {editingSection === 'update bylaw' && (
+        <UpdateBylawEditor
+          selectedBylaw={selectedBylaw}
+          setSelectedBylaw={setSelectedBylaw}
+          featuredContent={featuredContent}
+          setFeaturedContent={setFeaturedContent}
+          handleEditorChange={handleEditorChange}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          isPending={isPending}
+          isCheckboxChecked={isCheckboxChecked}
+          setIsCheckboxChecked={setIsCheckboxChecked}
+        />
+      )}
+      {editingSection === 'board' && (
         <BoardObservationsEditor
           boardContent={boardContent}
           handleEditorChange={handleEditorChange}
+          handleSubmit={handleSubmit}
           isPending={isPending}
           isCheckboxChecked={isCheckboxChecked}
           setIsCheckboxChecked={setIsCheckboxChecked}
-          updateBoardContent={updateBoardContent}
         />
       )}
     </div>
   );
 }
-

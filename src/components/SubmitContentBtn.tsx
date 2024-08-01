@@ -1,12 +1,5 @@
 import { Loader2 } from 'lucide-react';
-
-type SubmitContentBtnProps = {
-  onClick?: () => void;
-  isPending: boolean;
-  isChecked: boolean;
-  setIsChecked: (checked: boolean) => void;
-  text: string;
-};
+import { SubmitContentBtnProps } from '@/actions/types';
 
 export default function SubmitContentBtn({
   onClick,

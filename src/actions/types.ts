@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 
-export type EditFeaturedContentType = {
+export type PostNewFeaturedBylawType = {
   sectionNumber: string;
   sectionTitle: string;
   description: string;
@@ -8,22 +8,23 @@ export type EditFeaturedContentType = {
   inANutshell: string;
 };
 
-export type PostNewFeaturedBylawParams = {
+export type BylawParamsType = {
+  id: string;
   sectionNumber: string;
   sectionTitle: string;
   description: string;
   bylawText: string;
   inANutshell: string;
-};
+}
 
-export type AllBylawsType = {
-  id?: string;
-  created_at?: string;
-  section_number?: string;
-  section_title?: string;
-  description?: string;
-  bylaw_text?: string;
-  in_a_nutshell?: string;
+export type GetBylawsType = {
+  id: string;
+  created_at: string;
+  section_number: string;
+  section_title: string;
+  description: string;
+  bylaw_text: string;
+  in_a_nutshell: string;
 }
 
 export type FeaturedBylawContentType = {
@@ -57,16 +58,35 @@ export type UserRegistrationCardProps = {
   onResendCode: (id: string) => void;
 };
 
+export type UpdateBylawCardProps = {
+  id: string;
+  createdAt: string;
+  sectionNumber: string;
+  sectionTitle: string;
+  bylaws: GetBylawsType[];
+  setSelectedBylaw?: (bylaw: GetBylawsType) => void;
+};
+
 export type AdminEditorProps = {
-  featuredContent?: EditFeaturedContentType;
+  selectedBylaw?: GetBylawsType | null;
+  setSelectedBylaw?: React.Dispatch<React.SetStateAction<GetBylawsType | null>>;
+  featuredContent?: PostNewFeaturedBylawType;
+  setFeaturedContent?: React.Dispatch<React.SetStateAction<PostNewFeaturedBylawType>>;
   boardContent?: string;
   handleEditorChange: (content: string, section: string) => void;
   handleInputChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleSubmit?: () => void
   isPending: boolean;
   isCheckboxChecked: boolean;
   setIsCheckboxChecked: (checked: boolean) => void;
-  postFeaturedContent?: () => void;
-  updateBoardContent?: () => void;
+};
+
+export type SubmitContentBtnProps = {
+  onClick?: () => void;
+  isPending: boolean;
+  isChecked: boolean;
+  setIsChecked: (checked: boolean) => void;
+  text: string;
 };
 
 export type QuillProps = {

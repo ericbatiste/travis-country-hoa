@@ -6,7 +6,7 @@ import { useState, ChangeEvent } from 'react';
 
 export default function AdminDashboard() {
   const [showPendingUsers, setShowPendingUsers] = useState(true);
-  const [editingSection, setEditingSection] = useState('bylaw');
+  const [editingSection, setEditingSection] = useState('new bylaw');
 
   const toggleView = () => {
     setShowPendingUsers(!showPendingUsers);
@@ -34,7 +34,8 @@ export default function AdminDashboard() {
               value={editingSection}
               className="mb-2 px-4 py-2 border rounded"
             >
-              <option value="bylaw">Post new featured bylaw</option>
+              <option value="new bylaw">Post new featured bylaw</option>
+              <option value="update bylaw">Edit existing bylaw</option>
               <option value="board">Update Board Observations</option>
             </select>
             <ContentEditor editingSection={editingSection} />

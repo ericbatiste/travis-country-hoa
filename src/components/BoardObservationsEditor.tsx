@@ -5,10 +5,10 @@ import SubmitContentBtn from "./SubmitContentBtn";
 export default function BoardObservationsEditor({
   boardContent,
   handleEditorChange,
+  handleSubmit,
   isPending,
   isCheckboxChecked,
   setIsCheckboxChecked,
-  updateBoardContent,
 }: AdminEditorProps) {
   return (
     <>
@@ -21,7 +21,7 @@ export default function BoardObservationsEditor({
       </div>
 
       <SubmitContentBtn
-        onClick={updateBoardContent}
+        onClick={handleSubmit}
         isPending={isPending}
         isChecked={isCheckboxChecked}
         setIsChecked={setIsCheckboxChecked}

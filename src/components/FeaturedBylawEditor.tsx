@@ -1,16 +1,20 @@
+import { useEffect } from "react";
 import Quill from "./Quill";
 import { AdminEditorProps } from "@/actions/types";
 import SubmitContentBtn from "./SubmitContentBtn";
 
 export default function FeaturedBylawEditor({
+  selectedBylaw,
   featuredContent,
+  setFeaturedContent,
   handleEditorChange,
   handleInputChange,
+  handleSubmit,
   isPending,
   isCheckboxChecked,
   setIsCheckboxChecked,
-  postFeaturedContent,
 }: AdminEditorProps) {
+
   return (
     <>
       <div className="flex justify-between gap-4 w-full">
@@ -20,7 +24,7 @@ export default function FeaturedBylawEditor({
             type="text"
             name="sectionNumber"
             placeholder="Bylaw section number (not displayed)."
-            autoComplete="false"
+            autoComplete="off"
             value={featuredContent?.sectionNumber}
             onChange={handleInputChange}
             className="w-full px-4 py-2 border rounded"
@@ -34,7 +38,7 @@ export default function FeaturedBylawEditor({
             type="text"
             name="sectionTitle"
             placeholder="Bylaw section title (not displayed)."
-            autoComplete="false"
+            autoComplete="off"
             value={featuredContent?.sectionTitle}
             onChange={handleInputChange}
             className="w-full px-4 py-2 border rounded"
@@ -72,7 +76,7 @@ export default function FeaturedBylawEditor({
       </div>
 
       <SubmitContentBtn
-        onClick={postFeaturedContent}
+        onClick={handleSubmit}
         isPending={isPending}
         isChecked={isCheckboxChecked}
         setIsChecked={setIsCheckboxChecked}
@@ -81,3 +85,4 @@ export default function FeaturedBylawEditor({
     </>
   );
 }
+
