@@ -13,7 +13,7 @@ export default function FeaturedBylawContent({
         {featuredBylawContent?.bylaw_text && (
           <div className="mb-4">
             <h2 className="mb-6 text-xl font-semibold text-gray-800 text-center">
-              This Month's Featured Bylaw
+              Monthly Featured Bylaw
             </h2>
             <article
               className="mt-2 text-gray-700 prose"
