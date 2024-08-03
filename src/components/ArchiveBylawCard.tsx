@@ -3,7 +3,7 @@
 import { formatDate } from '@/utils/formatDate';
 import { useRouter } from 'next/navigation';
 
-export default function BylawCard({
+export default function ArchiveBylawCard({
   id,
   createdAt,
   sectionNumber,
@@ -33,7 +33,7 @@ export default function BylawCard({
         <p className="whitespace-nowrap">Section: {sectionNumber}</p>
         <p>{sectionTitle}</p>
       </div>
-      <div className="w-3/5">
+      <div className="px-4">
         <p>{description}</p>
       </div>
     </div>

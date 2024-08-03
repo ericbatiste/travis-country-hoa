@@ -29,10 +29,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        {user && <Header userName={userName} />}
+        <Header userName={userName} />
         <div className="flex flex-grow">
           {user && (
-            <aside className="w-1/6 p-8 bg-gray-100">
+            <aside className="p-8 bg-gray-100 w-min md:w-1/6">
               <Navigation admin={admin} />
             </aside>
           )}

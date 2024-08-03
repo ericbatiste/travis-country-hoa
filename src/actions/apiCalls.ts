@@ -145,7 +145,7 @@ export const getAllBylaws = async () => {
 
 export const getAllBylawIds = async () => {
   try {
-    const supabase = await serverClient();
+    const supabase = browserClient();
 
     const { data, error } = await supabase
       .from('bylaws')
@@ -239,7 +239,7 @@ export const updateBylaw = async ({
 
 export const getBoardObservations = async (): Promise<BoardObservationsContentType | null> => {
   try {
-    const supabase = browserClient()
+    const supabase = await serverClient()
 
     const { data, error } = await supabase
       .from('board_observations')
@@ -255,11 +255,29 @@ export const getBoardObservations = async (): Promise<BoardObservationsContentTy
   }
 };
 
+const getBoardObsId = async () => {
+  try {
+    const supabase = browserClient();
+  
+    const { data, error } = await supabase
+      .from('board_observations')
+      .select('id')
+      .single();
+  
+    if (error) throw error;
+    
+    return data || null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
 export const updateBoardObservations = async (content: string): Promise<ReturnsErrorMsg> => {
   try {
     const supabase = browserClient();
 
-    const data = await getBoardObservations()
+    const data = await getBoardObsId()
 
     const { error } = await supabase
       .from('board_observations')
@@ -267,7 +285,7 @@ export const updateBoardObservations = async (content: string): Promise<ReturnsE
         last_updated: new Date(),
         content: DOMPurify.sanitize(content),
       })
-      .eq('id', data?.id);
+      .eq('id', data?.id );
 
     if (error) throw error;
 

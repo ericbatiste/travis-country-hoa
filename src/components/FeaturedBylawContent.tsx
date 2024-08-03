@@ -1,12 +1,15 @@
+import { FeaturedBylawContentType } from '@/actions/types';
 import { sanitizeHTML } from '@/utils/sanitizeHtml';
-import { getFeaturedBylawContent } from '@/actions/apiCalls';
 
-export default async function FeaturedBylawContent() {
-  const featuredBylawContent = await getFeaturedBylawContent();
+export default function FeaturedBylawContent({
+  featuredBylawContent
+}: {
+  featuredBylawContent: FeaturedBylawContentType | null
+}) {
 
   return (
-    <section>
-      <article className="p-10 mt-20 bg-gray-100 rounded-lg shadow-md">
+    <section className="flex flex-col space-y-20">
+      <article className="p-10 bg-gray-100 rounded-lg shadow-md">
         {featuredBylawContent?.bylaw_text && (
           <div className="mb-4">
             <h2 className="mb-6 text-xl font-semibold text-gray-800 text-center">
@@ -19,7 +22,7 @@ export default async function FeaturedBylawContent() {
           </div>
         )}
       </article>
-      <article className="p-10 mt-20 mb-10 bg-gray-100 rounded-lg shadow-md">
+      <article className="p-10 bg-gray-100 rounded-lg shadow-md">
         {featuredBylawContent?.in_a_nutshell && (
           <div>
             <h2 className="mb-6 text-xl font-semibold text-gray-800 text-center">

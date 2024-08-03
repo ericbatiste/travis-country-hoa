@@ -1,5 +1,5 @@
 import { getAllBylaws } from "@/actions/apiCalls";
-import BylawCard from "@/components/BylawCard";
+import ArchiveBylawCard from "@/components/ArchiveBylawCard";
 
 export default async function Archive() {
   const bylaws = await getAllBylaws();
@@ -9,7 +9,7 @@ export default async function Archive() {
       <h1 className="text-2xl font-bold mb-4">Archived Bylaws</h1>
       <div className="space-y-4">
         {bylaws?.map(bylaw => (
-          <BylawCard 
+          <ArchiveBylawCard 
             key={bylaw.id}
             id={bylaw.id}
             createdAt={bylaw.created_at}

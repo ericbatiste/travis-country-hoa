@@ -7,7 +7,7 @@ export default async function BoardContent() {
   return (
     <section>
           {boardObservation?.content && (
-            <article className="p-10 mt-20 mb-10 bg-gray-100 rounded-lg shadow-md">
+            <article className="p-10 m-20 bg-gray-100 rounded-lg shadow-md">
               <h2 className="mb-6 text-xl font-semibold text-gray-800 text-center">
                 Current Board Observations
               </h2>
