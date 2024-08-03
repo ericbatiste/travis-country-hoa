@@ -1,9 +1,9 @@
-import Loading from "@/components/Loading";
+import LoadingPage from "@/components/LoadingPage";
 
-export default function() {
+export default function Loading() {
   return(
     <>
-      <Loading />
+      <LoadingPage />
     </>
   )
 }
