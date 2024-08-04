@@ -3,6 +3,7 @@ import { getErrorMessage } from '@/utils/errorMsg';
 import { browserClient } from '@/utils/supabase/client';
 import { serverClient } from '@/utils/supabase/server';
 import {
+  RegFormType,
   PostNewFeaturedBylawType,
   FeaturedBylawContentType,
   BoardObservationsContentType,
@@ -28,27 +29,26 @@ export const getUserName = async (email: string | undefined): Promise<string | n
   }
 };
 
-export const postUserRegistration = async (formData: FormData) => {
-  const supabase = browserClient();
+export const postUserRegistration = async (formData: RegFormType) => {
+  try {
+    const supabase = browserClient();
 
-  const firstName = formData.get('firstName') as string;
-  const lastName = formData.get('lastName') as string;
-  const email = formData.get('email') as string;
-  const address = formData.get('address') as string;
+    const { firstName, lastName, email, address } = formData;
 
-  const { data, error } = await supabase
-    .from('users')
-    .insert({
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        address: address
-    });
+    const { error } = await supabase
+      .from('users')
+      .insert({
+          first_name: firstName,
+          last_name: lastName,
+          email: email,
+          address: address
+      });
 
-  if (error) {
-    console.log(error);
-  } else {
-    console.log(data);
+    if (error) throw error
+
+    return { errorMessage: null };
+  } catch (error) {
+    return { errorMessage: getErrorMessage(error) };
   }
 };
 

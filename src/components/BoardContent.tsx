@@ -1,6 +1,8 @@
 import { getBoardObservations } from "@/actions/apiCalls";
 import { sanitizeHTML } from "@/utils/sanitizeHtml";
 
+export const revalidate = 0;
+
 export default async function BoardContent() {
   const boardObservation = await getBoardObservations();
 

@@ -1,5 +1,12 @@
 import { ChangeEvent } from 'react';
 
+export type RegFormType = {
+    firstName: string;
+    lastName: string;
+    email: string;
+    address: string;
+}
+
 export type PostNewFeaturedBylawType = {
   sectionNumber: string;
   sectionTitle: string;
