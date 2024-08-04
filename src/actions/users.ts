@@ -88,7 +88,7 @@ export async function approveUserAction(email: string) {
       email,
       options: {
         shouldCreateUser: true,
-        emailRedirectTo: 'http://localhost:3000/auth/otp-login'
+        emailRedirectTo: 'https://travis-country-hoa.vercel.app/auth/otp-login'
       }
     });
 
