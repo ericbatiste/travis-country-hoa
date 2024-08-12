@@ -1,6 +1,5 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
-import { defineAdmin } from '@/actions/apiCalls';
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -38,20 +37,13 @@ export async function updateSession(request: NextRequest) {
 
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/register') &&
-    !request.nextUrl.pathname.startsWith('/auth')
+    (
+      request.nextUrl.pathname.startsWith('/auth') ||
+      request.nextUrl.pathname.startsWith('/admin-dashboard')
+    )
   ) {
     const url = request.nextUrl.clone();
-    url.pathname = '/login';
-    return NextResponse.redirect(url);
-  }
-
-  const { admin } = await defineAdmin(user?.email);
-
-  if (!admin && request.nextUrl.pathname.startsWith('/admin-dashboard')) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/error';
+    url.pathname = '/';
     return NextResponse.redirect(url);
   }
 

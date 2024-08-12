@@ -11,24 +11,6 @@ import {
   BylawParamsType
 } from './types';
 
-export const getUserName = async (email: string | undefined): Promise<string | null> => {
-  try {
-    const supabase = await serverClient();
-
-    const { data: user, error } = await supabase
-      .from('users')
-      .select('first_name, email')
-      .eq('email', email)
-      .single();
-
-    if (error) throw error;
-
-    return user?.first_name ?? null;
-  } catch (error) {
-    return null;
-  }
-};
-
 export const postUserRegistration = async (formData: RegFormType) => {
   try {
     const supabase = browserClient();
@@ -45,40 +27,6 @@ export const postUserRegistration = async (formData: RegFormType) => {
       });
 
     if (error) throw error
-
-    return { errorMessage: null };
-  } catch (error) {
-    return { errorMessage: getErrorMessage(error) };
-  }
-};
-
-export const getPublicUsers = async () => {
-  try {
-    const supabase = browserClient();
-
-    const { data: users, error } = await supabase
-      .from('users')
-      .select('id, first_name, last_name, email, address, status');
-
-    if (error) throw new Error();
-
-    return users || [];
-  } catch (error) {
-    console.error('Error retrieving data:', error);
-    return [];
-  }
-};
-
-export const updateUserStatus = async (email: string, updatedStatus: string) => {
-  try {
-    const supabase = browserClient();
-
-    const { error } = await supabase
-      .from('users')
-      .update({ status: updatedStatus })
-      .eq('email', email);
-
-    if (error) throw error;
 
     return { errorMessage: null };
   } catch (error) {
@@ -292,25 +240,5 @@ export const updateBoardObservations = async (content: string): Promise<ReturnsE
     return { errorMessage: null }
   } catch(error) {
     return { errorMessage: getErrorMessage(error) }
-  }
-};
-
-export const defineAdmin = async (
-  email: string | undefined
-): Promise<{ admin: boolean }> => {
-  try {
-    const supabase = await serverClient();
-
-    const { data: publicUser, error } = await supabase
-      .from('users')
-      .select('admin')
-      .eq('email', email)
-      .single();
-
-    if (error) throw error;
-
-    return publicUser;
-  } catch (error) {
-    return { admin: false};
   }
 };

@@ -1,12 +1,9 @@
-import { useEffect } from "react";
 import Quill from "./Quill";
 import { AdminEditorProps } from "@/actions/types";
 import SubmitContentBtn from "./SubmitContentBtn";
 
 export default function FeaturedBylawEditor({
-  selectedBylaw,
   featuredContent,
-  setFeaturedContent,
   handleEditorChange,
   handleInputChange,
   handleSubmit,

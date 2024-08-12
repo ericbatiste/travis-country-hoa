@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import { Loader2, CircleUserRound, ChevronDown, ChevronUp } from 'lucide-react';
 
-export default function SignOutBtn({ userName }: { userName: string | null }) {
+export default function SignOutBtn() {
   const [isPending, startTransition] = useTransition();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
@@ -19,27 +19,25 @@ export default function SignOutBtn({ userName }: { userName: string | null }) {
       } else {
         setIsDropdownOpen(false);
         toast.success('Log out success, Goodbye!');
-        router.push('/login');
+        router.push('/');
       }
     });
   };
 
   return (
     <div className="relative">
-      {userName && (
-        <div
-          className="flex items-center space-x-2 mr-6 cursor-pointer"
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        >
-          <p>Howdy {userName}!</p>
-          <CircleUserRound size={30} strokeWidth={1.5} />
-          {isDropdownOpen ? (
-            <ChevronUp size={30} strokeWidth={1.5} />
-          ) : (
-            <ChevronDown size={30} strokeWidth={1.5} />
-          )}
-        </div>
-      )}
+      <div
+        className="flex items-center space-x-2 mr-6 cursor-pointer"
+        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+      >
+        <p>Howdy!</p>
+        <CircleUserRound size={30} strokeWidth={1.5} />
+        {isDropdownOpen ? (
+          <ChevronUp size={30} strokeWidth={1.5} />
+        ) : (
+          <ChevronDown size={30} strokeWidth={1.5} />
+        )}
+      </div>
       {isDropdownOpen && (
         <div className="absolute mt-2 right-0 bg-gray-800 shadow-md rounded-lg py-2 w-32">
           <button

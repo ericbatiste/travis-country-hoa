@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import { getAuthUser } from '@/actions/users';
-import { defineAdmin, getUserName } from '@/actions/apiCalls';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Navigation from '@/components/Navigation';
@@ -22,23 +21,19 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getAuthUser();
-  const { admin } = await defineAdmin(user?.email);
-  const userName = await getUserName(user?.email);
+  const admin = await getAuthUser()
 
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <Header userName={userName} />
+        <Header admin={admin} />
         <div className="flex flex-grow">
-          {user && (
             <aside className="p-8 bg-gray-100 w-min md:w-1/6">
               <Navigation admin={admin} />
             </aside>
-          )}
           <main className="flex-1 p-4">{children}</main>
         </div>
-        {user && <Footer />}
+        <Footer />
         <Toaster />
       </body>
     </html>

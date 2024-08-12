@@ -1,6 +1,5 @@
 "use client"
 
-import Link from 'next/link';
 import { loginAction } from '@/actions/users';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
@@ -62,11 +61,6 @@ export default function LoginPage() {
             >
             {isPending ? <Loader2 className="animate-spin" /> : "Login"}
           </button>
-          <Link href={'./register'}>
-            <button className="bg-indigo-500 hover:bg-indigo-700 text-white py-2 px-4 rounded">
-              Register
-            </button>
-          </Link>
         </div>
       </form>
     </div>

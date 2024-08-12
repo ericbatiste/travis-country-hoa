@@ -172,9 +172,7 @@ export default function ContentEditor({ editingSection }: { editingSection: stri
     <div className="flex flex-col w-4/5 max-w-screen-lg mt-8">
       {editingSection === 'new bylaw' && (
         <FeaturedBylawEditor
-          selectedBylaw={selectedBylaw}
           featuredContent={featuredContent}
-          setFeaturedContent={setFeaturedContent}
           handleEditorChange={handleEditorChange}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}

@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { User } from '@supabase/supabase-js';
 
-export default function Navigation({ admin }: { admin: boolean }) {
+export default function Navigation({ admin }: { admin: User | null}) {
   const pathname = usePathname();
   const isActive = (path: string) => pathname === path;
 

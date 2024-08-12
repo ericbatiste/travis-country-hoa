@@ -11,7 +11,6 @@ export default function UpdateBylawEditor({
   selectedBylaw,
   setSelectedBylaw,
   featuredContent,
-  setFeaturedContent,
   handleEditorChange,
   handleInputChange,
   handleSubmit,
@@ -57,9 +56,7 @@ export default function UpdateBylawEditor({
         </div>
       ) : (
         <FeaturedBylawEditor
-          selectedBylaw={selectedBylaw}
           featuredContent={featuredContent}
-          setFeaturedContent={setFeaturedContent}
           handleEditorChange={handleEditorChange}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
