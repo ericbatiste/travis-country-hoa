@@ -1,6 +1,6 @@
 ## Currently in development...
 
-This web application is an informative blog / archive for memebers of the Travis Country HOA to provide awareness and transparency regarding the cummunities' bylaws.
+This web application is an informative blog / archive for residents of Travis Country to provide awareness and transparency regarding the cummunity's HOA bylaws.
 
 ## Technoligies used:
 - Next
