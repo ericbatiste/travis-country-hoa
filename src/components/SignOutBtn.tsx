@@ -39,10 +39,10 @@ export default function SignOutBtn() {
         )}
       </div>
       {isDropdownOpen && (
-        <div className="absolute mt-2 right-0 bg-gray-800 shadow-md rounded-lg py-2 w-32">
+        <div className="absolute mt-2 right-0 bg-blue shadow-md rounded-lg py-2 w-32">
           <button
             onClick={handleLogout}
-            className="text-white px-4 py-2 w-full text-left hover:font-bold"
+            className="px-4 py-2 w-full text-left hover:font-bold"
           >
             {isPending ? <Loader2 className="animate-spin" /> : 'Log out'}
           </button>

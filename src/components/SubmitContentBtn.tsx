@@ -26,10 +26,10 @@ export default function SubmitContentBtn({
       <button
         onClick={onClick}
         disabled={!isChecked || isPending}
-        className={`w-full px-4 py-2 text-white rounded flex items-center justify-center ${
+        className={`w-full px-4 py-2 text-beige rounded flex items-center justify-center ${
           !isChecked || isPending
-            ? 'bg-gray-500 cursor-not-allowed'
-            : 'bg-green-500 hover:bg-green-600'
+            ? 'bg-gray-cool cursor-not-allowed'
+            : 'bg-green hover:bg-green-600'
         }`}
       >
         {isPending ? <Loader2 className="animate-spin" /> : text}

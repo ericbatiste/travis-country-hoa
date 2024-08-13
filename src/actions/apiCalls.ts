@@ -1,4 +1,4 @@
-import DOMPurify from 'dompurify';
+import { sanitizeHTML } from '@/utils/sanitizeHtml';
 import { getErrorMessage } from '@/utils/errorMsg';
 import { browserClient } from '@/utils/supabase/client';
 import { serverClient } from '@/utils/supabase/server';
@@ -143,8 +143,8 @@ export const postNewFeaturedBylaw = async ({
         section_number: sectionNumber,
         section_title: sectionTitle,
         description: description,
-        bylaw_text: DOMPurify.sanitize(bylawText),
-        in_a_nutshell: DOMPurify.sanitize(inANutshell)
+        bylaw_text: sanitizeHTML(bylawText),
+        in_a_nutshell: sanitizeHTML(inANutshell)
       });
 
     if (error) throw error;
@@ -172,8 +172,8 @@ export const updateBylaw = async ({
         section_number: sectionNumber,
         section_title: sectionTitle,
         description: description,
-        bylaw_text: DOMPurify.sanitize(bylawText),
-        in_a_nutshell: DOMPurify.sanitize(inANutshell)
+        bylaw_text: sanitizeHTML(bylawText),
+        in_a_nutshell: sanitizeHTML(inANutshell)
       })
       .eq('id', id)
 
@@ -231,7 +231,7 @@ export const updateBoardObservations = async (content: string): Promise<ReturnsE
       .from('board_observations')
       .update({
         last_updated: new Date(),
-        content: DOMPurify.sanitize(content),
+        content: sanitizeHTML(content),
       })
       .eq('id', data?.id );
 

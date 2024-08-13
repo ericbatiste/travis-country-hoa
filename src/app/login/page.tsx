@@ -23,7 +23,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center">
       <form action={handleClickLoginButton} className="bg-white p-6 rounded shadow-md w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-5 text-center">Login</h2>
         <div className="mb-4">

@@ -9,40 +9,40 @@ export default function Navigation({ admin }: { admin: User | null}) {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <ul className="space-y-4 w-min">
+    <ul className="space-y-10 w-min text-2xl font-light">
       <li
-        className={`transition-all font-semibold ${
-          isActive('/') ? 'text-indigo-600' : 'hover:text-indigo-600 cursor-pointer'
-        } hover:text-indigo-600`}
+        className={`transition-all ${
+          isActive('/') ? 'text-terracotta' : 'text-gray-text hover:cursor-pointer'
+        } hover:text-terracotta`}
       >
         <Link href="/">Home</Link>
       </li>
       <li
-        className={`transition-all font-semibold ${
-          isActive('/board-observations') ? 'text-indigo-600' : 'hover:text-indigo-600 cursor-pointer'
-        }`}
+        className={`transition-all ${
+          isActive('/board-observations') ? 'text-terracotta' : 'text-gray-text hover:cursor-pointer'
+        } hover:text-terracotta`}
       >
         <Link href="/board-observations">Observations</Link>
       </li>
       <li
-        className={`transition-all font-semibold ${
-          isActive('/archive') ? 'text-indigo-600' : 'hover:text-indigo-600 cursor-pointer'
-        }`}
+        className={`transition-all ${
+          isActive('/archive') ? 'text-terracotta' : 'text-gray-text hover:cursor-pointer'
+        } hover:text-terracotta`}
       >
         <Link href="/archive">Archive</Link>
       </li>
       <li
-        className={`transition-all font-semibold ${
-          isActive('/contact-us') ? 'text-indigo-600' : 'hover:text-indigo-600 cursor-pointer'
-        }`}
+        className={`transition-all ${
+          isActive('/contact-us') ? 'text-terracotta' : 'text-gray-text hover:cursor-pointer'
+        } hover:text-terracotta`}
       >
         <Link href="/contact-us">Contact Us</Link>
       </li>
       {admin && (
         <li
-          className={`transition-all font-semibold ${
-            isActive('/admin-dashboard') ? 'text-indigo-600' : 'hover:text-indigo-600 cursor-pointer'
-          }`}
+          className={`transition-all ${
+            isActive('/admin-dashboard') ? 'text-terracotta' : 'text-gray-text hover:cursor-pointer'
+          } hover:text-terracotta`}
         >
           <Link href="/admin-dashboard">Admin</Link>
         </li>

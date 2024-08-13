@@ -18,7 +18,7 @@ export default async function BylawDetails({ params: { id } }: { params: { id: s
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-4">
-      <section className="p-6 bg-gray-100 rounded-lg shadow-md">
+      <section className="p-20">
         <div>
           {bylaw?.section_number && (
             <p className="text-gray-600 mb-2">Section Number: {bylaw.section_number}</p>
@@ -34,7 +34,7 @@ export default async function BylawDetails({ params: { id } }: { params: { id: s
               <h2 className="text-xl font-semibold text-gray-800">Bylaw Text</h2>
               <div
                 className="mt-2 text-gray-700 prose"
-                dangerouslySetInnerHTML={sanitizeHTML(bylaw.bylaw_text)}
+                dangerouslySetInnerHTML={{__html: sanitizeHTML(bylaw.bylaw_text)}}
               />
             </div>
           )}
@@ -43,7 +43,7 @@ export default async function BylawDetails({ params: { id } }: { params: { id: s
               <h2 className="text-xl font-semibold text-gray-800">In a Nutshell...</h2>
               <div
                 className="mt-2 text-gray-700 prose"
-                dangerouslySetInnerHTML={sanitizeHTML(bylaw.in_a_nutshell)}
+                dangerouslySetInnerHTML={{__html: sanitizeHTML(bylaw.in_a_nutshell)}}
               />
             </div>
           )}

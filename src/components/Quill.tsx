@@ -16,7 +16,7 @@ export default function Quill({ value, onChange }: QuillProps) {
       [{ size: ['small', false, 'large', 'huge'] }],
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       ['link', 'image'],
-      [{ color: [] }, { background: [] }]
+      // [{ color: [] }, { background: [] }]
       // ['clean'],
     ],
     clipboard: {
@@ -36,8 +36,8 @@ export default function Quill({ value, onChange }: QuillProps) {
     'link',
     'image',
     // 'video',
-    'color',
-    'background'
+    // 'color',
+    // 'background'
     // 'clean',
   ];
   const placeholder = 'Enter content as you would like to see it displayed on screen...';

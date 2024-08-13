@@ -21,17 +21,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const admin = await getAuthUser()
+  const admin = await getAuthUser();
 
   return (
     <html lang="en">
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <Header admin={admin} />
         <div className="flex flex-grow">
-            <aside className="p-8 bg-gray-100 w-min md:w-1/6">
-              <Navigation admin={admin} />
-            </aside>
-          <main className="flex-1 p-4">{children}</main>
+          <aside className="p-8 bg-beige w-min">
+            <Navigation admin={admin} />
+          </aside>
+          <main className="flex-1">{children}</main>
         </div>
         <Footer />
         <Toaster />
