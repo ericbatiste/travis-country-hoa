@@ -24,10 +24,10 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <form action={handleClickLoginButton} className="bg-white p-6 rounded shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-5 text-center">Login</h2>
+      <form action={handleClickLoginButton} className="bg-gray-cool p-6 rounded shadow-md w-full max-w-sm">
+        <h2 className="text-3xl font-light mb-5 text-center text-gray-text">Admin Login</h2>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-gray-700 mb-2">
+          <label htmlFor="email" className="block text-gray-text text-lg mb-2">
             Email:
           </label>
           <input
@@ -37,11 +37,11 @@ export default function LoginPage() {
             required
             placeholder='Email'
             disabled={isPending}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          className="mt-1 block w-full p-2 border border-gray-warm rounded-md shadow-sm focus:outline-none focus:ring-blue focus:border-blue"
           />
         </div>
         <div className="mb-6">
-          <label htmlFor="password" className="block text-gray-700 mb-2">
+          <label htmlFor="password" className="block text-gray-text text-lg mb-2">
             Password:
           </label>
           <input
@@ -51,13 +51,13 @@ export default function LoginPage() {
             required
             placeholder='Password'
             disabled={isPending}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-warm rounded-md shadow-sm focus:outline-none focus:ring-blue focus:border-blue"
           />
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <button
             disabled={isPending}
-            className="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
+            className="bg-blue text-beige text-lg py-2 px-4 rounded-md hover:bg-green focus:outline-none focus:ring-2 focus:ring-green focus:ring-opacity-50"
             >
             {isPending ? <Loader2 className="animate-spin" /> : "Login"}
           </button>

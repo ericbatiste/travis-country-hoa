@@ -30,7 +30,6 @@ export default function SignOutBtn() {
         className="flex items-center space-x-2 mr-6 cursor-pointer"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        <p>Howdy!</p>
         <CircleUserRound size={30} strokeWidth={1.5} />
         {isDropdownOpen ? (
           <ChevronUp size={30} strokeWidth={1.5} />
@@ -39,11 +38,8 @@ export default function SignOutBtn() {
         )}
       </div>
       {isDropdownOpen && (
-        <div className="absolute mt-2 right-0 bg-blue shadow-md rounded-lg py-2 w-32">
-          <button
-            onClick={handleLogout}
-            className="px-4 py-2 w-full text-left hover:font-bold"
-          >
+        <div className="absolute mt-6 right-0 bg-blue shadow-md rounded-lg py-2 w-32">
+          <button onClick={handleLogout} className="px-4 py-2 w-full text-left hover:font-bold">
             {isPending ? <Loader2 className="animate-spin" /> : 'Log out'}
           </button>
         </div>

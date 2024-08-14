@@ -9,7 +9,7 @@ export default function Navigation({ admin }: { admin: User | null}) {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <ul className="space-y-10 w-min text-2xl font-light">
+    <ul className="space-y-6 w-min text-2xl font-light">
       <li
         className={`transition-all ${
           isActive('/') ? 'text-terracotta' : 'text-gray-text hover:cursor-pointer'

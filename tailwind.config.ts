@@ -16,6 +16,10 @@ const config: Config = {
       'gray-cool': '#AFB5B3',
       'gray-text': '#474747',
     },
+    fontFamily: {
+      sans: ['Graphik', 'sans-serif'],
+      serif: ['Times New Roman', 'serif'],
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

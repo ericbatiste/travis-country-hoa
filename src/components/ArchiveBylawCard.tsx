@@ -25,7 +25,7 @@ export default function ArchiveBylawCard({
   return (
     <div
       key={id}
-      className="border p-4 rounded-lg cursor-pointer hover:shadow-lg flex"
+      className="transition-all p-4 bg-beige shadow-sm cursor-pointer hover:shadow-lg flex"
       onClick={handleCardClick}
     >
       <div className="flex-shrink-0 w-2/5 space-x-8 flex">
