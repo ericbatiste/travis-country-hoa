@@ -36,7 +36,7 @@ export default function UpdateBylawEditor({
     <>
       {isPending ? (
         <div className="flex mt-20 justify-center min-w-full">
-          <Loader2 className="animate-spin text-blue-600" size={80} />
+          <Loader2 className="animate-spin text-green" size={80} />
         </div>
       ) : !selectedBylaw ? (
         <div className="p-2">

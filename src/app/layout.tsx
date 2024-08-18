@@ -28,7 +28,7 @@ export default async function RootLayout({
       <body className={`${inter.className} min-h-screen flex flex-col`}>
         <Header admin={admin} />
         <div className="flex flex-grow">
-          <aside className="p-8 bg-beige w-min">
+          <aside className="p-8 bg-beige w-min hidden lg:block">
             <Navigation admin={admin} />
           </aside>
           <main className="flex-1">{children}</main>

@@ -18,7 +18,7 @@ export default async function BylawDetails({ params: { id } }: { params: { id: s
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-4">
-      <section className="p-20">
+      <section className="p-6 md:p-12 lg:p-20">
         <div>
           {bylaw?.section_number && (
             <p className="text-gray-600 mb-2">Section Number: {bylaw.section_number}</p>

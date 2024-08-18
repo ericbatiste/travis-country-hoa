@@ -38,17 +38,17 @@ export default function ContactUs() {
 
   return (
     <>
-      <div className="w-full px-20 my-20">
+      <div className="w-full px-8 md:px-20 my-10 md:my-20">
         <div className="mb-20">
-          <h1 className="text-6xl font-bold mb-10 text-blue text-center">We are TSSCA members too…</h1>
-          <p className="text-center text-2xl text-gray-text">
+          <h1 className="text-4xl md:text-6xl font-bold mb-10 text-blue text-center">We are TSSCA members too…</h1>
+          <p className="text-center text-xl md:text-2xl text-gray-text">
             And we would like to hear from you! Send us a message HERE or email us at{' '}
             <span className="font-bold text-blue italic">info.ourtraviscountry@gmail.com</span>
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="px-10 space-y-10">
-          <div className="flex gap-6">
+        <form onSubmit={handleSubmit} className="md:px-10 space-y-10">
+          <div className="flex flex-col lg:flex-row gap-6">
             <div className="space-y-4">
               <div>
                 <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">

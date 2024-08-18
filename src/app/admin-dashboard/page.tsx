@@ -12,7 +12,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="p-6">
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center my-20">
         <select
           onChange={handleSectionChange}
           value={editingSection}

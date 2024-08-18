@@ -25,25 +25,25 @@ export default function SignOutBtn() {
   };
 
   return (
-    <div className="relative">
+    <>
       <div
-        className="flex items-center space-x-2 mr-6 cursor-pointer"
+        className="flex items-center space-x-1 cursor-pointer transition-all hover:scale-105"
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
       >
-        <CircleUserRound size={30} strokeWidth={1.5} />
+        <CircleUserRound size={35} strokeWidth={1.5} color={isDropdownOpen ? '#AD5F40' : 'beige'}/>
         {isDropdownOpen ? (
-          <ChevronUp size={30} strokeWidth={1.5} />
+          <ChevronUp size={35} strokeWidth={1.75} color={isDropdownOpen ? '#AD5F40' : 'beige'}/>
         ) : (
-          <ChevronDown size={30} strokeWidth={1.5} />
+          <ChevronDown size={35} strokeWidth={1.75} color={isDropdownOpen ? '#AD5F40' : 'beige'}/>
         )}
       </div>
       {isDropdownOpen && (
-        <div className="absolute mt-6 right-0 bg-blue shadow-md rounded-lg py-2 w-32">
-          <button onClick={handleLogout} className="px-4 py-2 w-full text-left hover:font-bold">
+        <div className="absolute right-0 top-full bg-beige shadow-md rounded-md py-2 pr-8 w-full">
+          <button onClick={handleLogout} className="px-4 py-2 w-full text-gray-text text-right hover:text-terracotta">
             {isPending ? <Loader2 className="animate-spin" /> : 'Log out'}
           </button>
         </div>
       )}
-    </div>
+    </>
   );
 }
