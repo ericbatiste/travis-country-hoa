@@ -8,11 +8,11 @@ export default async function BoardContent() {
 
   return (
     <>
-      <h2 className="my-8 md:my-16 text-4xl md:text-6xl font-semibold text-blue text-center">
-        Current Board Observations
+      <h2 className="my-6 md:my-10 text-2xl md:text-5xl font-semibold text-blue text-center">
+        Observations Re: Our Current Board 
       </h2>
       {boardObservation?.content && (
-        <article className="p-8 md:p-16 mb-20 bg-beige shadow-md">
+        <article className="p-6 md:p-14 bg-beige shadow-2xl">
           <div
             className="prose md:text-lg lg:text-xl text-gray-text"
             dangerouslySetInnerHTML={{ __html: sanitizeHTML(boardObservation.content) }}

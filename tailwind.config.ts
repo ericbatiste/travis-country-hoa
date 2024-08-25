@@ -15,6 +15,8 @@ const config: Config = {
       'gray-warm': '#948B88',
       'gray-cool': '#AFB5B3',
       'gray-text': '#474747',
+      'white': '#FFFFFF',
+      'black': '#000000'
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],

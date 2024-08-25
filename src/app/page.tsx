@@ -7,8 +7,9 @@ export default async function Home() {
   const featuredBylawContent = await getFeaturedBylawContent();
 
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen w-full">
+    <div className="flex flex-col items-center justify-center max-h-screen w-full mb-16">
       <FeaturedBylawContent featuredBylawContent={featuredBylawContent} />
     </div>
   );
 }
+

@@ -25,14 +25,10 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
+      <body className={`${inter.className} max-h-screen flex flex-col`}>
         <Header admin={admin} />
-        <div className="flex flex-grow">
-          <aside className="p-8 bg-beige w-min hidden lg:block">
-            <Navigation admin={admin} />
-          </aside>
-          <main className="flex-1">{children}</main>
-        </div>
+        <Navigation admin={admin} />
+        <main className="flex-1 pb-28">{children}</main>
         <Footer />
         <Toaster />
       </body>
