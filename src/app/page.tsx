@@ -1,5 +1,5 @@
 import FeaturedBylawContent from "@/components/FeaturedBylawContent";
-import { getFeaturedBylawContent } from '@/actions/apiCalls';
+import { getFeaturedBylawContent } from "@/utils/supabase/actions";
 
 export const revalidate = 0;
 

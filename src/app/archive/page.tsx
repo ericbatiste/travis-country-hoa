@@ -1,4 +1,4 @@
-import { getAllBylaws } from "@/actions/apiCalls";
+import { getAllBylaws } from "@/utils/supabase/actions";
 import ArchiveBylawCard from "@/components/ArchiveBylawCard";
 
 export default async function Archive() {

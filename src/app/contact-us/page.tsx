@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, FormEvent } from 'react';
+import { addUserToMailTable } from '@/utils/supabase/actions';
+import { populateMailingLists, sendEmail } from '@/utils/apiCalls';
 import toast from 'react-hot-toast';
 
 export default function ContactUs() {
@@ -9,8 +11,8 @@ export default function ContactUs() {
     lastName: '',
     email: '',
     message: '',
-    monthlyNewsletter: false,
-    questionnaires: false
+    monthlyCloseUp: false,
+    questionnaire: false
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -24,22 +26,12 @@ export default function ContactUs() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      const result = await res.json();
-  
-      if (res.ok) {
-        toast.success('Your message has been sent!');
-        resetFormFields();
-      } else {
-        toast.error(`Failed to send message: ${result.error}`);
-      }
+      await sendEmail(formData);
+      await addUserToMailTable(formData);
+      await populateMailingLists();
+
+      toast.success('Your message has been sent!');
+      resetFormFields();
     } catch (error) {
       console.error('Failed to send message:', error);
       toast.error('An error occurred while sending your message. Please try again later.');
@@ -52,8 +44,8 @@ export default function ContactUs() {
       lastName: '',
       email: '',
       message: '',
-      monthlyNewsletter: false,
-      questionnaires: false
+      monthlyCloseUp: false,
+      questionnaire: false
     });
   };
 
@@ -61,7 +53,9 @@ export default function ContactUs() {
     <>
       <div className="w-full px-8 md:px-20 my-10 md:my-20">
         <div className="mb-20">
-          <h1 className="text-4xl md:text-6xl font-bold mb-10 text-blue text-center">We are TSSCA members too…</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-10 text-blue text-center">
+            We are TSSCA members too…
+          </h1>
           <p className="text-center text-xl md:text-2xl text-gray-text">
             And we would like to hear from you! Send us a message HERE or email us at{' '}
             <span className="font-bold text-blue italic">info@ourtraviscountry.com</span>
@@ -122,13 +116,13 @@ export default function ContactUs() {
               <div className="flex items-center">
                 <input
                   type="checkbox"
-                  id="monthlyNewsletter"
-                  name="monthlyNewsletter"
-                  checked={formData.monthlyNewsletter}
+                  id="monthlyCloseUp"
+                  name="monthlyCloseUp"
+                  checked={formData.monthlyCloseUp}
                   onChange={handleInputChange}
-                  className='cursor-pointer'
+                  className="cursor-pointer"
                 />
-                <label htmlFor="monthlyNewsletter" className="ml-2 text-gray-text cursor-pointer">
+                <label htmlFor="monthlyCloseUp" className="ml-2 text-gray-text cursor-pointer">
                   Sign up to receive a monthly close-up of our TCCSA
                 </label>
               </div>
@@ -136,13 +130,13 @@ export default function ContactUs() {
               <div className="flex items-center">
                 <input
                   type="checkbox"
-                  id="questionnaires"
-                  name="questionnaires"
-                  checked={formData.questionnaires}
+                  id="questionnaire"
+                  name="questionnaire"
+                  checked={formData.questionnaire}
                   onChange={handleInputChange}
-                  className='cursor-pointer'
+                  className="cursor-pointer"
                 />
-                <label htmlFor="questionnaires" className="ml-2 text-gray-text cursor-pointer">
+                <label htmlFor="questionnaire" className="ml-2 text-gray-text cursor-pointer">
                   Sign up to participate in important questionnaires and petitions
                 </label>
               </div>
@@ -158,10 +152,11 @@ export default function ContactUs() {
                 value={formData.message}
                 onChange={handleInputChange}
                 required
-                className="flex-grow mt-1 p-2 border border-gray-warm rounded-md shadow-sm focus:outline-blue focus:ring-blue focus:border-blue sm:text-sm"
+                className="flex-grow min-h-28 mt-1 p-2 border border-gray-warm rounded-md shadow-sm focus:outline-blue focus:ring-blue focus:border-blue sm:text-sm"
               />
             </div>
           </div>
+
           <button
             type="submit"
             className="w-full justify-center py-2 px-4 border border-transparent shadow-sm rounded-md text-beige text-lg font-semibold bg-blue hover:bg-green focus:outline-blue focus:ring-2 focus:ring-offset-2 focus:ring-blue"
@@ -169,6 +164,7 @@ export default function ContactUs() {
             Send message
           </button>
         </form>
+
         <p className="mt-10 text-xl text-terracotta font-semibold text-center">
           We are consulting with a qualified HOA attorney to ensure the accuracy of our statements.
         </p>

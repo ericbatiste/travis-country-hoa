@@ -1,6 +1,6 @@
 "use client"
 
-import { loginAction } from '@/actions/users';
+import { loginAction } from '../auth/actions';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 import toast from 'react-hot-toast';

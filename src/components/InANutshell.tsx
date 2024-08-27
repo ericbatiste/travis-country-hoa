@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter } from 'next/navigation';
-import { FeaturedBylawContentType } from '@/actions/types';
+import { FeaturedBylawContentType } from '@/utils/types';
 import { sanitizeHTML } from '@/utils/sanitizeHtml';
 
 export default function InANutshell({

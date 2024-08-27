@@ -1,5 +1,5 @@
-import { getBylawById } from '@/actions/apiCalls';
-import { getAllBylawIds } from '@/actions/apiCalls';
+import { getBylawById } from '@/utils/supabase/actions';
+import { getAllBylawIds } from '@/utils/supabase/actions';
 import { formatDate } from '@/utils/formatDate';
 import { sanitizeHTML } from '@/utils/sanitizeHtml';
 import { notFound } from 'next/navigation';

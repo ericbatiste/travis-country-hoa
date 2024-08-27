@@ -1,29 +1,30 @@
-import { sanitizeHTML } from '@/utils/sanitizeHtml';
-import { getErrorMessage } from '@/utils/errorMsg';
-import { browserClient } from '@/utils/supabase/client';
-import { serverClient } from '@/utils/supabase/server';
+import { sanitizeHTML } from '../sanitizeHtml';
+import { getErrorMessage } from '../errorMsg';
+import { browserClient } from './client';
+import { serverClient } from './server';
 import {
-  RegFormType,
+  ContactType,
   PostNewFeaturedBylawType,
   FeaturedBylawContentType,
   BoardObservationsContentType,
   ReturnsErrorMsg,
   BylawParamsType
-} from './types';
+} from '../types';
 
-export const postUserRegistration = async (formData: RegFormType) => {
+export const addUserToMailTable = async (formData: ContactType) => {
+  const { firstName, lastName, email, monthlyCloseUp, questionnaire } = formData;
+  if (!monthlyCloseUp && !questionnaire) return;
   try {
     const supabase = browserClient();
 
-    const { firstName, lastName, email, address } = formData;
-
     const { error } = await supabase
-      .from('users')
+      .from('mailing_list')
       .insert({
           first_name: firstName,
           last_name: lastName,
           email: email,
-          address: address
+          monthly_close_up: monthlyCloseUp,
+          questionnaire: questionnaire
       });
 
     if (error) throw error
@@ -32,6 +33,26 @@ export const postUserRegistration = async (formData: RegFormType) => {
   } catch (error) {
     return { errorMessage: getErrorMessage(error) };
   }
+};
+
+export const fetchMailingListSupa = async (listType: string) => {
+  const supabase = await serverClient();
+
+  const { data, error } = await supabase
+    .from('mailing_list')
+    .select('first_name, last_name, email')
+    .eq(listType, true);
+
+  if (error) {
+    console.error(`Error fetching emails for ${listType}:`, error);
+    return [];
+  }
+
+  return data.map((subscriber: { first_name: string; last_name: string; email: string }) => ({
+    firstName: subscriber.first_name,
+    lastName: subscriber.last_name,
+    email: subscriber.email
+  }));
 };
 
 export const getFeaturedBylawContent = async (): Promise<FeaturedBylawContentType | null> => {

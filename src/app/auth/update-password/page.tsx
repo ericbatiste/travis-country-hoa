@@ -1,6 +1,6 @@
 'use client';
 
-import { updatePasswordAction } from '@/actions/users';
+import { updatePasswordAction } from '../actions';
 import { useState, useTransition, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';

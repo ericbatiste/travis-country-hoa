@@ -1,7 +1,7 @@
 'use client';
 
 import { formatDate } from '@/utils/formatDate';
-import { UpdateBylawCardProps } from '@/actions/types';
+import { UpdateBylawCardProps } from '@/utils/types';
 
 export default function UpdateBylawCard({
   id,

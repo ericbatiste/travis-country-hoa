@@ -1,5 +1,5 @@
 import Quill from "./Quill";
-import { AdminEditorProps } from "@/actions/types";
+import { AdminEditorProps } from "@/utils/types";
 import SubmitContentBtn from "./SubmitContentBtn";
 
 export default function FeaturedBylawEditor({

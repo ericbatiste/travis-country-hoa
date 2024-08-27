@@ -1,4 +1,4 @@
-import { getBoardObservations } from '@/actions/apiCalls';
+import { getBoardObservations } from '@/utils/supabase/actions';
 import { sanitizeHTML } from '@/utils/sanitizeHtml';
 
 export const revalidate = 0;

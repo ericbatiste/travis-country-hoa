@@ -3,7 +3,7 @@
 import 'quill/dist/quill.snow.css';
 import { useQuill } from 'react-quilljs';
 import { useEffect } from 'react';
-import { QuillProps } from '@/actions/types';
+import { QuillProps } from '@/utils/types';
 
 export default function Quill({ value, onChange }: QuillProps) {
   const theme = 'snow';

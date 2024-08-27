@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react';
-import { SubmitContentBtnProps } from '@/actions/types';
+import { SubmitContentBtnProps } from '@/utils/types';
 
 export default function SubmitContentBtn({
   onClick,

@@ -1,8 +1,8 @@
 import { useState, useEffect, useTransition } from 'react';
 import UpdateBylawCard from './UpdateBylawCard';
 import FeaturedBylawEditor from './FeaturedBylawEditor';
-import { AdminEditorProps, GetBylawsType } from '@/actions/types';
-import { fetchBylawsClient } from '@/actions/apiCalls';
+import { AdminEditorProps, GetBylawsType } from '@/utils/types';
+import { fetchBylawsClient } from '@/utils/supabase/actions';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '@/utils/errorMsg';
 import { Loader2 } from 'lucide-react';

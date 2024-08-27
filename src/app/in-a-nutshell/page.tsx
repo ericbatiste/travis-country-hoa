@@ -1,4 +1,4 @@
-import { getFeaturedBylawContent } from '@/actions/apiCalls';
+import { getFeaturedBylawContent } from "@/utils/supabase/actions";
 import InANutshell from "@/components/InANutshell";
 
 export const revalidate = 0;

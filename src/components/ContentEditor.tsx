@@ -1,8 +1,8 @@
 import { useState, useTransition, ChangeEvent, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '@/utils/errorMsg';
-import { postNewFeaturedBylaw, updateBoardObservations, updateBylaw } from '@/actions/apiCalls';
-import { GetBylawsType, PostNewFeaturedBylawType } from '@/actions/types';
+import { postNewFeaturedBylaw, updateBoardObservations, updateBylaw } from '@/utils/supabase/actions';
+import { GetBylawsType, PostNewFeaturedBylawType } from '@/utils/types';
 import FeaturedBylawEditor from './FeaturedBylawEditor';
 import BoardObservationsEditor from './BoardObservationsEditor';
 import UpdateBylawEditor from './UpdateBylawEditor';
