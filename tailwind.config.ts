@@ -16,11 +16,11 @@ const config: Config = {
       'gray-cool': '#AFB5B3',
       'gray-text': '#474747',
       'white': '#FFFFFF',
-      'black': '#000000'
+      'black': '#000000',
     },
     fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
-      serif: ['Times New Roman', 'serif'],
+      sans: ['Lato', 'sans-serif'],
+      serif: ['Cardo', 'serif'],
     },
     extend: {
       backgroundImage: {

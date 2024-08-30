@@ -35,24 +35,33 @@ export const addUserToMailTable = async (formData: ContactType) => {
   }
 };
 
-export const fetchMailingListSupa = async (listType: string) => {
-  const supabase = await serverClient();
+export const fetchMailingListSupa = async () => {
+  const supabase = browserClient();
 
   const { data, error } = await supabase
     .from('mailing_list')
-    .select('first_name, last_name, email')
-    .eq(listType, true);
+    .select('first_name, last_name, email, monthly_close_up, questionnaire');
 
   if (error) {
-    console.error(`Error fetching emails for ${listType}:`, error);
+    console.error('Error fetching emails subscriber emails');
     return [];
   }
 
-  return data.map((subscriber: { first_name: string; last_name: string; email: string }) => ({
-    firstName: subscriber.first_name,
-    lastName: subscriber.last_name,
-    email: subscriber.email
-  }));
+  return data.map(
+    (sub: {
+      first_name: string;
+      last_name: string;
+      email: string;
+      monthly_close_up: boolean;
+      questionnaire: boolean;
+    }) => ({
+      firstName: sub.first_name,
+      lastName: sub.last_name,
+      email: sub.email,
+      monthlyCloseUp: sub.monthly_close_up,
+      questionnaire: sub.questionnaire
+    })
+  );
 };
 
 export const getFeaturedBylawContent = async (): Promise<FeaturedBylawContentType | null> => {

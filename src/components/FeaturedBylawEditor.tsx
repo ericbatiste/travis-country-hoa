@@ -13,7 +13,7 @@ export default function FeaturedBylawEditor({
 }: AdminEditorProps) {
 
   return (
-    <>
+    <div className="flex flex-col gap-6">
       <div className="flex justify-between gap-4 w-full">
         <div className="w-1/2">
           <label className="block text-lg font-bold mb-2">Section Number:</label>
@@ -44,7 +44,7 @@ export default function FeaturedBylawEditor({
         </div>
       </div>
 
-      <div className="mt-6">
+      <div>
         <label className="block text-lg font-bold mb-2">Add brief description:</label>
         <textarea
           name="description"
@@ -56,30 +56,32 @@ export default function FeaturedBylawEditor({
         />
       </div>
 
-      <div className="w-full flex-grow mt-4 mb-4">
-        <h2 className="text-lg font-bold mt-2 mb-2">Bylaw Text:</h2>
+      <div className="w-full flex-grow mb-10">
+        <h2 className="text-lg font-bold mb-2">Bylaw Text:</h2>
         <Quill
           value={featuredContent?.bylawText}
           onChange={content => handleEditorChange(content, 'featuredBylaw')}
         />
       </div>
 
-      <div className="w-full flex-grow mt-10 mb-6">
-        <h2 className="text-lg font-bold mt-2 mb-2">In a Nutshell:</h2>
+      <div className="w-full flex-grow">
+        <h2 className="text-lg font-bold mb-2">In a Nutshell:</h2>
         <Quill
           value={featuredContent?.inANutshell}
           onChange={content => handleEditorChange(content, 'inANutshell')}
         />
       </div>
 
-      <SubmitContentBtn
-        onClick={handleSubmit}
-        isPending={isPending}
-        isChecked={isCheckboxChecked}
-        setIsChecked={setIsCheckboxChecked}
-        text="Submit"
-      />
-    </>
+      <div>
+        <SubmitContentBtn
+          onClick={handleSubmit}
+          isPending={isPending}
+          isChecked={isCheckboxChecked}
+          setIsChecked={setIsCheckboxChecked}
+          text="Submit"
+          />
+      </div>
+    </div>
   );
 }
 

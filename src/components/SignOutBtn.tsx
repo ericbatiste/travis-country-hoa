@@ -1,14 +1,13 @@
 'use client';
 
 import { signOutAction } from '@/app/auth/actions';
-import { useState, useTransition } from 'react';
+import { useTransition } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import { Loader2, CircleUserRound, ChevronDown, ChevronUp } from 'lucide-react';
+import { Loader2, CircleUserRound } from 'lucide-react';
 
 export default function SignOutBtn() {
   const [isPending, startTransition] = useTransition();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -17,7 +16,6 @@ export default function SignOutBtn() {
       if (errorMessage) {
         toast.error(errorMessage);
       } else {
-        setIsDropdownOpen(false);
         toast.success('Log out success, Goodbye!');
         router.push('/');
       }
@@ -25,25 +23,14 @@ export default function SignOutBtn() {
   };
 
   return (
-    <>
-      <div
-        className="flex items-center space-x-1 cursor-pointer transition-all hover:scale-105"
-        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-      >
-        <CircleUserRound size={35} strokeWidth={1.5} color={isDropdownOpen ? '#AD5F40' : 'beige'}/>
-        {isDropdownOpen ? (
-          <ChevronUp size={35} strokeWidth={1.75} color={isDropdownOpen ? '#AD5F40' : 'beige'}/>
-        ) : (
-          <ChevronDown size={35} strokeWidth={1.75} color={isDropdownOpen ? '#AD5F40' : 'beige'}/>
-        )}
-      </div>
-      {isDropdownOpen && (
-        <div className="absolute right-0 top-full bg-beige shadow-md rounded-md py-2 pr-8 w-full">
-          <button onClick={handleLogout} className="px-4 py-2 w-full text-gray-text text-right hover:text-terracotta">
-            {isPending ? <Loader2 className="animate-spin" /> : 'Log out'}
-          </button>
-        </div>
-      )}
-    </>
+    <div
+      onClick={handleLogout}
+      className="group transition-all flex items-center bg-sob hover:bg-green p-4 space-x-2 shadow-xl border border-gray-text rounded-full cursor-pointer"
+    >
+      <CircleUserRound size={40} strokeWidth={1.75} color="white" />
+      <p className="transition-all text-2xl text-white hidden group-hover:block">
+        {isPending ? <Loader2 className="animate-spin" /> : 'Log out'}
+      </p>
+    </div>
   );
 }

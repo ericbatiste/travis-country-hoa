@@ -16,7 +16,7 @@ export default function InANutshell({
       <h2 className="my-6 md:my-10 text-2xl md:text-5xl font-semibold text-blue text-center">
         In A Nutshell
       </h2>
-      <section className="px-6 md:px-14 lg:px-[12rem] lg:min-w-[1200px]">
+      <section className="px-4 md:px-10 lg:px-[10rem] lg:min-w-[1300px]">
         <article 
           className="self-center bg-beige shadow-2xl text-lg transition-shadow lg:float-left p-8 lg:mr-12 mb-8 lg:w-2/5 cursor-pointer hover:shadow-xl"
           onClick={() => router.push('./')}
@@ -33,7 +33,7 @@ export default function InANutshell({
           {featuredBylawContent?.in_a_nutshell && (
             <div>
               <div
-                className="mt-2 md:text-lg"
+                className="mt-2 md:text-xl"
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(featuredBylawContent.in_a_nutshell),
                 }}

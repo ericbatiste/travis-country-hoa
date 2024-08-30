@@ -1,12 +1,12 @@
-import { ContactType } from "./types";
+import { ContactType } from './types';
 
-export const sendEmail = async (formData: ContactType) => {
-  const res = await fetch('/api/send-email', {
+export const sendContactUsEmail = async (formData: ContactType) => {
+  const res = await fetch('/api/send-contact-us-email', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(formData),
+    body: JSON.stringify(formData)
   });
 
   const result = await res.json();
@@ -16,7 +16,25 @@ export const sendEmail = async (formData: ContactType) => {
   }
 
   return result;
-}
+};
+
+export const sendAdminEmail = async (list: string, subject: string, body: string) => {
+  const res = await fetch('/api/send-admin-email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ list, subject, body })
+  });
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    throw new Error(`Failed to send message: ${result.error}`);
+  }
+
+  return result;
+};
 
 export const populateMailingLists = async () => {
   try {
@@ -32,4 +50,4 @@ export const populateMailingLists = async () => {
   } catch (error) {
     console.error('Error populating mailing lists:', error);
   }
-}
+};

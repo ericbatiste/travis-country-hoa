@@ -23,7 +23,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="max-h-screen flex justify-center mt-20">
       <form action={handleClickLoginButton} className="bg-gray-cool p-6 rounded shadow-md w-full max-w-sm">
         <h2 className="text-3xl font-light mb-5 text-center text-gray-text">Admin Login</h2>
         <div className="mb-4">

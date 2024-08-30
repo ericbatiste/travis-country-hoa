@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 import { addUserToMailTable } from '@/utils/supabase/actions';
-import { populateMailingLists, sendEmail } from '@/utils/apiCalls';
+import { populateMailingLists, sendContactUsEmail } from '@/utils/apiCalls';
 import toast from 'react-hot-toast';
 
 export default function ContactUs() {
@@ -26,7 +26,7 @@ export default function ContactUs() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await sendEmail(formData);
+      await sendContactUsEmail(formData);
       await addUserToMailTable(formData);
       await populateMailingLists();
 

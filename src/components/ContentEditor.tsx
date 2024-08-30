@@ -1,13 +1,20 @@
+"use client"
+
 import { useState, useTransition, ChangeEvent, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '@/utils/errorMsg';
-import { postNewFeaturedBylaw, updateBoardObservations, updateBylaw } from '@/utils/supabase/actions';
+import {
+  postNewFeaturedBylaw,
+  updateBoardObservations,
+  updateBylaw
+} from '@/utils/supabase/actions';
 import { GetBylawsType, PostNewFeaturedBylawType } from '@/utils/types';
 import FeaturedBylawEditor from './FeaturedBylawEditor';
 import BoardObservationsEditor from './BoardObservationsEditor';
 import UpdateBylawEditor from './UpdateBylawEditor';
 
-export default function ContentEditor({ editingSection }: { editingSection: string }) {
+export default function ContentEditor() {
+  const [editingSection, setEditingSection] = useState('new bylaw');
   const [isPending, startTransition] = useTransition();
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const [selectedBylaw, setSelectedBylaw] = useState<GetBylawsType | null>(null);
@@ -31,10 +38,14 @@ export default function ContentEditor({ editingSection }: { editingSection: stri
         sectionTitle: selectedBylaw.section_title,
         description: selectedBylaw.description,
         bylawText: selectedBylaw.bylaw_text,
-        inANutshell: selectedBylaw.in_a_nutshell,
+        inANutshell: selectedBylaw.in_a_nutshell
       });
     }
   }, [selectedBylaw, setFeaturedContent]);
+
+  const handleSectionChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setEditingSection(event.target.value);
+  };
 
   const handleEditorChange = (content: string, section: string) => {
     switch (section) {
@@ -129,7 +140,7 @@ export default function ContentEditor({ editingSection }: { editingSection: stri
       startTransition(async () => {
         const { sectionNumber, sectionTitle, description, bylawText, inANutshell } =
           featuredContent;
-        const id = selectedBylaw.id
+        const id = selectedBylaw.id;
         const { errorMessage } = await updateBylaw({
           id,
           sectionNumber,
@@ -169,7 +180,17 @@ export default function ContentEditor({ editingSection }: { editingSection: stri
   };
 
   return (
-    <div className="flex flex-col w-4/5 max-w-screen-lg mt-8">
+    <div className="flex flex-col w-4/5 my-10">
+      <select
+        onChange={handleSectionChange}
+        value={editingSection}
+        className="mb-6 px-4 py-2 border rounded w-min self-center"
+      >
+        <option value="new bylaw">Post new featured bylaw</option>
+        <option value="update bylaw">Edit existing bylaw</option>
+        <option value="board">Update Board Observations</option>
+      </select>
+
       {editingSection === 'new bylaw' && (
         <FeaturedBylawEditor
           featuredContent={featuredContent}

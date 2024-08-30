@@ -3,14 +3,25 @@ import { User } from '@supabase/supabase-js';
 
 export default function Header({ admin }: { admin: User | null }) {
   return (
-    <header className='bg-blue text-beige shadow-md w-full'>
-      <div className='flex justify-between items-center px-4 md:px-10 py-2 md:py-6'>
-        <div className='space-y-4'>
-          <h1 className="font-serif text-3xl md:text-5xl">Our Travis Country</h1>
-          <p className="italic text-lg md:text-2xl">Know your rights as property owners and members of the TCCSA!</p>
+    <header className="relative shadow-md w-full py-4 md:py-8">
+      <div className="absolute inset-0 bg-gradient-to-b from-[#a8c8c0] to-[#d6d3cc] z-0" />
+      <div
+        className="absolute inset-0 bg-no-repeat bg-cover saturate-150 z-10"
+        style={{ backgroundImage: "url('/marymoorefalls.png')", backgroundPosition: '50% 25%' }}
+      />
+      <div className="relative z-10 h-full flex justify-between px-4 md:px-10">
+        <div className="space-y-2">
+          <h1 className="font-serif text-white tracking-wide text-3xl md:text-6xl text-shadow">
+            Our Travis Country
+          </h1>
+          <p className="italic text-xl text-white font-semibold md:text-2xl text-shadow md:ml-10">
+            KNOW YOUR RIGHTS as property owners and members of the TCCSA!
+          </p>
         </div>
         {admin && (
-          <SignOutBtn />
+          <div className="">
+            <SignOutBtn />
+          </div>
         )}
       </div>
     </header>
