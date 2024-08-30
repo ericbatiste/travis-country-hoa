@@ -45,7 +45,7 @@ export const resetPasswordAction = async (formData: FormData) => {
     };
 
     const { error } = await auth.resetPasswordForEmail(data.email, {
-      redirectTo: 'http://localhost:3000/auth/update-password',
+      redirectTo: 'https://www.ourtraviscountry.com/auth/update-password',
     })
     
     if (error) throw error;
