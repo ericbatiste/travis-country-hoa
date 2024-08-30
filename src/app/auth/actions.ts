@@ -17,7 +17,7 @@ export const getAuthUser = async () => {
   }
 }
 
-export async function loginAction(formData: FormData) {
+export const loginAction = async (formData: FormData) => {
   try {
     const { auth } = await serverClient();
 
@@ -28,6 +28,26 @@ export async function loginAction(formData: FormData) {
 
     const { error } = await auth.signInWithPassword(data);
 
+    if (error) throw error;
+
+    return { errorMessage: null };
+  } catch (error) {
+    return { errorMessage: getErrorMessage(error) };
+  }
+}
+
+export const resetPasswordAction = async (formData: FormData) => {
+  try {
+    const { auth } = await serverClient();
+
+    const data = {
+      email: formData.get('email') as string,
+    };
+
+    const { error } = await auth.resetPasswordForEmail(data.email, {
+      redirectTo: 'http://localhost:3000/auth/update-password',
+    })
+    
     if (error) throw error;
 
     return { errorMessage: null };
