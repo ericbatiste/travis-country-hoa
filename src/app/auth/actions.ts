@@ -43,7 +43,7 @@ export const resetPasswordAction = async (formData: FormData) => {
     const email = formData.get('email') as string
 
     const { error } = await auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://www.ourtraviscountry.com/auth/update-password',
+      redirectTo: 'https://www.ourtraviscountry.com/update-password',
     })
     
     if (error) throw error;
