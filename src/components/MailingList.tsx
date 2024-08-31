@@ -1,40 +1,38 @@
-"use client"
+'use client';
 
-import { useEffect, useState } from "react";
-import { fetchMailingListSupa } from "@/utils/supabase/actions";
+import { useState } from 'react';
+import { SubscriberType } from '@/utils/types';
+import SubscriberCard from '@/components/SubscriberCard';
 
-export default function MailingList() {
-  const [subs, setSubs] = useState<any[]>([]);
+export default function MailingList({ subscribers }: { subscribers: SubscriberType[] }) {
+  const [filter, setFilter] = useState<'all' | 'monthlyCloseUp' | 'questionnaire'>('all');
 
-  useEffect(() => {
-    const getSubs = async () => {
-      try {
-        const subscribers = await fetchMailingListSupa();
-        console.log(subscribers)
-        setSubs(subscribers);
-      } catch (error) {
-        console.error("Error fetching subscribers:", error);
-      }
-    };
-
-    getSubs();
-    console.log(subs)
-  }, []);
+  const filteredSubscribers = subscribers.filter(subs => {
+    if (filter === 'monthlyCloseUp') return subs.monthlyCloseUp;
+    if (filter === 'questionnaire') return subs.questionnaire;
+    return true;
+  });
 
   return (
-    <div className="my-10">
-      <h1 className="text-xl font-bold mb-4 text-center">Mailing List</h1>
-      {subs.length === 0 ? (
-        <p>No subscribers found.</p>
-      ) : (
-        <ul className="list-disc pl-5">
-          {subs.map((sub, index) => (
-            <li key={index} className="mb-2">
-              <span className="font-semibold">{sub.firstName} {sub.lastName}</span> - {sub.email}
-            </li>
-          ))}
-        </ul>
-      )}
+    <div className="flex flex-col gap-6 items-center my-10 w-3/4 mx-auto">
+      <div className="">
+        <select
+          id="filter"
+          value={filter}
+          onChange={e => setFilter(e.target.value as 'all' | 'monthlyCloseUp' | 'questionnaire')}
+          className="border rounded p-2"
+        >
+          <option value="all">All Subscribers</option>
+          <option value="monthlyCloseUp">Monthly Close-Up</option>
+          <option value="questionnaire">Questionnaire</option>
+        </select>
+      </div>
+      <h1 className="text-3xl font-bold text-center text-gray-800">Mailing List</h1>
+      <div className="flex flex-col w-full">
+        {filteredSubscribers.map((sub, index) => (
+          <SubscriberCard key={index} subscriber={sub} />
+        ))}
+      </div>
     </div>
   );
 }

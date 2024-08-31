@@ -9,6 +9,14 @@ export type ContactType = {
   questionnaire: boolean;
 }
 
+export type SubscriberType = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  monthlyCloseUp: boolean;
+  questionnaire: boolean;
+};
+
 export type PostNewFeaturedBylawType = {
   sectionNumber: string;
   sectionTitle: string;
