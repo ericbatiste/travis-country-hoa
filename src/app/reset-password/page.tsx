@@ -3,8 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 import { resetPasswordAction } from '../auth/actions';
+import { verifyUserEmail } from '@/utils/supabase/actions';
 import toast from 'react-hot-toast';
 import { Loader2 } from 'lucide-react';
+import { getErrorMessage } from '@/utils/errorMsg';
 
 export default function ResetPassword() {
   const router = useRouter();
@@ -12,11 +14,16 @@ export default function ResetPassword() {
 
   const handleClickSendButton = async (formData: FormData) => {
     startTransition(async () => {
-      const { errorMessage } = await resetPasswordAction(formData);
-      if (errorMessage) {
-        toast.error(errorMessage);
-      } else {
-        toast.success('Success, check your email!');
+      try {
+        const data = await verifyUserEmail(formData);
+        if (data?.length) {
+          const { errorMessage } = await resetPasswordAction(formData);
+          errorMessage ? toast.error(errorMessage) : toast.success('Success, check your email!');
+        } else {
+          throw new Error('Could not verify email');
+        }
+      } catch (error) {
+        toast.error(getErrorMessage(error));
       }
     });
   };

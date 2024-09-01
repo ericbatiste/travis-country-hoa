@@ -2,6 +2,7 @@
 
 import { serverClient } from '@/utils/supabase/server';
 import { getErrorMessage } from '@/utils/errorMsg';
+import { headers } from 'next/headers';
 
 export const getAuthUser = async () => {
   try {
@@ -39,11 +40,11 @@ export const loginAction = async (formData: FormData) => {
 export const resetPasswordAction = async (formData: FormData) => {
   try {
     const { auth } = await serverClient();
-
+    const origin = headers().get('origin');
     const email = formData.get('email') as string
 
     const { error } = await auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://www.ourtraviscountry.com/update-password',
+      redirectTo: `${origin}/update-password`,
     })
     
     if (error) throw error;
@@ -63,7 +64,7 @@ export const updatePasswordAction = async (password: string) => {
     } = await auth.getUser();
 
     if (!user) {
-      throw new Error('No active session found. Please log in again.');
+      throw new Error('No active session found. Please log in or request new password reset link.');
     }
 
     const { error } = await auth.updateUser({ password });

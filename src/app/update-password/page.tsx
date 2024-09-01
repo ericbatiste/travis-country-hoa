@@ -10,10 +10,11 @@ export default function PasswordPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isPending, startTransition] = useTransition();
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleSubmitPassword = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+    event.preventDefault();
 
     if (password !== confirmPassword) {
       return toast.error('Passwords do not match!');
@@ -31,49 +32,69 @@ export default function PasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="max-h-screen flex justify-center mt-20">
       <form
         onSubmit={handleSubmitPassword}
-        className="bg-white p-6 rounded shadow-md w-full max-w-sm"
+        className="flex flex-col gap-4 bg-gray-cool p-6 rounded shadow-lg w-full max-w-sm"
       >
-        <h2 className="text-2xl font-bold mb-5 text-center">Create Password</h2>
-        <div className="mb-4">
-          <label htmlFor="password" className="block text-gray-700 mb-2">
+        <h2 className="text-3xl text-center">Create New Password</h2>
+        <div>
+          <label htmlFor="password" className="block text-lg mb-2">
             Enter Password
           </label>
           <input
             id="password"
             name="password"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={event => setPassword(event.target.value)}
             required
             disabled={isPending}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-warm rounded-md shadow-sm focus:outline-none focus:ring-blue focus:border-blue"
           />
         </div>
-        <div className="mb-6">
-          <label htmlFor="confirmPassword" className="block text-gray-700 mb-2">
+        <div>
+          <label htmlFor="confirmPassword" className="block text-lg mb-2">
             Confirm Password
           </label>
           <input
             id="confirmPassword"
             name="confirmPassword"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
+            onChange={event => setConfirmPassword(event.target.value)}
             required
             disabled={isPending}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            className="mt-1 block w-full p-2 border border-gray-warm rounded-md shadow-sm focus:outline-none focus:ring-blue focus:border-blue"
           />
+          <div className="flex items-center justify-center">
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="text-blue hover:underline focus:outline-none"
+            >
+              {showPassword ? 'Hide Password' : 'Show Password'}
+            </button>
+          </div>
         </div>
-        <button
-          type="submit"
-          disabled={isPending}
-          className="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50 w-full"
-        >
-          {isPending ? <Loader2 className="animate-spin" /> : 'Update Password'}
-        </button>
+        <div className="flex items-center justify-center mt-2">
+          <button
+            type="submit"
+            disabled={isPending}
+            className="bg-blue text-white text-lg py-1 px-6 rounded-md hover:bg-green focus:outline-none focus:ring-2 focus:ring-green focus:ring-opacity-50 w-full"
+          >
+            {isPending ? <Loader2 className="animate-spin" /> : 'Update Password'}
+          </button>
+        </div>
+        <div className="flex items-center justify-center">
+          <button
+            type="button"
+            onClick={() => router.push('/reset-password')}
+            className="text-lg text-blue hover:underline focus:outline-none"
+          >
+            Email password reset link.
+          </button>
+        </div>
       </form>
     </div>
   );

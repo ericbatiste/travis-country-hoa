@@ -11,6 +11,24 @@ import {
   BylawParamsType
 } from '../types';
 
+export const verifyUserEmail = async (formData: FormData) => {
+  try {
+    const supabase = browserClient();
+    const email = formData.get('email');
+    const { data, error } = await supabase
+      .from('users')
+      .select('email')
+      .eq('email', email);
+
+    if (error) throw error
+    
+    return data
+  } catch (error) {
+    console.error(error);
+    return null
+  }
+}
+
 export const addUserToMailTable = async (formData: ContactType) => {
   const { firstName, lastName, email, monthlyCloseUp, questionnaire } = formData;
   if (!monthlyCloseUp && !questionnaire) return;
