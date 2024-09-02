@@ -12,7 +12,7 @@ export default async function BoardContent() {
         Observations Re: Our Current Board 
       </h2>
       {boardObservation?.content && (
-        <article className="p-6 md:p-14 bg-beige shadow-2xl">
+        <article className="p-4 md:p-14 bg-beige shadow-2xl">
           <div
             className="prose md:text-lg lg:text-xl text-gray-text"
             dangerouslySetInnerHTML={{ __html: sanitizeHTML(boardObservation.content) }}

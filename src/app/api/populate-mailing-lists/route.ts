@@ -10,7 +10,8 @@ export async function GET() {
     
     const { data: allSubscribers, error } = await supabase
       .from('mailing_list')
-      .select('first_name, last_name, email, monthly_close_up, questionnaire');
+      .select('first_name, last_name, email, monthly_close_up, questionnaire')
+      .or('monthly_close_up.eq.true,questionnaire.eq.true');
 
     if (!allSubscribers) {
       throw new Error(error.message)

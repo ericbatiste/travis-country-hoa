@@ -51,3 +51,27 @@ export const addToMailingList = async (
     console.error(`Failed to add ${email} to ${mailingList}:`, error);
   }
 }
+
+export async function unsubscribeFromMailgunLists(
+  email: string,
+  monthlyCloseUp: string,
+  questionnaire: string
+) {
+  try {
+    const mg = mailgunClient();
+    const domain = process.env.MAILGUN_DOMAIN as string;
+    const listsToUnsubscribe: string[] = [];
+
+    if (monthlyCloseUp) listsToUnsubscribe.push(`monthly_close_up@${domain}`);
+    if (questionnaire) listsToUnsubscribe.push(`questionnaire@${domain}`);
+
+    const unsubscribe = listsToUnsubscribe.map(list => {
+      return mg.lists.members.destroyMember(list, email);
+    });
+
+    await Promise.all(unsubscribe);
+  } catch (error) {
+    console.error('Failed to unsubscribe from Mailgun lists:', error);
+    throw new Error('Failed to unsubscribe from Mailgun lists');
+  }
+}

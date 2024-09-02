@@ -15,12 +15,21 @@ export async function POST(req: NextRequest) {
 
   const mg = mailgunClient()
   const domain = process.env.MAILGUN_DOMAIN as string;
+  const unsubscribeLink = `https://${domain}/unsubscribe?email=%recipient%`;
+  const bodyWithUnsubscribe = `
+  <p>${sanitizeHTML(body)}</p>
+  <p>
+    No longer want to recieve emails from Our Travis Country? 
+    <a href="${unsubscribeLink}">unsubscribe here</a>.
+  </p>
+`;
 
   const data = {
     from: `Our Travis Country <no-reply@${domain}>`,
     to: `${list}@${domain}`,
     subject: subject,
-    html: sanitizeHTML(body)
+    html: bodyWithUnsubscribe,
+    'h:List-Unsubscribe': `<${unsubscribeLink}>`,
   };
 
   try {

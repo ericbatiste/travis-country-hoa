@@ -58,7 +58,7 @@ export const fetchMailingListSupa = async () => {
 
   const { data, error } = await supabase
     .from('mailing_list')
-    .select('first_name, last_name, email, monthly_close_up, questionnaire');
+    .select('first_name, last_name, email, monthly_close_up, questionnaire, unsubscribed');
 
   if (error) {
     console.error('Error fetching emails subscriber emails');
@@ -72,15 +72,47 @@ export const fetchMailingListSupa = async () => {
       email: string;
       monthly_close_up: boolean;
       questionnaire: boolean;
+      unsubscribed: boolean;
     }) => ({
       firstName: sub.first_name,
       lastName: sub.last_name,
       email: sub.email,
       monthlyCloseUp: sub.monthly_close_up,
-      questionnaire: sub.questionnaire
+      questionnaire: sub.questionnaire,
+      unsubscribed: sub.unsubscribed
     })
   );
 };
+
+export const updateMailingListUser = async (
+  email: string,
+  monthlyCloseUps: boolean,
+  questionnaires: boolean
+) => {
+  try {
+    const supabase = browserClient();
+
+    const updateValue = (value: boolean) => {
+      if (value) return false;
+      return;
+    }
+
+    const { error } = await supabase
+      .from('mailing_list')
+      .update({
+        monthly_close_up: updateValue(monthlyCloseUps),
+        questionnaire: updateValue(questionnaires)
+      })
+      .eq('email', email);
+
+    if (error) throw error;
+
+  } catch (error) {
+    console.error('Failed to update mailing list in database:', error);
+    throw new Error('Failed to update mailing list in database');
+  }
+};
+
 
 export const getFeaturedBylawContent = async (): Promise<FeaturedBylawContentType | null> => {
   try {

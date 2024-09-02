@@ -51,3 +51,33 @@ export const populateMailingLists = async () => {
     console.error('Error populating mailing lists:', error);
   }
 };
+
+export async function unsubscribeUser(
+  email: string,
+  monthlyCloseUp: boolean,
+  questionnaire: boolean
+): Promise<boolean> {
+  try {
+    const response = await fetch('/api/unsubscribe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        monthlyCloseUp,
+        questionnaire,
+      }),
+    });
+
+    if (response.ok) {
+      return true;
+    } else {
+      console.error('Failed to unsubscribe:', await response.json());
+      return false;
+    }
+  } catch (error) {
+    console.error('Failed to unsubscribe:', error);
+    return false;
+  }
+}

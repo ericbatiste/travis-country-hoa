@@ -1,11 +1,13 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useTransition } from 'react';
 import { addUserToMailTable } from '@/utils/supabase/actions';
 import { populateMailingLists, sendContactUsEmail } from '@/utils/apiCalls';
+import { Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 export default function ContactUs() {
+  const [isPending, startTransition] = useTransition()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -23,19 +25,21 @@ export default function ContactUs() {
     }));
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    try {
-      await sendContactUsEmail(formData);
-      await addUserToMailTable(formData);
-      await populateMailingLists();
-
-      toast.success('Your message has been sent!');
-      resetFormFields();
-    } catch (error) {
-      console.error('Failed to send message:', error);
-      toast.error('An error occurred while sending your message. Please try again later.');
-    }
+    startTransition(async () => {
+      try {
+        await sendContactUsEmail(formData);
+        await addUserToMailTable(formData);
+        await populateMailingLists();
+        
+        toast.success('Your message has been sent!');
+        resetFormFields();
+      } catch (error) {
+        console.error('Failed to send message:', error);
+        toast.error('An error occurred while sending your message. Please try again later.');
+      }
+    })
   };
 
   const resetFormFields = () => {
@@ -52,17 +56,17 @@ export default function ContactUs() {
   return (
     <>
       <div className="w-full px-8 md:px-20 my-10 md:my-20">
-        <div className="mb-20">
-          <h1 className="text-4xl md:text-6xl font-bold mb-10 text-blue text-center">
+        <div className="mb-10 md:mb-20">
+          <h1 className="text-2xl md:text-5xl font-bold mb-10 text-blue text-center">
             We are TSSCA members too…
           </h1>
-          <p className="text-center text-xl md:text-2xl text-gray-text">
+          <p className="text-center text-lg md:text-2xl text-gray-text">
             And we would like to hear from you! Send us a message HERE or email us at{' '}
             <span className="font-bold text-blue italic">info@ourtraviscountry.com</span>
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="md:px-10 space-y-16">
+        <form onSubmit={handleSubmit} className="md:px-10 space-y-10 md:space-y-16">
           <div className="flex flex-col lg:flex-row gap-6">
             <div className="space-y-4">
               <div>
@@ -158,10 +162,10 @@ export default function ContactUs() {
           </div>
 
           <button
-            type="submit"
-            className="w-full justify-center py-2 px-4 border border-transparent shadow-sm rounded-md text-beige text-lg font-semibold bg-blue hover:bg-green focus:outline-blue focus:ring-2 focus:ring-offset-2 focus:ring-blue"
-          >
-            Send message
+            disabled={isPending}
+            className="flex items-center justify-center w-full bg-blue text-white text-lg py-1 px-6 rounded-md hover:bg-green focus:outline-none focus:ring-2 focus:ring-green focus:ring-opacity-50"
+            >
+            {isPending ? <Loader2 className="animate-spin" /> : "Send Message"}
           </button>
         </form>
 
