@@ -3,7 +3,6 @@ import { getErrorMessage } from '../errorMsg';
 import { browserClient } from './client';
 import { serverClient } from './server';
 import {
-  ContactType,
   PostNewFeaturedBylawType,
   FeaturedBylawContentType,
   BoardObservationsContentType,
@@ -28,91 +27,6 @@ export const verifyUserEmail = async (formData: FormData) => {
     return null
   }
 }
-
-export const addUserToMailTable = async (formData: ContactType) => {
-  const { firstName, lastName, email, monthlyCloseUp, questionnaire } = formData;
-  if (!monthlyCloseUp && !questionnaire) return;
-  try {
-    const supabase = browserClient();
-
-    const { error } = await supabase
-      .from('mailing_list')
-      .insert({
-          first_name: firstName,
-          last_name: lastName,
-          email: email,
-          monthly_close_up: monthlyCloseUp,
-          questionnaire: questionnaire
-      });
-
-    if (error) throw error
-
-    return { errorMessage: null };
-  } catch (error) {
-    return { errorMessage: getErrorMessage(error) };
-  }
-};
-
-export const fetchMailingListSupa = async () => {
-  const supabase = browserClient();
-
-  const { data, error } = await supabase
-    .from('mailing_list')
-    .select('first_name, last_name, email, monthly_close_up, questionnaire, unsubscribed');
-
-  if (error) {
-    console.error('Error fetching emails subscriber emails');
-    return [];
-  }
-
-  return data.map(
-    (sub: {
-      first_name: string;
-      last_name: string;
-      email: string;
-      monthly_close_up: boolean;
-      questionnaire: boolean;
-      unsubscribed: boolean;
-    }) => ({
-      firstName: sub.first_name,
-      lastName: sub.last_name,
-      email: sub.email,
-      monthlyCloseUp: sub.monthly_close_up,
-      questionnaire: sub.questionnaire,
-      unsubscribed: sub.unsubscribed
-    })
-  );
-};
-
-export const updateMailingListUser = async (
-  email: string,
-  monthlyCloseUps: boolean,
-  questionnaires: boolean
-) => {
-  try {
-    const supabase = browserClient();
-
-    const updateValue = (value: boolean) => {
-      if (value) return false;
-      return;
-    }
-
-    const { error } = await supabase
-      .from('mailing_list')
-      .update({
-        monthly_close_up: updateValue(monthlyCloseUps),
-        questionnaire: updateValue(questionnaires)
-      })
-      .eq('email', email);
-
-    if (error) throw error;
-
-  } catch (error) {
-    console.error('Failed to update mailing list in database:', error);
-    throw new Error('Failed to update mailing list in database');
-  }
-};
-
 
 export const getFeaturedBylawContent = async (): Promise<FeaturedBylawContentType | null> => {
   try {

@@ -1,3 +1,4 @@
+import { MailListMember } from 'mailgun.js';
 import { ChangeEvent } from 'react';
 
 export type ContactType = {
@@ -9,12 +10,9 @@ export type ContactType = {
   questionnaire: boolean;
 }
 
-export type SubscriberType = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  monthlyCloseUp: boolean;
-  questionnaire: boolean;
+export type SubscribersType = {
+  monthlyCloseUp: MailListMember[];
+  questionnaire: MailListMember[];
 };
 
 export type PostNewFeaturedBylawType = {

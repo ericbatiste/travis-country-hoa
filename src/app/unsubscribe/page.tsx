@@ -26,7 +26,6 @@ export default function Unsubscribe() {
     }
 
     startTransition(async () => {
-      console.log(email)
       const success = await unsubscribeUser(email!, monthlyCloseUp, questionnaire);
       
       if (success) {
@@ -75,7 +74,7 @@ export default function Unsubscribe() {
           </div>
           <button
             disabled={isPending}
-            className="bg-blue text-white text-lg py-1 px-6 rounded-md hover:bg-green focus:outline-none focus:ring-2 focus:ring-green focus:ring-opacity-50"
+            className="flex justify-center items-center bg-blue text-white text-lg py-1 px-6 rounded-md hover:bg-green focus:outline-none focus:ring-2 focus:ring-green focus:ring-opacity-50"
           >
             {isPending ? <Loader2 className="animate-spin" /> : 'Unsubscribe'}
           </button>

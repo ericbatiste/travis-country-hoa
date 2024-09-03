@@ -1,21 +1,40 @@
 'use client';
 
-import { useState } from 'react';
-import { SubscriberType } from '@/utils/types';
+import { useEffect, useState } from 'react';
+import { SubscribersType } from '@/utils/types';
 import SubscriberCard from '@/components/SubscriberCard';
 
-export default function MailingList({ subscribers }: { subscribers: SubscriberType[] }) {
+export default function MailingList({ subscribers }: { subscribers: SubscribersType }) {
   const [filter, setFilter] = useState<'all' | 'monthlyCloseUp' | 'questionnaire'>('all');
+  const [filteredSubscribers, setFilteredSubscribers] = useState<any[]>([]);
 
-  const filteredSubscribers = subscribers.filter(subs => {
-    if (filter === 'monthlyCloseUp') return subs.monthlyCloseUp;
-    if (filter === 'questionnaire') return subs.questionnaire;
-    return true;
-  });
+  const { monthlyCloseUp, questionnaire } = subscribers;
+  const allSubscribers = Array.from(
+    new Map(
+      [...monthlyCloseUp, ...questionnaire].map(subscriber => [subscriber.address, subscriber])
+    ).values()
+  );
+
+  useEffect(() => {
+    switch (filter) {
+      case 'all':
+        setFilteredSubscribers(allSubscribers);
+        break;
+      case 'monthlyCloseUp':
+        setFilteredSubscribers(monthlyCloseUp);
+        break;
+      case 'questionnaire':
+        setFilteredSubscribers(questionnaire);
+        break;
+      default:
+        setFilteredSubscribers([]);
+        break;
+    }
+  }, [filter]);
 
   return (
     <div className="flex flex-col gap-6 items-center my-10 w-3/4 mx-auto">
-      <div className="">
+      <div>
         <select
           id="filter"
           value={filter}

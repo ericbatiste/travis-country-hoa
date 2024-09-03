@@ -1,46 +1,14 @@
-import { NextResponse } from 'next/server';
-import { serverClient } from '@/utils/supabase/server';
-import { mailgunClient, fetchExistingEmails, addToMailingList } from '@/utils/mailgun';
+import { NextRequest, NextResponse } from 'next/server';
+import { addUserToMailgunLists, mailgunClient } from '@/utils/mailgun';
 
-export async function GET() {
+export async function POST(req: NextRequest) {
+  const { firstName, lastName, email } = await req.json();
+  const domain = process.env.MAILGUN_DOMAIN!;
+  const mailingLists = [`monthly_close_up@${domain}`, `questionnaire@${domain}`];
+
   try {
-    const mg = mailgunClient();
-    const supabase = await serverClient()
-    const domain = process.env.MAILGUN_DOMAIN!;
-    
-    const { data: allSubscribers, error } = await supabase
-      .from('mailing_list')
-      .select('first_name, last_name, email, monthly_close_up, questionnaire')
-      .or('monthly_close_up.eq.true,questionnaire.eq.true');
-
-    if (!allSubscribers) {
-      throw new Error(error.message)
-    } else {
-      const monthlyCloseUpSubscribers = allSubscribers.filter(sub => sub.monthly_close_up);
-      const questionnaireSubscribers = allSubscribers.filter(sub => sub.questionnaire);
-      
-      const existingMCUEmails = await fetchExistingEmails(mg, `monthly_close_up@${domain}`);
-      const existingQuestEmails = await fetchExistingEmails(mg, `questionnaire@${domain}`);
-      
-      for (const { first_name, last_name, email } of monthlyCloseUpSubscribers) {
-        await addToMailingList(
-          first_name,
-          last_name,
-          email,
-          `monthly_close_up@${domain}`,
-          existingMCUEmails
-        );
-      }
-      
-      for (const { first_name, last_name, email } of questionnaireSubscribers) {
-        await addToMailingList(
-          first_name,
-          last_name,
-          email,
-          `questionnaire@${domain}`,
-          existingQuestEmails
-        );
-      }
+    for (const list of mailingLists) {
+      await addUserToMailgunLists(firstName, lastName, email, list);
     }
 
     return NextResponse.json({ message: 'Both mailing lists populated successfully' });
@@ -49,3 +17,4 @@ export async function GET() {
     return NextResponse.json({ error: 'Failed to populate mailing lists' }, { status: 500 });
   }
 }
+

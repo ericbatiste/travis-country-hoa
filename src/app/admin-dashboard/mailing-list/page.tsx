@@ -1,11 +1,11 @@
 import AdminNav from "@/components/AdminNav";
 import MailingList from "@/components/MailingList";
-import { fetchMailingListSupa } from "@/utils/supabase/actions";
+import { fetchMailgunSubscribers } from "@/utils/mailgun";
 
 export const revalidate = 0;
 
 export default async function Subscribers() {
-  const subscribers = await fetchMailingListSupa();
+  const subscribers = await fetchMailgunSubscribers();
 
   return (
     <div className="flex w-screen">

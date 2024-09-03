@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, FormEvent, useTransition } from 'react';
-import { addUserToMailTable } from '@/utils/supabase/actions';
 import { populateMailingLists, sendContactUsEmail } from '@/utils/apiCalls';
 import { Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
@@ -30,8 +29,8 @@ export default function ContactUs() {
     startTransition(async () => {
       try {
         await sendContactUsEmail(formData);
-        await addUserToMailTable(formData);
-        await populateMailingLists();
+        const { firstName, lastName, email } = formData;
+        await populateMailingLists(firstName, lastName, email);
         
         toast.success('Your message has been sent!');
         resetFormFields();

@@ -36,9 +36,19 @@ export const sendAdminEmail = async (list: string, subject: string, body: string
   return result;
 };
 
-export const populateMailingLists = async () => {
+export const populateMailingLists = async (firstName: string, lastName: string, email: string) => {
   try {
-    const res = await fetch('/api/populate-mailing-lists');
+    const res = await fetch('/api/populate-mailing-lists', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email
+      })
+    });
 
     const result = await res.json();
 
@@ -61,13 +71,13 @@ export async function unsubscribeUser(
     const response = await fetch('/api/unsubscribe', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         email,
         monthlyCloseUp,
-        questionnaire,
-      }),
+        questionnaire
+      })
     });
 
     if (response.ok) {

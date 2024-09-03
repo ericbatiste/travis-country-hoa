@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { unsubscribeFromMailgunLists } from '@/utils/mailgun';
-import { updateMailingListUser } from '@/utils/supabase/actions';
+import { unsubUserFromMailgunLists } from '@/utils/mailgun';
 
 export async function POST(req: NextRequest) {
   try {
@@ -9,10 +8,8 @@ export async function POST(req: NextRequest) {
     if (!email) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
     }
-
-    await unsubscribeFromMailgunLists(email, monthlyCloseUp, questionnaire);
-
-    await updateMailingListUser(email, monthlyCloseUp, questionnaire);
+    
+    await unsubUserFromMailgunLists(email, monthlyCloseUp, questionnaire);
 
     return NextResponse.json({ success: true });
   } catch (error) {

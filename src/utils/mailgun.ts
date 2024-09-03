@@ -1,3 +1,4 @@
+import { MailListMember } from 'mailgun.js';
 import formData from 'form-data';
 import Mailgun from 'mailgun.js';
 
@@ -9,50 +10,51 @@ export const mailgunClient = () => {
   });
 };
 
-export const fetchExistingEmails = async (
-  mg: ReturnType<typeof mailgunClient>,
-  mailingList: string
-): Promise<Set<string>> => {
-  const existingEmails = new Set<string>();
+export const fetchMailgunSubscribers = async (): Promise<{
+  monthlyCloseUp: MailListMember[];
+  questionnaire: MailListMember[];
+}> => {
+  const mg = mailgunClient();
+  const domain = process.env.MAILGUN_DOMAIN as string;
+  const mailingLists = [`monthly_close_up@${domain}`, `questionnaire@${domain}`];
 
   try {
-    const response = await mg.lists.members.listMembers(mailingList);
-    const members = response.items;
+    const [monthlyCloseUp, questionnaire] = await Promise.all([
+      mg.lists.members.listMembers(mailingLists[0]),
+      mg.lists.members.listMembers(mailingLists[1]),
+    ]);
 
-    for (const member of members) {
-      existingEmails.add(member.address);
-    }
+    return {
+      monthlyCloseUp: monthlyCloseUp.items,
+      questionnaire: questionnaire.items,
+    };
   } catch (error) {
-    console.error(`Failed to fetch existing members from ${mailingList}:`, error);
+    console.error(`Failed to fetch existing members from ${mailingLists}:`, error);
+    throw error;
   }
+};
 
-  return existingEmails;
-}
-
-export const addToMailingList = async (
+export const addUserToMailgunLists = async (
   firstName: string,
   lastName: string,
   email: string,
-  mailingList: string,
-  existingEmails: Set<string>
+  mailingList: string
 ) => {
-  if (existingEmails.has(email)) return;
-  const mg = mailgunClient();
-
   try {
+    const mg = mailgunClient();
+
     await mg.lists.members.createMember(mailingList, {
       subscribed: true,
       address: email,
       name: `${firstName} ${lastName}`
     });
-
     console.log(`Added ${email} to ${mailingList}.`);
   } catch (error) {
     console.error(`Failed to add ${email} to ${mailingList}:`, error);
   }
-}
+};
 
-export async function unsubscribeFromMailgunLists(
+export async function unsubUserFromMailgunLists(
   email: string,
   monthlyCloseUp: string,
   questionnaire: string
@@ -60,12 +62,12 @@ export async function unsubscribeFromMailgunLists(
   try {
     const mg = mailgunClient();
     const domain = process.env.MAILGUN_DOMAIN as string;
-    const listsToUnsubscribe: string[] = [];
 
-    if (monthlyCloseUp) listsToUnsubscribe.push(`monthly_close_up@${domain}`);
-    if (questionnaire) listsToUnsubscribe.push(`questionnaire@${domain}`);
+    const mailingLists: string[] = [];
+    if (monthlyCloseUp) mailingLists.push(`monthly_close_up@${domain}`);
+    if (questionnaire) mailingLists.push(`questionnaire@${domain}`);
 
-    const unsubscribe = listsToUnsubscribe.map(list => {
+    const unsubscribe = mailingLists.map(list => {
       return mg.lists.members.destroyMember(list, email);
     });
 
