@@ -15,8 +15,7 @@ export async function POST(req: NextRequest) {
 
   const mg = mailgunClient()
   const domain = process.env.MAILGUN_DOMAIN as string;
-  // const unsubscribeLink = `https://${domain}/unsubscribe?email=%recipient%`;
-  const unsubscribeLink = `http://localhost:3000/unsubscribe?email=%recipient%`;
+  const unsubscribeLink = `https://${domain}/unsubscribe?email=%recipient%`;
   const bodyWithUnsubscribe = `
   <p>${sanitizeHTML(body)}</p>
   <p>
