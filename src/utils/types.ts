@@ -50,13 +50,13 @@ export type FeaturedBylawContentType = {
 export type GetBoardActionsType = {
   id: string;
   created_at: string;
+  description: string;
   content: string;
 }
 
-export type BoardObservationsContentType = {
-  id?: string;
-  last_updated?: string;
-  content?: string;
+export type BoardActionContentType = {
+  description: string;
+  content: string;
 };
 
 export type ReturnsErrorMsg = {

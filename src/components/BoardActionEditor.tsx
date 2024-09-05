@@ -6,7 +6,7 @@ import { getErrorMessage } from '@/utils/errorMsg';
 import { postNewBoardAction, updateBoardAction } from '@/utils/supabase/actions';
 import Quill from './Quill';
 import SubmitContentBtn from './SubmitContentBtn';
-import { BoardActionEditorProps } from '@/utils/types';
+import { BoardActionEditorProps, BoardActionContentType } from '@/utils/types';
 
 export default function BoardActionEditor({
   editingSection,
@@ -15,22 +15,33 @@ export default function BoardActionEditor({
 }: BoardActionEditorProps) {
   const [isPending, startTransition] = useTransition();
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-  const [boardContent, setBoardContent] = useState('');
+  const [boardContent, setBoardContent] = useState<BoardActionContentType>({
+    description: '',
+    content: ''
+  });
 
   useEffect(() => {
     if (selectedAction) {
-      setBoardContent(selectedAction.content);
+      setBoardContent({
+        description: selectedAction.description,
+        content: selectedAction.content
+      });
     } else {
       resetFields();
     }
   }, [selectedAction]);
 
   const handleEditorChange = (content: string) => {
-    setBoardContent(content)
-  }
+    setBoardContent(prev => ({ ...prev, content: content }));
+  };
 
-  const validateContent = (content: string) => {
-    if (!content.trim()) {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setBoardContent(prev => ({ ...prev, [name]: value }));
+  };
+
+  const validateContent = ({ description, content }: typeof boardContent) => {
+    if (!description.trim() || !content.trim()) {
       throw new Error('Complete all fields to submit content.');
     }
   };
@@ -47,7 +58,10 @@ export default function BoardActionEditor({
   };
 
   const resetFields = () => {
-    setBoardContent('');
+    setBoardContent({
+      description: '',
+      content: ''
+    });
     setIsCheckboxChecked(false);
     setSelectedAction(null);
   };
@@ -56,7 +70,8 @@ export default function BoardActionEditor({
     try {
       validateContent(boardContent);
       startTransition(async () => {
-        const { errorMessage } = await postNewBoardAction(boardContent)
+        const { description, content } = boardContent;
+        const { errorMessage } = await postNewBoardAction(description, content);
         if (errorMessage) {
           toast.error(errorMessage);
         } else {
@@ -74,8 +89,9 @@ export default function BoardActionEditor({
     try {
       validateContent(boardContent);
       startTransition(async () => {
-        const id = selectedAction.id
-        const { errorMessage } = await updateBoardAction(id, boardContent);
+        const id = selectedAction.id;
+        const { description, content } = boardContent;
+        const { errorMessage } = await updateBoardAction(id, description, content);
         if (errorMessage) {
           toast.error(errorMessage);
         } else {
@@ -89,13 +105,22 @@ export default function BoardActionEditor({
   };
 
   return (
-    <div className="flex flex-col w-4/5">
+    <div className="flex flex-col gap-6 w-4/5">
+      <div>
+        <label className="block text-lg font-bold mb-2">Add brief description:</label>
+        <textarea
+          name="description"
+          placeholder="Text for the archive description."
+          value={boardContent.description}
+          onChange={handleInputChange}
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          required
+        />
+      </div>
+
       <div className="w-full flex-grow mb-6">
         <h2 className="text-lg font-bold mb-2">Board Action:</h2>
-        <Quill
-          value={boardContent}
-          onChange={handleEditorChange}
-        />
+        <Quill value={boardContent.content} onChange={handleEditorChange} />
       </div>
 
       <SubmitContentBtn

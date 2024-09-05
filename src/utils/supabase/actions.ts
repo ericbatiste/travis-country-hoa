@@ -5,7 +5,7 @@ import { serverClient } from './server';
 import {
   PostNewFeaturedBylawType,
   FeaturedBylawContentType,
-  BoardObservationsContentType,
+  BoardActionContentType,
   ReturnsErrorMsg,
   BylawParamsType
 } from '../types';
@@ -183,7 +183,7 @@ export const fetchBoardActionsClient = async () => {
 
     const { data, error } = await supabase
       .from('board_observations')
-      .select('id, created_at, content')
+      .select('id, created_at, description, content')
       .order('created_at', { ascending: true });
 
     if (error) throw error;
@@ -195,13 +195,13 @@ export const fetchBoardActionsClient = async () => {
   }
 }
 
-export const getBoardActionContent = async (): Promise<BoardObservationsContentType | null> => {
+export const getBoardActionContent = async (): Promise<BoardActionContentType | null> => {
   try {
-    const supabase = await serverClient()
+    const supabase = await serverClient();
 
     const { data, error } = await supabase
       .from('board_observations')
-      .select('id, created_at, content')
+      .select('id, created_at, description, content')
       .order('created_at', { ascending: false })
       .limit(1)
       .single();
@@ -215,24 +215,31 @@ export const getBoardActionContent = async (): Promise<BoardObservationsContentT
   }
 };
 
-export const postNewBoardAction = async (content: string) => {
+export const postNewBoardAction = async (
+  content: string,
+  description: string
+): Promise<ReturnsErrorMsg> => {
   try {
     const supabase = browserClient();
 
     const { error } = await supabase
       .from('board_observations')
-      .insert({ content: sanitizeHTML(content) });
-    
+      .insert({
+        description: description,
+        content: sanitizeHTML(content)
+    });
+
     if (error) throw error;
 
     return { errorMessage: null };
   } catch (error) {
     return { errorMessage: getErrorMessage(error) };
   }
-}
+};
 
 export const updateBoardAction = async (
   id: string,
+  description: string,
   content: string
 ): Promise<ReturnsErrorMsg> => {
   try {
@@ -241,6 +248,7 @@ export const updateBoardAction = async (
     const { error } = await supabase
       .from('board_observations')
       .update({
+        description: description,
         content: sanitizeHTML(content)
       })
       .eq('id', id);
