@@ -35,9 +35,8 @@ export default function BoardActionEditor({
     setBoardContent(prev => ({ ...prev, content: content }));
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
-    setBoardContent(prev => ({ ...prev, [name]: value }));
+  const handleInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setBoardContent(prev => ({ ...prev, description: e.target.value }));
   };
 
   const validateContent = ({ description, content }: typeof boardContent) => {

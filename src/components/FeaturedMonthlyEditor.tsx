@@ -48,8 +48,8 @@ export default function FeaturedMonthlyEditor({
     }
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = event.target;
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
     setFeaturedContent(prev => ({ ...prev, [name]: value }));
   };
 

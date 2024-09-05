@@ -8,7 +8,7 @@ export default function AdminNav() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <div className="flex justify-center rounded-md shadow-lg w-min py-6 px-4 bg-blue">
+    <div className="sticky top-[3.7rem] flex justify-center rounded-md shadow-lg w-min py-6 px-4 bg-blue">
       <ul className="flex flex-col gap-2 md:gap-4 w-min text-sm md:text-xl text-white">
         <li
           className={`transition-all text-shadow whitespace-nowrap ${

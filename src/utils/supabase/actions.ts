@@ -195,6 +195,60 @@ export const fetchBoardActionsClient = async () => {
   }
 }
 
+export const getAllBoardActions = async () => {
+  try {
+    const supabase = await serverClient();
+
+    const { data, error } = await supabase
+      .from('board_observations')
+      .select('id, created_at, description, content')
+      .order('created_at', { ascending: true })
+
+    if (error) throw error;
+
+    return data && data.length > 0 ? data : null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getAllBoardActionIds = async () => {
+  try {
+    const supabase = browserClient();
+
+    const { data, error } = await supabase
+      .from('board_observations')
+      .select('id')
+
+    if (error) throw error;
+
+    return data && data.length > 0 ? data : null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getBoardActionById = async (id: string) => {
+  try {
+    const supabase = await serverClient();
+
+    const { data, error } = await supabase
+      .from('board_observations')
+      .select('id, created_at, description, content')
+      .match({ id })
+      .single()
+
+    if (error) throw error;
+
+    return data ?? null
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 export const getBoardActionContent = async (): Promise<BoardActionContentType | null> => {
   try {
     const supabase = await serverClient();
