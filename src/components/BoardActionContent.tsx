@@ -2,14 +2,14 @@
 
 import { useRouter } from 'next/navigation';
 import { sanitizeHTML } from '@/utils/sanitizeHtml';
-import { BoardObservationsContentType, FeaturedBylawContentType, GetBylawsType } from '@/utils/types';
+import { BoardActionContentType, FeaturedBylawContentType} from '@/utils/types';
 
 export default async function BoardActionContent({
   featuredBylawContent,
   boardAction
 }: {
   featuredBylawContent: FeaturedBylawContentType | null;
-  boardAction: BoardObservationsContentType | null;
+  boardAction: BoardActionContentType | null;
 }) {
   const router = useRouter();
 
