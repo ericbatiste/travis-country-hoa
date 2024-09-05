@@ -1,24 +1,20 @@
-"use client"
+'use client';
 
 import { useState, useTransition, ChangeEvent, useEffect } from 'react';
+import Quill from './Quill';
+import SubmitContentBtn from './SubmitContentBtn';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '@/utils/errorMsg';
-import {
-  postNewFeaturedBylaw,
-  updateBoardObservations,
-  updateBylaw
-} from '@/utils/supabase/actions';
-import { GetBylawsType, PostNewFeaturedBylawType } from '@/utils/types';
-import FeaturedBylawEditor from './FeaturedBylawEditor';
-import BoardObservationsEditor from './BoardObservationsEditor';
-import UpdateBylawEditor from './UpdateBylawEditor';
+import { postNewFeaturedBylaw, updateBylaw } from '@/utils/supabase/actions';
+import { PostNewFeaturedBylawType, FeaturedMonthlyEditorProps } from '@/utils/types';
 
-export default function ContentEditor() {
-  const [editingSection, setEditingSection] = useState('new bylaw');
+export default function FeaturedMonthlyEditor({
+  editingSection,
+  selectedBylaw,
+  setSelectedBylaw
+}: FeaturedMonthlyEditorProps) {
   const [isPending, startTransition] = useTransition();
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-  const [selectedBylaw, setSelectedBylaw] = useState<GetBylawsType | null>(null);
-  const [boardContent, setBoardContent] = useState('');
   const [featuredContent, setFeaturedContent] = useState<PostNewFeaturedBylawType>({
     sectionNumber: '',
     sectionTitle: '',
@@ -28,11 +24,7 @@ export default function ContentEditor() {
   });
 
   useEffect(() => {
-    resetFields();
-  }, [editingSection]);
-
-  useEffect(() => {
-    if (selectedBylaw && setFeaturedContent) {
+    if (selectedBylaw) {
       setFeaturedContent({
         sectionNumber: selectedBylaw.section_number,
         sectionTitle: selectedBylaw.section_title,
@@ -40,12 +32,10 @@ export default function ContentEditor() {
         bylawText: selectedBylaw.bylaw_text,
         inANutshell: selectedBylaw.in_a_nutshell
       });
+    } else {
+      resetFields();
     }
-  }, [selectedBylaw, setFeaturedContent]);
-
-  const handleSectionChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setEditingSection(event.target.value);
-  };
+  }, [selectedBylaw]);
 
   const handleEditorChange = (content: string, section: string) => {
     switch (section) {
@@ -54,9 +44,6 @@ export default function ContentEditor() {
         break;
       case 'inANutshell':
         setFeaturedContent(prev => ({ ...prev, inANutshell: content }));
-        break;
-      case 'boardObservations':
-        setBoardContent(content);
         break;
     }
   };
@@ -86,10 +73,7 @@ export default function ContentEditor() {
         postFeaturedContent();
         break;
       case 'update bylaw':
-        updateBylawContent();
-        break;
-      case 'board':
-        updateBoardContent();
+        updateFeaturedContent();
         break;
     }
   };
@@ -102,7 +86,6 @@ export default function ContentEditor() {
       bylawText: '',
       inANutshell: ''
     });
-    setBoardContent('');
     setIsCheckboxChecked(false);
     setSelectedBylaw(null);
   };
@@ -133,7 +116,7 @@ export default function ContentEditor() {
     }
   };
 
-  const updateBylawContent = async () => {
+  const updateFeaturedContent = async () => {
     if (!selectedBylaw) return;
     try {
       validateContent(featuredContent);
@@ -162,70 +145,77 @@ export default function ContentEditor() {
     }
   };
 
-  const updateBoardContent = async () => {
-    try {
-      validateContent(boardContent);
-      startTransition(async () => {
-        const { errorMessage } = await updateBoardObservations(boardContent);
-        if (errorMessage) {
-          toast.error(errorMessage);
-        } else {
-          toast.success('Board Observations updated successfully!');
-          resetFields();
-        }
-      });
-    } catch (error) {
-      toast.error(getErrorMessage(error));
-    }
-  };
-
   return (
-    <div className="flex flex-col w-4/5 my-10">
-      <select
-        onChange={handleSectionChange}
-        value={editingSection}
-        className="mb-6 px-4 py-2 border rounded w-min self-center"
-      >
-        <option value="new bylaw">Post new featured bylaw</option>
-        <option value="update bylaw">Edit existing bylaw</option>
-        <option value="board">Update Board Observations</option>
-      </select>
+    <div className="flex flex-col w-4/5">
+      <div className="flex flex-col gap-6">
+        <div className="flex justify-between gap-4 w-full">
+          <div className="w-1/2">
+            <label className="block text-lg font-bold mb-2">Section Number:</label>
+            <input
+              type="text"
+              name="sectionNumber"
+              placeholder="Bylaw section number (not displayed)."
+              autoComplete="off"
+              value={featuredContent?.sectionNumber}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border rounded"
+              required
+            />
+          </div>
 
-      {editingSection === 'new bylaw' && (
-        <FeaturedBylawEditor
-          featuredContent={featuredContent}
-          handleEditorChange={handleEditorChange}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          isPending={isPending}
-          isCheckboxChecked={isCheckboxChecked}
-          setIsCheckboxChecked={setIsCheckboxChecked}
-        />
-      )}
-      {editingSection === 'update bylaw' && (
-        <UpdateBylawEditor
-          selectedBylaw={selectedBylaw}
-          setSelectedBylaw={setSelectedBylaw}
-          featuredContent={featuredContent}
-          setFeaturedContent={setFeaturedContent}
-          handleEditorChange={handleEditorChange}
-          handleInputChange={handleInputChange}
-          handleSubmit={handleSubmit}
-          isPending={isPending}
-          isCheckboxChecked={isCheckboxChecked}
-          setIsCheckboxChecked={setIsCheckboxChecked}
-        />
-      )}
-      {editingSection === 'board' && (
-        <BoardObservationsEditor
-          boardContent={boardContent}
-          handleEditorChange={handleEditorChange}
-          handleSubmit={handleSubmit}
-          isPending={isPending}
-          isCheckboxChecked={isCheckboxChecked}
-          setIsCheckboxChecked={setIsCheckboxChecked}
-        />
-      )}
+          <div className="w-1/2">
+            <label className="block text-lg font-bold mb-2">Section Title:</label>
+            <input
+              type="text"
+              name="sectionTitle"
+              placeholder="Bylaw section title (not displayed)."
+              autoComplete="off"
+              value={featuredContent?.sectionTitle}
+              onChange={handleInputChange}
+              className="w-full px-4 py-2 border rounded"
+              required
+            />
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-lg font-bold mb-2">Add brief description:</label>
+          <textarea
+            name="description"
+            placeholder="Text for the archive description."
+            value={featuredContent?.description}
+            onChange={handleInputChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            required
+          />
+        </div>
+
+        <div className="w-full flex-grow mb-10">
+          <h2 className="text-lg font-bold mb-2">Bylaw Text:</h2>
+          <Quill
+            value={featuredContent?.bylawText}
+            onChange={content => handleEditorChange(content, 'featuredBylaw')}
+          />
+        </div>
+
+        <div className="w-full flex-grow">
+          <h2 className="text-lg font-bold mb-2">In a Nutshell:</h2>
+          <Quill
+            value={featuredContent?.inANutshell}
+            onChange={content => handleEditorChange(content, 'inANutshell')}
+          />
+        </div>
+
+        <div>
+          <SubmitContentBtn
+            onClick={handleSubmit}
+            isPending={isPending}
+            isChecked={isCheckboxChecked}
+            setIsChecked={setIsCheckboxChecked}
+            text="Submit"
+          />
+        </div>
+      </div>
     </div>
   );
 }

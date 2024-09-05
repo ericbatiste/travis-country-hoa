@@ -53,10 +53,10 @@ export default function ContactUs() {
   };
 
   return (
-    <>
-      <div className="w-full px-8 md:px-20 my-10 md:my-20">
-        <div className="mb-10 md:mb-20">
-          <h1 className="text-2xl md:text-5xl font-bold mb-10 text-blue text-center">
+    <div className='flex justify-center'>
+      <div className="max-w-max px-8 md:px-20 my-6 md:my-10">
+        <div className="mb-6 md:mb-10">
+          <h1 className="text-2xl md:text-5xl font-bold mb-6 md:mb-10 text-blue text-center">
             We are TSSCA members too…
           </h1>
           <p className="text-center text-lg md:text-2xl text-gray-text">
@@ -167,11 +167,7 @@ export default function ContactUs() {
             {isPending ? <Loader2 className="animate-spin" /> : "Send Message"}
           </button>
         </form>
-
-        <p className="mt-10 text-xl text-terracotta font-semibold text-center">
-          We are consulting with a qualified HOA attorney to ensure the accuracy of our statements.
-        </p>
       </div>
-    </>
+    </div>
   );
 }

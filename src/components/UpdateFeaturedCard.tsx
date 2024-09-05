@@ -3,7 +3,7 @@
 import { formatDate } from '@/utils/formatDate';
 import { UpdateBylawCardProps } from '@/utils/types';
 
-export default function UpdateBylawCard({
+export default function UpdateFeaturedCard({
   id,
   createdAt,
   sectionNumber,
@@ -14,14 +14,12 @@ export default function UpdateBylawCard({
   
   const handleCardClick = () => {
     const selected = bylaws.find(bylaw => id === bylaw.id);
-    if (selected && setSelectedBylaw) {
-      setSelectedBylaw(selected);
-    }
+    selected && setSelectedBylaw(selected);
   };
 
   return (
     <div
-      className="border p-4 rounded-lg cursor-pointer hover:shadow-lg flex justify-around"
+      className="flex justify-around border p-4 rounded-lg cursor-pointer hover:shadow-lg"
       onClick={handleCardClick}
     >
       <p className="whitespace-nowrap">{formatDate(createdAt)}</p>

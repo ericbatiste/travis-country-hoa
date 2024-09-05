@@ -12,7 +12,7 @@ export default async function Subscribers() {
       <aside className="top-0 left-0 h-screen w-min p-4">
         <AdminNav />
       </aside>
-      <div className="flex flex-col flex-grow items-center mt-4">
+      <div className="flex flex-col flex-grow items-center">
         <MailingList subscribers={subscribers} />
       </div>
     </div>

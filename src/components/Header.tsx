@@ -12,10 +12,10 @@ export default function Header({ admin }: { admin: User | null }) {
       <div className="relative z-10 h-full flex justify-between px-4 md:px-10">
         <div className="space-y-2">
           <h1 className="font-serif text-white tracking-wide text-3xl md:text-6xl text-shadow">
-            Our Travis Country
+            Our Travis Country...
           </h1>
-          <p className="italic text-xl text-white font-semibold md:text-2xl text-shadow md:ml-10">
-            KNOW YOUR RIGHTS as property owners and members of the TCCSA!
+          <p className="text-xl text-white  md:text-4xl text-shadow md:ml-10">
+            examining our bylaws one section at a time.
           </p>
         </div>
         {admin && (

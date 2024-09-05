@@ -1,11 +1,11 @@
 import { FeaturedBylawContentType } from '@/utils/types';
+import { getFeaturedBylawContent } from '@/utils/supabase/actions';
 import { sanitizeHTML } from '@/utils/sanitizeHtml';
 
-export default function FeaturedBylawContent({
-  featuredBylawContent
-}: {
-  featuredBylawContent: FeaturedBylawContentType | null;
-}) {
+export const revalidate = 0;
+
+export default async function FeaturedBylawContent() {
+  const featuredBylawContent = await getFeaturedBylawContent();
 
   return (
     <>

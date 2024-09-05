@@ -53,16 +53,14 @@ export const fetchBylawsClient = async () => {
     const supabase = browserClient();
     const { data, error } = await supabase
       .from('bylaws')
-      .select(
-        'id, created_at, section_number, section_title, description, bylaw_text, in_a_nutshell'
-      )
+      .select('id, created_at, section_number, section_title, description, bylaw_text, in_a_nutshell')
       .order('created_at', { ascending: true });
 
     if (error) throw error;
 
     return data ?? null
   } catch (error) {
-    console.error('Error fetching bylaws:', error);
+    console.error(error);
     return null;
   }
 };
@@ -179,13 +177,33 @@ export const updateBylaw = async ({
   }
 };
 
-export const getBoardObservations = async (): Promise<BoardObservationsContentType | null> => {
+export const fetchBoardActionsClient = async () => {
+  try {
+    const supabase = browserClient()
+
+    const { data, error } = await supabase
+      .from('board_observations')
+      .select('id, created_at, content')
+      .order('created_at', { ascending: true });
+
+    if (error) throw error;
+
+    return data || null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export const getBoardActionContent = async (): Promise<BoardObservationsContentType | null> => {
   try {
     const supabase = await serverClient()
 
     const { data, error } = await supabase
       .from('board_observations')
-      .select('id, last_updated, content')
+      .select('id, created_at, content')
+      .order('created_at', { ascending: false })
+      .limit(1)
       .single();
 
     if (error) throw error;
@@ -197,42 +215,40 @@ export const getBoardObservations = async (): Promise<BoardObservationsContentTy
   }
 };
 
-const getBoardObsId = async () => {
+export const postNewBoardAction = async (content: string) => {
   try {
     const supabase = browserClient();
-  
-    const { data, error } = await supabase
+
+    const { error } = await supabase
       .from('board_observations')
-      .select('id')
-      .single();
-  
-    if (error) throw error;
+      .insert({ content: sanitizeHTML(content) });
     
-    return data || null;
+    if (error) throw error;
+
+    return { errorMessage: null };
   } catch (error) {
-    console.error(error);
-    return null;
+    return { errorMessage: getErrorMessage(error) };
   }
 }
 
-export const updateBoardObservations = async (content: string): Promise<ReturnsErrorMsg> => {
+export const updateBoardAction = async (
+  id: string,
+  content: string
+): Promise<ReturnsErrorMsg> => {
   try {
     const supabase = browserClient();
-
-    const data = await getBoardObsId()
 
     const { error } = await supabase
       .from('board_observations')
       .update({
-        last_updated: new Date(),
-        content: sanitizeHTML(content),
+        content: sanitizeHTML(content)
       })
-      .eq('id', data?.id );
+      .eq('id', id);
 
     if (error) throw error;
 
-    return { errorMessage: null }
-  } catch(error) {
-    return { errorMessage: getErrorMessage(error) }
+    return { errorMessage: null };
+  } catch (error) {
+    return { errorMessage: getErrorMessage(error) };
   }
 };

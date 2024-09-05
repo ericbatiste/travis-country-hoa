@@ -7,7 +7,7 @@ export default function EmailSubscribers() {
       <aside className="top-0 left-0 h-screen w-min p-4">
         <AdminNav />
       </aside>
-      <div className="flex flex-col flex-grow items-center mt-4">
+      <div className="flex flex-col flex-grow items-center">
         <Mailer />
       </div>
     </div>
