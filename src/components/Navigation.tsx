@@ -39,12 +39,12 @@ export default function Navigation({ admin }: { admin: User | null }) {
       <ul className="flex gap-2 md:gap-8 w-min text-xs md:text-xl text-white">
         <li
           className={`transition-all whitespace-nowrap  ${
-            isActive('/')
+            isActive('/monthly-feature')
               ? 'text-gray-text hover:text-gray-text text-shadow-a font-black'
               : 'text-shadow hover:text-gray-cool'
           }`}
         >
-          <Link href="/">Monthly Feature</Link>
+          <Link href="/monthly-feature">Monthly Feature</Link>
         </li>
         <li
           className={`transition-all whitespace-nowrap ${
@@ -72,7 +72,7 @@ export default function Navigation({ admin }: { admin: User | null }) {
           }`}
           onClick={() => setDropdownOpen(!isDropdownOpen)}
         >
-          <span className='cursor-pointer'>Archive</span>
+          <span className="cursor-pointer">Archive</span>
           {isDropdownOpen && (
             <div
               ref={dropdownRef}

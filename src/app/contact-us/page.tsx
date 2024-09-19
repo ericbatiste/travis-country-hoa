@@ -167,6 +167,10 @@ export default function ContactUs() {
             {isPending ? <Loader2 className="animate-spin" /> : "Send Message"}
           </button>
         </form>
+        <p className='mt-4 md:mt-8 md:text-xl text-blue text-center font-semibold'>
+          Please note: your email address or contact information will never be shared, sold or used for anything other than as indicated above. 
+          We reserve the right to choose to engage with only the TCCSA membership.
+        </p>
       </div>
     </div>
   );

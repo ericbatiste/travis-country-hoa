@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import SignOutBtn from './SignOutBtn';
 import { User } from '@supabase/supabase-js';
 
@@ -10,14 +11,16 @@ export default function Header({ admin }: { admin: User | null }) {
         style={{ backgroundImage: "url('/marymoorefalls.png')", backgroundPosition: '50% 25%' }}
       />
       <div className="relative z-10 h-full flex justify-between px-4 md:px-10">
-        <div className="space-y-2">
-          <h1 className="font-serif text-white tracking-wide text-3xl md:text-6xl text-shadow">
-            Our Travis Country...
-          </h1>
-          <p className="text-xl text-white  md:text-4xl text-shadow md:ml-10">
-            examining our bylaws one section at a time.
-          </p>
-        </div>
+        <Link href="/">
+          <div className="space-y-2">
+            <h1 className="font-serif text-white tracking-wide text-3xl md:text-6xl text-shadow">
+              Our Travis Country...
+            </h1>
+            <p className="text-xl text-white whitespace-nowrap md:text-4xl text-shadow md:ml-10">
+              examining our bylaws one section at a time.
+            </p>
+          </div>
+        </Link>
         {admin && (
           <div className="">
             <SignOutBtn />

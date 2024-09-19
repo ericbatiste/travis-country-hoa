@@ -15,12 +15,12 @@ export default async function BoardActionContent({
 
   return (
     <>
-      <h2 className="my-6 md:my-10 text-2xl md:text-5xl font-semibold text-blue text-center">
+      <h2 className="my-4 md:my-8 text-2xl md:text-5xl font-semibold text-blue text-center">
         Observations Re: Our Current Board
       </h2>
       <section className="px-4 md:px-10 lg:px-[10rem] lg:min-w-[1300px]">
-        <article
-          className="self-center bg-beige shadow-2xl text-lg transition-shadow lg:float-left p-8 lg:mr-12 mb-8 lg:w-2/5 cursor-pointer hover:shadow-xl"
+      <article 
+          className="self-center bg-beige shadow-2xl text-lg transition-shadow lg:float-left p-8 lg:mr-12 mb-4 mt-2 lg:w-2/5 cursor-pointer hover:shadow-xl"
           onClick={() => router.push('./')}
         >
           {featuredBylawContent?.bylaw_text && (
@@ -35,7 +35,7 @@ export default async function BoardActionContent({
           {boardAction?.content && (
             <div>
               <div
-                className="mt-2 md:text-xl"
+                className="md:text-xl"
                 dangerouslySetInnerHTML={{
                   __html: sanitizeHTML(boardAction.content)
                 }}
@@ -43,9 +43,15 @@ export default async function BoardActionContent({
             </div>
           )}
         </article>
-        <p className="mt-10 text-lg md:text-2xl text-terracotta font-semibold text-center">
-          We are consulting with a qualified HOA attorney to ensure the accuracy of our statements.
-        </p>
+
+        <article className='flex flex-col gap-4'>
+          <p className="text-lg md:text-2xl text-terracotta font-semibold text-center">
+            * We are consulting with a qualified HOA attorney to ensure the accuracy of our statements. *
+          </p>
+          <p className="md:text-xl text-terracotta font-semibold text-center">
+            The observations above represent our understanding of this Board action and why the action appears to be inconsistent with our governing documents.
+          </p>
+        </article>
       </section>
     </>
   );

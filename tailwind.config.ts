@@ -33,6 +33,7 @@ const config: Config = {
           css: {
             maxWidth: '100%',
             p: {
+              marginTop: '0',
               lineHeight: '2',
             },
             h2: {
