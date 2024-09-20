@@ -7,7 +7,7 @@ export default async function Archive() {
   return (
     <div className="px-4 lg:px-20 my-4">
       <h1 className="my-6 md:my-10 text-2xl md:text-5xl font-semibold text-blue text-center">Bylaw Archive</h1>
-      <p className="mb-2 md:mb-4 text-lg md:text-2xl font-semibold text-blue text-center">Select a Bylaw to view it's text along with associated In A Nutshell and Board Action content...</p>
+      <p className="mb-2 md:mb-4 text-lg md:text-2xl font-semibold text-blue text-center">Select to view Bylaw along with associated In A Nutshell and Board Action content...</p>
       <div className="space-y-4">
         {bylaws?.map(bylaw => (
           <ArchiveBylawCard 
