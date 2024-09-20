@@ -1,14 +1,14 @@
 import { getFeaturedBylawContent } from "@/utils/supabase/actions";
-import InANutshell from "@/components/InANutshell";
+import InANutshellContent from "@/components/InANutshellContent";
 
 export const revalidate = 0;
 
-export default async function Home() {
-  const featuredBylawContent = await getFeaturedBylawContent();
+export default async function InANutshellPage() {
+  const content = await getFeaturedBylawContent();
 
   return (
     <div className="flex flex-col items-center justify-start w-full mb-10">
-      <InANutshell featuredBylawContent={featuredBylawContent} />
+      <InANutshellContent content={content} />
     </div>
   );
 }

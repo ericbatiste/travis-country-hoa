@@ -46,8 +46,8 @@ export default function MailingList({ subscribers }: { subscribers: SubscribersT
           <option value="questionnaire">Questionnaire</option>
         </select>
       </div>
-      <h1 className="text-3xl font-bold text-center text-gray-800">Mailing List</h1>
-      <div className="flex flex-col w-full">
+      <h1 className="text-3xl font-bold text-center text-gray-text">Mailing List</h1>
+      <div className="flex flex-col w-full space-y-2">
         {filteredSubscribers.map((sub, index) => (
           <SubscriberCard key={index} subscriber={sub} />
         ))}

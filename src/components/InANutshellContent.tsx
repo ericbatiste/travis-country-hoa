@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { FeaturedBylawContentType } from '@/utils/types';
 import { sanitizeHTML } from '@/utils/sanitizeHtml';
 
-export default function InANutshell({
-  featuredBylawContent
+export default function InANutshellContent({
+  content
 }: {
-  featuredBylawContent: FeaturedBylawContentType | null;
+  content: FeaturedBylawContentType | null;
 }) {
   const router = useRouter();
 
@@ -19,23 +19,23 @@ export default function InANutshell({
       <section className="px-4 md:px-10 lg:px-[10rem] lg:min-w-[1300px]">
         <article 
           className="self-center bg-beige shadow-2xl text-lg transition-shadow lg:float-left p-8 lg:mr-12 mb-4 mt-2 lg:w-2/5 cursor-pointer hover:shadow-xl"
-          onClick={() => router.push('./')}
+          onClick={() => router.push('./monthly-feature')}
         >
-          {featuredBylawContent?.bylaw_text && (
+          {content?.bylaw_text && (
             <div
               className="prose font-serif text-xs"
-              dangerouslySetInnerHTML={{ __html: sanitizeHTML(featuredBylawContent.bylaw_text) }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHTML(content.bylaw_text) }}
             />
           )}
         </article>
 
         <article className="prose">
-          {featuredBylawContent?.in_a_nutshell && (
+          {content?.in_a_nutshell && (
             <div>
               <div
                 className="md:text-xl"
                 dangerouslySetInnerHTML={{
-                  __html: sanitizeHTML(featuredBylawContent.in_a_nutshell),
+                  __html: sanitizeHTML(content.in_a_nutshell),
                 }}
               />
             </div>

@@ -3,7 +3,7 @@
 import { formatDate } from '@/utils/formatDate';
 import { UpdateBylawCardProps } from '@/utils/types';
 
-export default function UpdateFeaturedCard({
+export default function UpdateContentCard({
   id,
   createdAt,
   sectionNumber,

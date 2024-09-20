@@ -38,6 +38,20 @@ const config: Config = {
             },
             h2: {
               margin: '0',
+            },
+            ol: {
+              'list-style-type': 'decimal',
+              'padding-left': '1.5rem',
+              'margin-top': '1rem',
+              'margin-bottom': '1rem',
+              'margin-left': '.5rem',
+              'margin-right': '.5rem',
+
+              li: {
+                'position': 'relative',
+                'padding-left': '.5rem',
+                'line-height': '2rem'
+              }
             }
           }
         }
@@ -48,4 +62,5 @@ const config: Config = {
     require('@tailwindcss/typography'),
   ],
 };
+
 export default config;

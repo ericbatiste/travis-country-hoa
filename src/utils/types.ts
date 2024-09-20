@@ -1,5 +1,4 @@
 import { MailListMember } from 'mailgun.js';
-import { ChangeEvent } from 'react';
 
 export type ContactType = {
   firstName: string;
@@ -21,6 +20,7 @@ export type PostNewFeaturedBylawType = {
   description: string;
   bylawText: string;
   inANutshell: string;
+  boardAction: string;
 };
 
 export type BylawParamsType = {
@@ -30,6 +30,7 @@ export type BylawParamsType = {
   description: string;
   bylawText: string;
   inANutshell: string;
+  boardAction: string;
 }
 
 export type GetBylawsType = {
@@ -40,23 +41,13 @@ export type GetBylawsType = {
   description: string;
   bylaw_text: string;
   in_a_nutshell: string;
+  board_action: string;
 }
 
 export type FeaturedBylawContentType = {
-  bylaw_text?: string;
-  in_a_nutshell?: string;
-};
-
-export type GetBoardActionsType = {
-  id: string;
-  created_at: string;
-  description: string;
-  content: string;
-}
-
-export type BoardActionContentType = {
-  description: string;
-  content: string;
+  bylaw_text: string;
+  in_a_nutshell: string;
+  board_action: string;
 };
 
 export type ReturnsErrorMsg = {
@@ -72,23 +63,10 @@ export type UpdateBylawCardProps = {
   setSelectedBylaw: (bylaw: GetBylawsType) => void;
 };
 
-export type UpdateBoardCardProps = {
-  id: string;
-  createdAt: string;
-  boardActions: GetBoardActionsType[];
-  setSelectedAction: (boardAction: GetBoardActionsType) => void;
-}
-
 export type FeaturedMonthlyEditorProps = {
   editingSection: string;
   selectedBylaw: GetBylawsType | null;
   setSelectedBylaw: React.Dispatch<React.SetStateAction<GetBylawsType | null>>;
-}
-
-export type BoardActionEditorProps = {
-  editingSection: string;
-  selectedAction: GetBoardActionsType | null;
-  setSelectedAction: React.Dispatch<React.SetStateAction<GetBoardActionsType | null>>
 }
 
 export type SubmitContentBtnProps = {

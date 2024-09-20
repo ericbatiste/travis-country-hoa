@@ -8,7 +8,7 @@ import { getErrorMessage } from '@/utils/errorMsg';
 import { postNewFeaturedBylaw, updateBylaw } from '@/utils/supabase/actions';
 import { PostNewFeaturedBylawType, FeaturedMonthlyEditorProps } from '@/utils/types';
 
-export default function FeaturedMonthlyEditor({
+export default function ContentEditor({
   editingSection,
   selectedBylaw,
   setSelectedBylaw
@@ -20,7 +20,8 @@ export default function FeaturedMonthlyEditor({
     sectionTitle: '',
     description: '',
     bylawText: '',
-    inANutshell: ''
+    inANutshell: '',
+    boardAction: ''
   });
 
   useEffect(() => {
@@ -30,7 +31,8 @@ export default function FeaturedMonthlyEditor({
         sectionTitle: selectedBylaw.section_title,
         description: selectedBylaw.description,
         bylawText: selectedBylaw.bylaw_text,
-        inANutshell: selectedBylaw.in_a_nutshell
+        inANutshell: selectedBylaw.in_a_nutshell,
+        boardAction: selectedBylaw.board_action
       });
     } else {
       resetFields();
@@ -44,6 +46,9 @@ export default function FeaturedMonthlyEditor({
         break;
       case 'inANutshell':
         setFeaturedContent(prev => ({ ...prev, inANutshell: content }));
+        break;
+      case 'boardAction':
+        setFeaturedContent(prev => ({ ...prev, boardAction: content }));
         break;
     }
   };
@@ -84,7 +89,8 @@ export default function FeaturedMonthlyEditor({
       sectionTitle: '',
       description: '',
       bylawText: '',
-      inANutshell: ''
+      inANutshell: '',
+      boardAction: ''
     });
     setIsCheckboxChecked(false);
     setSelectedBylaw(null);
@@ -94,14 +100,15 @@ export default function FeaturedMonthlyEditor({
     try {
       validateContent(featuredContent);
       startTransition(async () => {
-        const { sectionNumber, sectionTitle, description, bylawText, inANutshell } =
+        const { sectionNumber, sectionTitle, description, bylawText, inANutshell, boardAction } =
           featuredContent;
         const { errorMessage } = await postNewFeaturedBylaw({
           sectionNumber,
           sectionTitle,
           description,
           bylawText,
-          inANutshell
+          inANutshell,
+          boardAction
         });
 
         if (errorMessage) {
@@ -121,7 +128,7 @@ export default function FeaturedMonthlyEditor({
     try {
       validateContent(featuredContent);
       startTransition(async () => {
-        const { sectionNumber, sectionTitle, description, bylawText, inANutshell } =
+        const { sectionNumber, sectionTitle, description, bylawText, inANutshell, boardAction } =
           featuredContent;
         const id = selectedBylaw.id;
         const { errorMessage } = await updateBylaw({
@@ -130,7 +137,8 @@ export default function FeaturedMonthlyEditor({
           sectionTitle,
           description,
           bylawText,
-          inANutshell
+          inANutshell,
+          boardAction
         });
 
         if (errorMessage) {
@@ -198,11 +206,19 @@ export default function FeaturedMonthlyEditor({
           />
         </div>
 
-        <div className="w-full flex-grow">
+        <div className="w-full flex-grow mb-10">
           <h2 className="text-lg font-bold mb-2">In a Nutshell:</h2>
           <Quill
             value={featuredContent?.inANutshell}
             onChange={content => handleEditorChange(content, 'inANutshell')}
+          />
+        </div>
+
+        <div className="w-full flex-grow">
+          <h2 className="text-lg font-bold mb-2">Board Action:</h2>
+          <Quill
+            value={featuredContent?.boardAction}
+            onChange={content => handleEditorChange(content, 'boardAction')}
           />
         </div>
 

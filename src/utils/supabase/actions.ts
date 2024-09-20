@@ -5,7 +5,6 @@ import { serverClient } from './server';
 import {
   PostNewFeaturedBylawType,
   FeaturedBylawContentType,
-  BoardActionContentType,
   ReturnsErrorMsg,
   BylawParamsType
 } from '../types';
@@ -34,7 +33,7 @@ export const getFeaturedBylawContent = async (): Promise<FeaturedBylawContentTyp
 
     const { data, error } = await supabase
       .from('bylaws')
-      .select('bylaw_text, in_a_nutshell')
+      .select('bylaw_text, in_a_nutshell, board_action')
       .order('created_at', { ascending: false })
       .limit(1)
       .single();
@@ -53,7 +52,7 @@ export const fetchBylawsClient = async () => {
     const supabase = browserClient();
     const { data, error } = await supabase
       .from('bylaws')
-      .select('id, created_at, section_number, section_title, description, bylaw_text, in_a_nutshell')
+      .select('id, created_at, section_number, section_title, description, bylaw_text, in_a_nutshell, board_action')
       .order('created_at', { ascending: true });
 
     if (error) throw error;
@@ -71,7 +70,7 @@ export const getAllBylaws = async () => {
 
     const { data, error } = await supabase
       .from('bylaws')
-      .select('id, created_at, section_number, section_title, description, bylaw_text, in_a_nutshell')
+      .select('id, created_at, section_number, section_title, description, bylaw_text, in_a_nutshell, board_action')
       .order('created_at', { ascending: true })
 
     if (error) throw error;
@@ -106,7 +105,7 @@ export const getBylawById = async (id: string) => {
 
     const { data, error } = await supabase
       .from('bylaws')
-      .select('id, created_at, section_number, section_title, description, bylaw_text, in_a_nutshell')
+      .select('id, created_at, section_number, section_title, description, bylaw_text, in_a_nutshell, board_action')
       .match({ id })
       .single()
 
@@ -124,7 +123,8 @@ export const postNewFeaturedBylaw = async ({
   sectionTitle,
   description,
   bylawText,
-  inANutshell
+  inANutshell,
+  boardAction
 }: PostNewFeaturedBylawType): Promise<ReturnsErrorMsg> => {
   try {
     const supabase = browserClient();
@@ -136,7 +136,8 @@ export const postNewFeaturedBylaw = async ({
         section_title: sectionTitle,
         description: description,
         bylaw_text: sanitizeHTML(bylawText),
-        in_a_nutshell: sanitizeHTML(inANutshell)
+        in_a_nutshell: sanitizeHTML(inANutshell),
+        board_action: sanitizeHTML(boardAction)
       });
 
     if (error) throw error;
@@ -153,7 +154,8 @@ export const updateBylaw = async ({
   sectionTitle,
   description,
   bylawText,
-  inANutshell
+  inANutshell,
+  boardAction
 }: BylawParamsType): Promise<ReturnsErrorMsg> => {
   try {
     const supabase = browserClient();
@@ -165,147 +167,10 @@ export const updateBylaw = async ({
         section_title: sectionTitle,
         description: description,
         bylaw_text: sanitizeHTML(bylawText),
-        in_a_nutshell: sanitizeHTML(inANutshell)
+        in_a_nutshell: sanitizeHTML(inANutshell),
+        board_action: sanitizeHTML(boardAction)
       })
       .eq('id', id)
-
-    if (error) throw error;
-
-    return { errorMessage: null };
-  } catch (error) {
-    return { errorMessage: getErrorMessage(error) };
-  }
-};
-
-export const fetchBoardActionsClient = async () => {
-  try {
-    const supabase = browserClient()
-
-    const { data, error } = await supabase
-      .from('board_observations')
-      .select('id, created_at, description, content')
-      .order('created_at', { ascending: true });
-
-    if (error) throw error;
-
-    return data || null;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-}
-
-export const getAllBoardActions = async () => {
-  try {
-    const supabase = await serverClient();
-
-    const { data, error } = await supabase
-      .from('board_observations')
-      .select('id, created_at, description, content')
-      .order('created_at', { ascending: true })
-
-    if (error) throw error;
-
-    return data && data.length > 0 ? data : null;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
-
-export const getAllBoardActionIds = async () => {
-  try {
-    const supabase = browserClient();
-
-    const { data, error } = await supabase
-      .from('board_observations')
-      .select('id')
-
-    if (error) throw error;
-
-    return data && data.length > 0 ? data : null;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
-
-export const getBoardActionById = async (id: string) => {
-  try {
-    const supabase = await serverClient();
-
-    const { data, error } = await supabase
-      .from('board_observations')
-      .select('id, created_at, description, content')
-      .match({ id })
-      .single()
-
-    if (error) throw error;
-
-    return data ?? null
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
-
-export const getBoardActionContent = async (): Promise<BoardActionContentType | null> => {
-  try {
-    const supabase = await serverClient();
-
-    const { data, error } = await supabase
-      .from('board_observations')
-      .select('id, created_at, description, content')
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single();
-
-    if (error) throw error;
-
-    return data || null;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
-
-export const postNewBoardAction = async (
-  content: string,
-  description: string
-): Promise<ReturnsErrorMsg> => {
-  try {
-    const supabase = browserClient();
-
-    const { error } = await supabase
-      .from('board_observations')
-      .insert({
-        description: description,
-        content: sanitizeHTML(content)
-    });
-
-    if (error) throw error;
-
-    return { errorMessage: null };
-  } catch (error) {
-    return { errorMessage: getErrorMessage(error) };
-  }
-};
-
-export const updateBoardAction = async (
-  id: string,
-  description: string,
-  content: string
-): Promise<ReturnsErrorMsg> => {
-  try {
-    const supabase = browserClient();
-
-    const { error } = await supabase
-      .from('board_observations')
-      .update({
-        description: description,
-        content: sanitizeHTML(content)
-      })
-      .eq('id', id);
 
     if (error) throw error;
 

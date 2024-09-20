@@ -3,8 +3,8 @@
 import AdminNav from '@/components/AdminNav';
 import { useState, useEffect, ChangeEvent } from 'react';
 import { GetBylawsType } from '@/utils/types';
-import FeaturedMonthlyEditor from '@/components/FeaturedMonthlyEditor';
-import UpdateFeaturedMothly from '@/components/UpdateFeaturedMonthly';
+import ContentEditor from '@/components/ContentEditor';
+import UpdateContentEditor from '@/components/UpdateContentEditor';
 
 export default function FeaturedMonthlyEditorPage() {
   const [editingSection, setEditingSection] = useState('new bylaw');
@@ -19,7 +19,7 @@ export default function FeaturedMonthlyEditorPage() {
   };
 
   return (
-    <div className="flex w-screen">
+    <div className="flex w-full">
       <aside className="top-0 left-0 h-screen w-min p-4">
         <AdminNav />
       </aside>
@@ -29,19 +29,19 @@ export default function FeaturedMonthlyEditorPage() {
           value={editingSection}
           className="mb-6 px-4 py-2 border rounded w-min self-center"
         >
-          <option value="new bylaw">Post new featured bylaw</option>
-          <option value="update bylaw">Edit existing bylaw</option>
+          <option value="new bylaw">Post new content</option>
+          <option value="update bylaw">Edit existing content</option>
         </select>
 
         {editingSection === 'new bylaw' && (
-          <FeaturedMonthlyEditor 
+          <ContentEditor 
             editingSection={editingSection} 
             selectedBylaw={selectedBylaw} 
             setSelectedBylaw={setSelectedBylaw}
           />
         )}
         {editingSection === 'update bylaw' && (
-          <UpdateFeaturedMothly
+          <UpdateContentEditor
             editingSection={editingSection}
             selectedBylaw={selectedBylaw}
             setSelectedBylaw={setSelectedBylaw}

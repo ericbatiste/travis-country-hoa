@@ -1,13 +1,13 @@
 import { useState, useEffect, useTransition } from 'react';
-import UpdateFeaturedCard from './UpdateFeaturedCard';
-import FeaturedMonthlyEditor from './FeaturedMonthlyEditor';
+import UpdateFeaturedCard from './UpdateContentCard';
+import FeaturedMonthlyEditor from './ContentEditor';
 import { GetBylawsType, FeaturedMonthlyEditorProps } from '@/utils/types';
 import { fetchBylawsClient } from '@/utils/supabase/actions';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '@/utils/errorMsg';
 import { Loader2 } from 'lucide-react';
 
-export default function UpdateFeaturedMothly({
+export default function UpdateContentEditor({
   editingSection,
   selectedBylaw,
   setSelectedBylaw

@@ -12,21 +12,12 @@ export default function AdminNav() {
       <ul className="flex flex-col gap-2 md:gap-4 w-min text-sm md:text-xl text-white">
         <li
           className={`transition-all text-shadow whitespace-nowrap ${
-            isActive('/admin-dashboard/featured-monthly-editor')
+            isActive('/admin-dashboard/content-editor')
               ? 'text-terracotta hover:text-terracotta font-black scale-y-125'
               : 'hover:text-gray-cool'
           }`}
         >
-          <Link href="/admin-dashboard/featured-monthly-editor">Monthly Feature Editor</Link>
-        </li>
-        <li
-          className={`transition-all text-shadow whitespace-nowrap ${
-            isActive('/admin-dashboard/board-action-editor')
-              ? 'text-terracotta hover:text-terracotta font-black scale-y-125'
-              : 'hover:text-gray-cool'
-          }`}
-        >
-          <Link href="/admin-dashboard/board-action-editor">Board Action Editor</Link>
+          <Link href="/admin-dashboard/content-editor">Content Editor</Link>
         </li>
         <li
           className={`transition-all text-shadow ${

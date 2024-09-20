@@ -25,9 +25,9 @@ export default function LandingPage() {
           </p>
         </div>
       </header>
-      <section className="mt-12 flex flex-col justify-center items-center gap-10">
-        <div className="w-2/3 flex flex-col gap-8 p-10 bg-beige opacity- rounded-md shadow-xl text-xl text-blue">
-          <h2 className="text-3xl text-center font-semibold">We’ve all signed them, but have we <span className="italic underline">read</span> them?</h2>
+      <section className="mt-12 px-6 md:px-20 flex flex-col justify-center items-center gap-10">
+        <div className="max-w-4xl flex flex-col gap-8 p-8 md:p-14 bg-beige rounded-md shadow-xl text-md md:text-xl text-blue">
+          <h2 className="text-2xl md:text-3xl text-center font-semibold">We’ve all signed them, but have we <span className="italic underline">read</span> them?</h2>
           <p>
             As former board members, our goal is to educate you, the members and residents of
             Travis Country Community Service Association, Inc. (TCCSA), about your rights and
@@ -50,7 +50,7 @@ export default function LandingPage() {
           </p>
         </div>
         <button 
-          className="bg-terracotta text-white text-xl mb-8 py-2 px-6 rounded-md hover:bg-green focus:outline-none focus:ring-2 focus:ring-green focus:ring-opacity-50"
+          className="bg-terracotta text-white md:text-xl mb-8 py-2 px-6 rounded-md hover:bg-green focus:outline-none focus:ring-2 focus:ring-green focus:ring-opacity-50"
           onClick={() => router.push('/monthly-feature')} 
         >
           Continue To Site

@@ -27,7 +27,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${lato.className} max-h-screen flex flex-col`}>
         <HeaderNav admin={admin}/>
-        <main className="flex-1 pb-12">{children}</main>
+        <main className="flex-1 pb-8 md:pb-12">{children}</main>
         <Footer />
         <Toaster />
       </body>
