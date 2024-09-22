@@ -25,17 +25,15 @@ export default function ArchiveBylawCard({
   return (
     <div
       key={id}
-      className="transition-all p-4 bg-beige text-gray-text shadow-sm hover:shadow-lg cursor-pointer rounded-sm border border-gray-warm flex gap-4"
+      className="transition-all p-1 bg-beige text-gray-text shadow-sm hover:shadow-lg cursor-pointer rounded-sm border border-gray-warm"
       onClick={handleCardClick}
       >
-      <div className="flex-shrink-0 flex items-center justify-around space-x-4 overflow-x-auto pb-2 sm:pb-0 w-full sm:w-auto">
-        <p className="min-[500px]:whitespace-nowrap text-center">{formatDate(createdAt as string)}</p>
-        <p className="font-medium min-[500px]:whitespace-nowrap text-center">Section: {sectionNumber}</p>
-        <h3 className="text-lg font-semibold min-[500px]:whitespace-nowrap text-center">{sectionTitle}</h3>
-      </div>
-      <div className="hidden sm:block flex-grow sm:ml-4">
-        <p className="line-clamp-4">{description}</p>
-      </div>
+        <div className='grid grid-cols-3 md:grid-cols-7 justify-center items-center gap-2'>
+          <div className='font-bold text-center'>{formatDate(createdAt as string)}</div>
+          <div className='font-bold text-center'>{sectionNumber}</div>
+          <div className='font-bold text-center'>{sectionTitle}</div>
+          <div className='col-span-4 px-2 hidden md:block'>{description}</div>
+        </div>
     </div>
   );
 }

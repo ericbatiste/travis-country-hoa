@@ -20,15 +20,17 @@ export default async function BylawDetails({ params: { id } }: { params: { id: s
     <div className="flex flex-col items-center justify-center max-h-max py-4">
       <section className="p-4 md:p-12">
         <div className='space-y-8'>
-          {bylaw?.section_number && (
-            <p className="text-gray-600">Section Number: {bylaw.section_number}</p>
-          )}
-          {bylaw?.section_title && (
-            <h1 className="text-3xl font-bold text-gray-800">{bylaw.section_title}</h1>
-          )}
-          {bylaw?.created_at && (
-            <p className="text-gray-600">Date uploaded: {formatDate(bylaw.created_at)}</p>
-          )}
+          <div className='space-y-2'>
+            {bylaw?.section_number && (
+              <p className="text-xl">Section Number: {bylaw.section_number}</p>
+            )}
+            {bylaw?.section_title && (
+              <h1 className="text-3xl font-bold">{bylaw.section_title}</h1>
+            )}
+            {bylaw?.created_at && (
+              <p className="text-xl">Date uploaded: {formatDate(bylaw.created_at)}</p>
+            )}
+          </div>
           {bylaw?.bylaw_text && (
             <div>
               <h2 className="text-2xl font-semibold text-gray-800">Bylaw Text</h2>
