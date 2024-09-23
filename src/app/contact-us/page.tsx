@@ -53,10 +53,10 @@ export default function ContactUs() {
   };
 
   return (
-    <div className='flex justify-center'>
-      <div className="max-w-max px-8 md:px-20 my-6 md:my-10">
-        <div className="mb-6 md:mb-10">
-          <h1 className="text-2xl md:text-5xl font-bold mb-6 md:mb-10 text-blue text-center">
+    <div className='flex justify-center min-h-screen'>
+      <div className="px-4 md:px-10 lg:px-[10rem] lg:min-w-[1300px]">
+        <div className="my-6 md:my-10 space-y-2 md:space-y-6">
+          <h1 className="text-2xl md:text-5xl font-bold text-blue text-center">
             We are TSSCA members too…
           </h1>
           <p className="text-center text-lg md:text-2xl text-gray-text">
@@ -65,9 +65,9 @@ export default function ContactUs() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="md:px-10 space-y-10 md:space-y-16">
-          <div className="flex flex-col lg:flex-row gap-6">
-            <div className="space-y-4">
+        <form onSubmit={handleSubmit} className="md:px-10 space-y-6 md:space-y-10">
+          <div className="flex flex-col lg:flex-row gap-4 md:gap-6">
+            <div className="space-y-4 md:space-y-4">
               <div>
                 <label htmlFor="firstName" className="block font-medium text-gray-text">
                   First Name:
@@ -167,7 +167,8 @@ export default function ContactUs() {
             {isPending ? <Loader2 className="animate-spin" /> : "Send Message"}
           </button>
         </form>
-        <p className='mt-4 md:mt-8 md:text-xl text-blue text-center font-semibold'>
+        
+        <p className='my-4 md:my-8 text-sm md:text-lg text-blue text-center font-semibold'>
           Please note: your email address or contact information will never be shared, sold or used for anything other than as indicated above. 
           We reserve the right to choose to engage with only the TCCSA membership.
         </p>

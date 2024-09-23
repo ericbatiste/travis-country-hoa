@@ -10,7 +10,7 @@ export default function Header({ admin }: { admin: User | null }) {
         className="absolute inset-0 bg-no-repeat bg-cover saturate-150 z-10"
         style={{ backgroundImage: "url('/marymoorefalls.png')", backgroundPosition: '50% 25%' }}
       />
-      <div className="relative z-10 h-full flex justify-between px-4 md:px-10">
+      <div className="relative z-10 h-full flex justify-between px-2 md:px-10">
         <Link href="/">
           <div className="space-y-2">
             <h1 className="font-serif text-white tracking-wide text-3xl md:text-6xl text-shadow">

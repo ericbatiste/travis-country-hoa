@@ -15,7 +15,7 @@ export default function LandingPage() {
         zIndex: 10
       }}  
     >
-      <header className="flex justify-between px-4 md:px-10 z-20">
+      <header className="flex justify-between px-2 md:px-10 z-20">
         <div className="space-y-2">
           <h1 className="font-serif text-white tracking-wide text-3xl md:text-6xl text-shadow">
             Our Travis Country...
