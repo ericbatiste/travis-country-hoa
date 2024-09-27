@@ -48,6 +48,10 @@ export default function LandingPage() {
             Join us by signing up on our contact page to receive the monthly segment as soon as
             we’ve uploaded it.
           </p>
+          <div className="italic font-bold text-center space-y-2">
+            <p>Thank you for visiting us!</p>
+            <p className="font-serif">Suzann Madeley, Linda Farrow and Ibby Sowell</p>
+          </div>
         </div>
         <button 
           className="bg-terracotta text-white md:text-xl mb-8 py-2 px-6 rounded-md hover:bg-green focus:outline-none focus:ring-2 focus:ring-green focus:ring-opacity-50"
