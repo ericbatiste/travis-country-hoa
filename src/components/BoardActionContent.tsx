@@ -18,7 +18,7 @@ export default function BoardActionContent({
       </h2>
       <section className="px-4 md:px-10 lg:px-[10rem] lg:min-w-[1300px]">
         <article
-          className="self-center bg-beige shadow-2xl text-lg transition-shadow lg:float-left p-8 lg:mr-12 mb-8 mt-2 lg:w-2/5 cursor-pointer hover:shadow-xl"
+          className="self-center bg-beige shadow-2xl text-lg transition-shadow lg:float-left p-8 lg:mr-12 mb-8 mt-2 lg:w-2/5 cursor-pointer hover:shadow-xl hidden lg:block"
           onClick={() => router.push('./monthly-feature')}
         >
           {content?.bylaw_text && (
