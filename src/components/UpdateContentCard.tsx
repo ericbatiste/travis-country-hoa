@@ -19,12 +19,12 @@ export default function UpdateContentCard({
 
   return (
     <div
-      className="flex justify-around border p-4 rounded-lg cursor-pointer hover:shadow-lg"
+      className="flex flex-col space-y-2 border p-6 rounded-lg cursor-pointer hover:shadow-lg"
       onClick={handleCardClick}
     >
-      <p className="whitespace-nowrap">{formatDate(createdAt)}</p>
-      <p className="whitespace-nowrap">Section: {sectionNumber}</p>
-      <p>{sectionTitle}</p>
+      <p className="whitespace-nowrap "><span className='font-bold'>Uploaded:</span> {formatDate(createdAt)}</p>
+      <p className=''><span className='font-bold'>Section:</span> {sectionNumber}</p>
+      <p className=''><span className='font-bold'>Title:</span> {sectionTitle}</p>
     </div>
   );
 }

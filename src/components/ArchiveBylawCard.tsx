@@ -25,14 +25,14 @@ export default function ArchiveBylawCard({
   return (
     <div
       key={id}
-      className="transition-all bg-beige text-gray-text shadow-sm hover:shadow-lg cursor-pointer"
+      className="transition-all bg-beige text-gray-text shadow-sm hover:bg-gray-cool hover:shadow-lg cursor-pointer"
       onClick={handleCardClick}
       >
         <div className='grid grid-cols-3 md:grid-cols-7 justify-center items-center gap'>
-          <div className='font-bold text-center border border-white h-full p-2'>{formatDate(createdAt as string)}</div>
-          <div className='font-bold text-center border border-white h-full p-2'>{sectionNumber}</div>
-          <div className='font-bold text-center border border-white h-full p-2'>{sectionTitle}</div>
-          <div className='col-span-4 hidden md:block border border-white h-full p-2'>{description}</div>
+          <div className='font-bold text-center border-r border-white h-full p-2'>{formatDate(createdAt as string)}</div>
+          <div className='font-bold text-center border-x border-white h-full p-2'>{sectionNumber}</div>
+          <div className='font-bold text-center border-l md:border-x border-white h-full p-2'>{sectionTitle}</div>
+          <div className='col-span-4 hidden md:block border-l border-white h-full p-2'>{description}</div>
         </div>
     </div>
   );

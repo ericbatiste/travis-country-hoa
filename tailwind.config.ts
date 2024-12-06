@@ -39,23 +39,51 @@ const config: Config = {
             h2: {
               margin: '0',
             },
-            ol: {
-              'list-style-type': 'decimal',
-              'padding-left': '1.5rem',
-              'margin-top': '1rem',
-              'margin-bottom': '1rem',
-              'margin-left': '.5rem',
-              'margin-right': '.5rem',
-
-              li: {
-                'position': 'relative',
-                'padding-left': '.5rem',
-                'line-height': '2rem'
-              }
-            }
-          }
-        }
-      }
+            '.ql-align-center': {
+              textAlign: 'center',
+            },
+            '.ql-align-right': {
+              textAlign: 'right',
+            },
+            '.ql-align-left': {
+              textAlign: 'left',
+            },
+            '.ql-indent-1': {
+              paddingLeft: '2em',
+            },
+            '.ql-indent-2': {
+              paddingLeft: '4em',
+            },
+            '.ql-list': {
+              marginTop: '1em',
+              marginBottom: '1em',
+              paddingLeft: '1.5em',
+            },
+            '.ql-list-ordered': {
+              listStyleType: 'decimal',
+              marginTop: '0.5em',
+              marginBottom: '0.5em',
+              paddingLeft: '1.5em',
+            },
+            '.ql-list-unordered': {
+              listStyleType: 'disc',
+              marginTop: '0.5em',
+              marginBottom: '0.5em',
+              paddingLeft: '1.5em',
+            },
+            '.ql-list li': {
+              marginBottom: '0.25em',
+            },
+            'a': {
+              color: '#1D4ED8',
+              textDecoration: 'underline',
+              '&:hover': {
+                color: '#1E3A8A',
+              },
+            },
+          },
+        },
+      },
     },
   },
   plugins: [

@@ -5,10 +5,10 @@ export default async function Archive() {
   const bylaws = await getAllBylaws();
 
   return (
-    <div className="px-4 lg:px-20 my-4">
+    <div className="px-4 lg:px-20 my-4 min-h-screen">
       <h1 className="my-4 md:my-10 text-2xl md:text-5xl font-semibold text-blue text-center">Archive</h1>
       <p className="mb-2 md:mb-4 md:text-2xl font-semibold text-blue text-center">Select an entry to view Bylaw along with associated In A Nutshell and Board Action content...</p>
-      <div className="grid grid-cols-3 md:grid-cols-7 text-center bg-blue text-white font-bold mb-2">
+      <div className="grid grid-cols-3 md:grid-cols-7 text-center bg-blue text-white font-bold mb-4">
         <div className="p-2 border">Featured Date</div>
         <div className="p-2 border">Section Number</div>
         <div className="p-2 border">Section Title</div>
