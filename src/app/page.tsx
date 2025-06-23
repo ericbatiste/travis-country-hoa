@@ -50,7 +50,7 @@ export default function LandingPage() {
           </p>
           <div className="italic font-bold text-center space-y-2">
             <p>Thank you for visiting us!</p>
-            <p className="font-serif">Suzann Madeley, Linda Farrow and Ibby Sowell</p>
+            <p className="font-serif">Suzann Madeley and Ibby Sowell</p>
           </div>
         </div>
         <button 

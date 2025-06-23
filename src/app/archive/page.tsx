@@ -14,7 +14,7 @@ export default async function Archive() {
         <div className="p-2 border">Section Title</div>
         <div className="col-span-4 p-2 border hidden md:block">Description</div>
       </div>
-      <div className="space-y-2">
+      <div className="space-y-2 pb-8">
         {bylaws?.map(bylaw => (
           <ArchiveBylawCard 
             key={bylaw.id}
