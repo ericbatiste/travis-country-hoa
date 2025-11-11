@@ -198,7 +198,7 @@ export default function ContentEditor({
           />
         </div>
 
-        <div className="w-full flex-grow mb-10">
+        <div className="w-full flex-grow mb-16">
           <h2 className="text-lg font-bold mb-2">Bylaw Text:</h2>
           <Quill
             value={featuredContent?.bylawText}
@@ -206,7 +206,7 @@ export default function ContentEditor({
           />
         </div>
 
-        <div className="w-full flex-grow mb-10">
+        <div className="w-full flex-grow mb-16">
           <h2 className="text-lg font-bold mb-2">In a Nutshell:</h2>
           <Quill
             value={featuredContent?.inANutshell}
@@ -214,7 +214,7 @@ export default function ContentEditor({
           />
         </div>
 
-        <div className="w-full flex-grow">
+        <div className="w-full flex-grow mb-4">
           <h2 className="text-lg font-bold mb-2">Board Action:</h2>
           <Quill
             value={featuredContent?.boardAction}

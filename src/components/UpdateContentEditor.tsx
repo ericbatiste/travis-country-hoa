@@ -1,6 +1,6 @@
 import { useState, useEffect, useTransition } from 'react';
 import UpdateFeaturedCard from './UpdateContentCard';
-import FeaturedMonthlyEditor from './ContentEditor';
+import ContentEditor from './ContentEditor';
 import { GetBylawsType, FeaturedMonthlyEditorProps } from '@/utils/types';
 import { fetchBylawsClient } from '@/utils/supabase/actions';
 import toast from 'react-hot-toast';
@@ -49,7 +49,7 @@ export default function UpdateContentEditor({
           </div>
         </div>
       ) : (
-        <FeaturedMonthlyEditor
+        <ContentEditor
           editingSection={editingSection}
           selectedBylaw={selectedBylaw}
           setSelectedBylaw={setSelectedBylaw}

@@ -1,12 +1,10 @@
 'use client';
 
-import 'quill/dist/quill.snow.css';
-import { useQuill } from 'react-quilljs';
-import { useEffect } from 'react';
+import 'react-quill/dist/quill.snow.css';
+import ReactQuill from 'react-quill';
 import { QuillProps } from '@/utils/types';
 
 export default function Quill({ value, onChange }: QuillProps) {
-  const theme = 'snow';
   const modules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],
@@ -16,13 +14,12 @@ export default function Quill({ value, onChange }: QuillProps) {
       [{ size: ['small', false, 'large', 'huge'] }],
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       ['link', 'image'],
-      // [{ color: [] }, { background: [] }]
-      // ['clean'],
     ],
     clipboard: {
       matchVisual: true
     }
   };
+
   const formats = [
     'bold',
     'italic',
@@ -35,43 +32,19 @@ export default function Quill({ value, onChange }: QuillProps) {
     'header',
     'link',
     'image',
-    // 'video',
-    // 'color',
-    // 'background'
-    // 'clean',
   ];
-  const placeholder = 'Enter content as you would like to see it displayed on screen...';
-
-  const { quill, quillRef } = useQuill({ theme, modules, formats, placeholder });
-
-  useEffect(() => {
-    if (quill) {
-      const handleTextChange = () => {
-        const content = quill.root.innerHTML;
-        onChange(content);
-      };
-
-      quill.on('text-change', handleTextChange);
-
-      return () => {
-        quill.off('text-change', handleTextChange);
-      };
-    }
-  }, [quill, onChange]);
-
-  useEffect(() => {
-    if (quill) {
-      const currentHtml = quill.root.innerHTML;
-      if (value !== currentHtml) {
-        const delta = quill.clipboard.convert({ html: value});
-        quill.setContents(delta, 'silent');
-      }
-    }
-  }, [value, quill]);
 
   return (
     <div style={{ width: '100%', minWidth: '700px', height: '300px' }}>
-      <div ref={quillRef} />
+      <ReactQuill
+        theme="snow"
+        value={value || ''}
+        onChange={onChange}
+        modules={modules}
+        formats={formats}
+        placeholder="Enter content as you would like to see it displayed on screen..."
+        className='h-80'
+      />
     </div>
   );
 }
