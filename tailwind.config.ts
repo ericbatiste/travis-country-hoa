@@ -37,13 +37,6 @@ const config: Config = {
               marginBottom: '0',
               lineHeight: '2'
             },
-            // h1: {
-            //   margin: '0'
-            // },
-            // h2: {
-            //   margin: '0'
-            // },
-            // Quill alignment classes
             '.ql-align-center': {
               textAlign: 'center'
             },
@@ -53,75 +46,51 @@ const config: Config = {
             '.ql-align-left': {
               textAlign: 'left'
             },
-
-            // Base lists with proper padding
             'ul, ol': {
               paddingLeft: '1.5em',
               marginTop: '0',
               marginBottom: '0',
-              listStylePosition: 'outside'
+              listStylePosition: 'outside',
+              counterReset: 'item0 item1 item2'
             },
 
             li: {
               marginBottom: '0.25em',
               marginLeft: '2em'
             },
-
-            // Ordered list number styles
             'ol > li': {
-              listStyleType: 'decimal'
+              listStyleType: 'decimal',
+              counterIncrement: 'item0'
             },
             'ol > li::marker': {
+              content: 'counter(item0) ". "',
               color: '#474747'
             },
             'ol > li.ql-indent-1': {
-              listStyleType: 'lower-alpha'
+              counterIncrement: 'item1',
+              counterReset: 'item2'
+            },
+            'ol > li.ql-indent-1::marker': {
+              content: 'counter(item1, lower-alpha) ". "'
             },
             'ol > li.ql-indent-2': {
-              listStyleType: 'lower-roman'
+              counterIncrement: 'item2'
             },
-            'ol > li.ql-indent-3': {
-              listStyleType: 'decimal'
+            'ol > li.ql-indent-2::marker': {
+              content: 'counter(item2, lower-roman) ". "'
             },
-            'ol > li.ql-indent-4': {
-              listStyleType: 'lower-alpha'
-            },
-
-            // Unordered lists
             'ul > li': {
               listStyleType: 'disc'
             },
             'ul > li::marker': {
               color: '#474747'
             },
-
-            // Quill indent classes - ADD EXTRA PADDING for each level
             '.ql-indent-1': {
               marginLeft: '3em !important'
             },
             '.ql-indent-2': {
               marginLeft: '6em !important'
             },
-            '.ql-indent-3': {
-              marginLeft: '9em !important'
-            },
-            '.ql-indent-4': {
-              marginLeft: '12em !important'
-            },
-            '.ql-indent-5': {
-              marginLeft: '15em !important'
-            },
-            '.ql-indent-6': {
-              marginLeft: '18em !important'
-            },
-            '.ql-indent-7': {
-              marginLeft: '21em !important'
-            },
-            '.ql-indent-8': {
-              marginLeft: '24em !important'
-            },
-
-            // Link styling
             a: {
               color: '#1D4ED8',
               textDecoration: 'underline',
