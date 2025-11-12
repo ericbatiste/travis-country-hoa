@@ -53,7 +53,7 @@ export default function ContactUs() {
   };
 
   return (
-    <div className='flex justify-center min-h-screen'>
+    <div className='flex justify-center'>
       <div className="px-4 md:px-10 lg:px-[10rem] lg:min-w-[1300px]">
         <div className="my-6 md:my-10 space-y-2 md:space-y-6">
           <h1 className="text-2xl md:text-5xl font-bold text-blue text-center">

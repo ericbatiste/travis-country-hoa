@@ -20,7 +20,7 @@ export default function FeaturedMonthlyEditorPage() {
 
   return (
     <div className="flex w-full">
-      <aside className="top-0 left-0 h-screen w-min p-4">
+      <aside className="top-0 left-0 w-min p-4">
         <AdminNav />
       </aside>
       <div className="flex flex-col flex-grow items-center my-10">
