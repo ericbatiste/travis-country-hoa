@@ -1,5 +1,5 @@
 import { getAllBylaws } from "@/utils/supabase/actions";
-import ArchiveBylawCard from "@/components/ArchiveBylawCard";
+import ArchiveCard from "@/components/ArchiveCard";
 
 export default async function Archive() {
   const bylaws = await getAllBylaws();
@@ -16,7 +16,7 @@ export default async function Archive() {
       </div>
       <div className="space-y-2 pb-8">
         {bylaws?.map(bylaw => (
-          <ArchiveBylawCard 
+          <ArchiveCard 
             key={bylaw.id}
             id={bylaw.id}
             createdAt={bylaw.created_at}

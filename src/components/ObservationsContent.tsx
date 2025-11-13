@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { sanitizeHTML } from '@/utils/sanitizeHtml';
 import { FeaturedBylawContentType } from '@/utils/types';
 
-export default function BoardActionContent({
+export default function ObservationsContent({
   content
 }: {
   content: FeaturedBylawContentType | null;
@@ -14,7 +14,7 @@ export default function BoardActionContent({
   return (
     <>
       <h2 className="my-4 md:my-8 text-2xl md:text-5xl font-semibold text-blue text-center">
-        Observations Re: Our Current Board
+        Observations
       </h2>
       <section className="px-4 md:px-10 lg:px-[10rem] lg:min-w-[1300px]">
         <article
@@ -48,8 +48,7 @@ export default function BoardActionContent({
             statements. *
           </p>
           <p className="md:text-xl text-terracotta font-semibold text-center">
-            The observations above represent our understanding of this Board action and why the
-            action appears to be inconsistent with our governing documents.
+            The observations above represent our understanding of the topic and it’s significance relating to the HOA.
           </p>
         </article>
       </section>

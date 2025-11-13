@@ -3,7 +3,7 @@
 import { formatDate } from '@/utils/formatDate';
 import { useRouter } from 'next/navigation';
 
-export default function ArchiveBylawCard({
+export default function ArchiveCard({
   id,
   createdAt,
   sectionNumber,

@@ -1,14 +1,14 @@
-import BoardActionContent from "@/components/BoardActionContent";
+import ObservationsContent from "@/components/ObservationsContent";
 import { getFeaturedBylawContent } from "@/utils/supabase/actions";
 
 export const revalidate = 0;
 
-export default async function BoardActionPage() {
+export default async function ObservationsPage() {
   const content = await getFeaturedBylawContent()
 
   return (
       <section className="flex flex-col items-center justify-start w-full mb-10">
-        <BoardActionContent content={content} />
+        <ObservationsContent content={content} />
       </section>
   );
 }

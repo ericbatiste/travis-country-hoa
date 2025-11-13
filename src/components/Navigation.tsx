@@ -37,12 +37,12 @@ export default function Navigation({ admin }: { admin: User | null }) {
         </li>
         <li
           className={`transition-all whitespace-nowrap ${
-            isActive('/board-action')
+            isActive('/observations')
               ? 'text-gray-text hover:text-gray-text text-shadow-a font-black scale-y-125'
               : 'text-shadow hover:text-gray-cool'
           }`}
         >
-          <Link href="/board-action">Board Action</Link>
+          <Link href="/observations">Observations</Link>
         </li>
         <li
           className={`transition-all whitespace-nowrap ${

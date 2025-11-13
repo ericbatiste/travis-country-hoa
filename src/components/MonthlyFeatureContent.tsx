@@ -9,7 +9,7 @@ export default async function MonthlyFeatureContent() {
   return (
     <>
       <h2 className="my-6 md:my-10 text-2xl md:text-5xl font-semibold text-blue text-center">
-        Monthly Featured TCCSA Bylaw
+        Monthly Featured TCCSA Topic
       </h2>
       <section className="px-2 md:px-20">
         <article className="bg-beige shadow-2xl max-w-4xl p-4 md:p-14">
